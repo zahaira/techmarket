@@ -183,7 +183,7 @@ export const _heroMockProducts: Product[] = [
     name: 'Hp Elitedesk"',
     slug: "hp-elitedesk",
     subDescription:
-      "Hp Elitedesk 600 G3 Mini Core i5 - 6th Gén - 8Go , 256Go SSD avec Ecran EliteDisplay E202 20",
+      "Hp Elitedesk 600 G3 Mini Core i5 - 6th Gén - 8Go , 256Go SSD",
     price: 2500,
     discount: { type: "percentage", value: 15 },
     stock: 5,

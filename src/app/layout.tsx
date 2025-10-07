@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
+import HeaderTop from "@/shared/layout/HeaderTop";
+import HeaderWithSidebar from "@/shared/layout/HeaderWithSidebar";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -20,7 +22,9 @@ export default function RootLayout({
   return (
     <html lang="en" className={poppins.className}>
       <body>
-        <main>{children}</main>
+        <HeaderTop />
+        <HeaderWithSidebar />
+        <main className="sm:pl-[70px] w-full">{children}</main>
       </body>
     </html>
   );

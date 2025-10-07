@@ -8,5 +8,7 @@ export type Category = {
   // /category/accessories
   seoTitle?: string;
   seoDescription?: string;
+  iconName: string;
+  image: string;
   children?: Category[];
 };
