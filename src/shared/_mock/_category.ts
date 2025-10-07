@@ -9,7 +9,7 @@ export const _mockCategories: Category[] = [
     seoDescription:
       "Find keyboards, mice, headphones, and all computer accessories.",
     iconName: "FiHeadphones",
-    image: "/images/peripherals.jpg",
+    image: "/images/category/peripheral.png",
   },
   {
     categoryId: "2",
@@ -19,7 +19,7 @@ export const _mockCategories: Category[] = [
     seoDescription:
       "High-performance laptops and desktop computers for work and gaming.",
     iconName: "FiMonitor",
-    image: "/images/laptops.jpg",
+    image: "/images/category/pc.png",
   },
   {
     categoryId: "3",
@@ -29,6 +29,6 @@ export const _mockCategories: Category[] = [
     seoDescription:
       "Explore the newest smartphones with the best prices and features.",
     iconName: "FiSmartphone",
-    image: "/images/smartphones.jpg",
+    image: "/images/category/tel.png",
   },
 ];

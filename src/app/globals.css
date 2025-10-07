@@ -19,3 +19,10 @@
     transform: translateX(0) !important;
   }
 }
+
+.swiper-button-prev,
+.swiper-button-next {
+  width: 25px !important;
+  height: 25px !important;
+  color: #4da6ff !important; 
+}
