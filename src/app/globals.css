@@ -1,1 +1,28 @@
 @import "tailwindcss";
+
+/* Ajoutez ceci dans votre fichier CSS global ou dans un module CSS */
+
+/* Sur mobile: sidebar cachée par défaut (hors écran) */
+@media (max-width: 639px) {
+  aside[class*="sidebar"] {
+    transform: translateX(-100%);
+  }
+  
+  aside[class*="sidebar"].open {
+    transform: translateX(0);
+  }
+}
+
+/* Sur desktop: sidebar toujours visible */
+@media (min-width: 640px) {
+  aside[class*="sidebar"] {
+    transform: translateX(0) !important;
+  }
+}
+
+.swiper-button-prev,
+.swiper-button-next {
+  width: 25px !important;
+  height: 25px !important;
+  color: #4da6ff !important; 
+}
