@@ -1,6 +1,13 @@
 @import "tailwindcss";
 
-/* Ajoutez ceci dans votre fichier CSS global ou dans un module CSS */
+@theme{
+  --color-primary: #4da6ff;
+  --color-primary-dark: #2b8ce0;
+  --color-primary-light: #e8f2faff;
+  --color-secondary: #041f4c;
+  --color-secondary-dark: #021132;
+  --color-secondary-light: #4d5a99;
+}
 
 /* Sur mobile: sidebar cachée par défaut (hors écran) */
 @media (max-width: 639px) {
