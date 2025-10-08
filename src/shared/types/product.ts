@@ -34,6 +34,15 @@ export interface Product {
   createdAt: Date;
   updatedAt: Date;
 }
+export interface ProductCardItem {
+  productId: string;
+  name: string;
+  price: number;
+  priceSale: number;
+  discountPercentage: number;
+  new?: boolean;
+  coverUrl: string;
+}
 
 // 3. Product Variant (optional but useful)
 

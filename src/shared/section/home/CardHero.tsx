@@ -27,14 +27,14 @@ const CardHero = ({ product }: props) => {
           {product.subDescription}
         </p>
         {product.discount && (
-          <span className=" text-red-600 px-2 py-1 text-3xl rounded-2xl w-max font-semibold ">
+          <span className=" text-primary-dark px-2 py-1 text-3xl rounded-2xl w-max font-semibold ">
             -{product.discount.value}% Off
           </span>
         )}
         {!product.discount && isNew(product.createdAt) && <NewBadge />}
 
         <span
-          className="inline-block bg-white text-3xl md:text-3xl text-red-600 font-bold px-4 py-2 rounded-2xl shadow-md w-max"
+          className="inline-block bg-white text-3xl md:text-3xl text-primary-dark font-bold px-4 py-2 rounded-2xl shadow-md w-max"
           aria-label={`Prix: ${fCurrency(product.price)}`}
         >
           {fCurrency(product.price)}

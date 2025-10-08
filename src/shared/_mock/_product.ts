@@ -1,5 +1,11 @@
-import type { Product, ProductVariant, Discount } from "../types/product";
+import type {
+  Product,
+  ProductVariant,
+  Discount,
+  ProductCardItem,
+} from "../types/product";
 import { _mock } from "./_mock";
+import { _headPhonesImages, _pcImages, _smartphoneImages } from "./assets";
 
 // Stock options
 export const PRODUCT_STOCK_OPTIONS = [
@@ -220,5 +226,88 @@ export const _heroMockProducts: Product[] = [
     variants: [],
     createdAt: new Date(),
     updatedAt: new Date(),
+  },
+];
+
+export const _mockBestOfferProducts: ProductCardItem[] = [
+  // 🖥️ PCs
+  {
+    productId: "pc-001",
+    name: "Gaming PC RTX 4070 – i7-12700 – Avec Ecran 27″",
+    price: 1899,
+    priceSale: 1599,
+    coverUrl: _pcImages[0],
+    discountPercentage: Math.round(((1899 - 1599) / 1899) * 100),
+  },
+  {
+    productId: "pc-002",
+    name: "UltraSlim Office Desktop",
+    price: 999,
+    priceSale: 849,
+    coverUrl: _pcImages[1],
+    new: true,
+    discountPercentage: Math.round(((999 - 849) / 999) * 100),
+  },
+  {
+    productId: "pc-003",
+    name: "All-in-One i7 Touchscreen",
+    price: 1399,
+    priceSale: 1199,
+    coverUrl: _pcImages[2],
+    discountPercentage: Math.round(((1399 - 1199) / 1399) * 100),
+  },
+
+  // 📱 Smartphones
+  {
+    productId: "phone-001",
+    name: "Smartphone Pro X",
+    price: 1099,
+    priceSale: 899,
+    coverUrl: _smartphoneImages[0],
+    new: true,
+    discountPercentage: Math.round(((1099 - 899) / 1099) * 100),
+  },
+  {
+    productId: "phone-002",
+    name: "Galaxy Z Flip Lite",
+    price: 999,
+    priceSale: 799,
+    coverUrl: _smartphoneImages[1],
+    discountPercentage: Math.round(((999 - 799) / 999) * 100),
+  },
+  {
+    productId: "phone-003",
+    name: "iPhone 15 Mini",
+    price: 899,
+    priceSale: 799,
+    coverUrl: _smartphoneImages[2],
+    discountPercentage: Math.round(((899 - 799) / 899) * 100),
+  },
+
+  // 🎧 Headphones
+  {
+    productId: "hp-001",
+    name: "Noise Cancelling Headphones",
+    price: 249,
+    priceSale: 199,
+    coverUrl: _headPhonesImages[0],
+    discountPercentage: Math.round(((249 - 199) / 249) * 100),
+  },
+  {
+    productId: "hp-002",
+    name: "Wireless Studio Pro",
+    price: 199,
+    priceSale: 159,
+    coverUrl: _headPhonesImages[1],
+    new: true,
+    discountPercentage: Math.round(((199 - 159) / 199) * 100),
+  },
+  {
+    productId: "hp-003",
+    name: "Bass Boost Over-Ear",
+    price: 149,
+    priceSale: 119,
+    coverUrl: _headPhonesImages[2],
+    discountPercentage: Math.round(((149 - 119) / 149) * 100),
   },
 ];
