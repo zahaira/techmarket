@@ -10,5 +10,6 @@ export type Category = {
   seoDescription?: string;
   iconName: string;
   image: string;
+  parentId?: string;
   children?: Category[];
 };

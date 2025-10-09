@@ -4,6 +4,7 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { IoClose } from "react-icons/io5";
 import { _mockCategories } from "../_mock/_category";
 import { iconMap } from "../utils/iconMap";
+import { useRouter } from "next/navigation";
 
 interface SidebarProps {
   isOpen: boolean;
@@ -12,6 +13,7 @@ interface SidebarProps {
 
 const SidebarCategories = ({ isOpen, setIsOpen }: SidebarProps) => {
   const isDesktop = typeof window !== "undefined" && window.innerWidth >= 640;
+  const router = useRouter();
 
   return (
     <>
@@ -113,6 +115,7 @@ const SidebarCategories = ({ isOpen, setIsOpen }: SidebarProps) => {
                   ) {
                     setIsOpen(false);
                   }
+                  router.push(`/category/${cat.slug}`);
                 }}
               >
                 <div className="absolute inset-0 bg-gray-100 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200" />

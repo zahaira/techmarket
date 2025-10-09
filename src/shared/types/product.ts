@@ -39,7 +39,7 @@ export interface ProductCardItem {
   name: string;
   price: number;
   priceSale: number;
-  discountPercentage: number;
+  discountPercentage?: number;
   new?: boolean;
   coverUrl: string;
 }

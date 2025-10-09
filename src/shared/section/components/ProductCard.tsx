@@ -20,9 +20,23 @@ const ProductCard = ({ product }: ProductCardProps) => {
           className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
         />
 
-        {/* Discount Badge */}
-        <div className="absolute left-2 top-2 rounded-full bg-primary-light px-2 py-0.5 text-xs font-bold text-primary-dark shadow">
-          -{product.discountPercentage}%
+        {/* Badges Container */}
+        <div className="absolute left-2 top-2 flex flex-col gap-1">
+          {/* Discount Badge */}
+          {product.discountPercentage ? (
+            <div className="rounded-full bg-primary-light px-2 py-0.5 text-xs font-bold text-primary-dark shadow">
+              -{product.discountPercentage}%
+            </div>
+          ) : (
+            <div className="hidden"></div>
+          )}
+
+          {/* NEW Badge */}
+          {product.new && (
+            <div className="rounded-full bg-green-500 px-2 py-0.5 text-xs font-bold text-green-50 shadow">
+              NEW
+            </div>
+          )}
         </div>
 
         {/* Wishlist Button */}
@@ -32,7 +46,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
 
         {/* Quick Add Overlay */}
         <div className="absolute inset-x-0 bottom-0 translate-y-full bg-gradient-to-t from-black/60 to-transparent p-2 transition-transform duration-300 group-hover:translate-y-0">
-          <button className="flex w-full items-center justify-center gap-1 rounded-md bg-white py-2 text-sm font-semibold text-gray-900 transition-all duration-300 hover:bg-gray-100 hover:text-primary-dark cursor-pointer">
+          <button className="flex w-full items-center justify-center gap-1 rounded-md bg-white py-2 text-sm font-semibold text-gray-900 transition-all duration-300 hover:text-primary-dark cursor-pointer">
             <LuShoppingCart className="h-4 w-4" />
             Add
           </button>

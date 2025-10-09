@@ -105,3 +105,22 @@ export const _headPhonesImages = [
   "https://images.pexels.com/photos/14935011/pexels-photo-14935011.jpeg?auto=compress&cs=tinysrgb&",
   "https://images.pexels.com/photos/3394650/pexels-photo-3394650.jpeg?auto=compress&cs=tinysrgb&",
 ];
+export const _keyboardImages = [
+  "https://images.pexels.com/photos/1309766/pexels-photo-1309766.jpeg",
+  "https://images.pexels.com/photos/14553715/pexels-photo-14553715.jpeg",
+  "https://images.pexels.com/photos/5548045/pexels-photo-5548045.jpeg",
+  "https://images.pexels.com/photos/13260080/pexels-photo-13260080.jpeg",
+  "https://images.pexels.com/photos/26256439/pexels-photo-26256439.jpeg",
+  "https://images.pexels.com/photos/18155963/pexels-photo-18155963.jpeg",
+  "https://images.pexels.com/photos/19012041/pexels-photo-19012041.jpeg",
+];
+export const _mouseImages = [
+  "https://images.pexels.com/photos/2115256/pexels-photo-2115256.jpeg",
+  "https://images.pexels.com/photos/19012033/pexels-photo-19012033.jpeg",
+  "https://images.pexels.com/photos/32755749/pexels-photo-32755749.jpeg",
+];
+
+export const _desktopImages = [
+  "https://images.pexels.com/photos/13989043/pexels-photo-13989043.jpeg",
+  "https://images.pexels.com/photos/5082554/pexels-photo-5082554.jpeg",
+];
