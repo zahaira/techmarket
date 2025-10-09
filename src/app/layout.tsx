@@ -3,6 +3,7 @@ import { Poppins } from "next/font/google";
 import "./globals.css";
 import HeaderTop from "@/shared/layout/HeaderTop";
 import HeaderWithSidebar from "@/shared/layout/HeaderWithSidebar";
+import Footer from "@/shared/layout/Footer";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -25,6 +26,7 @@ export default function RootLayout({
         <HeaderTop />
         <HeaderWithSidebar />
         <main className="sm:pl-[70px] w-full">{children}</main>
+        <Footer />
       </body>
     </html>
   );

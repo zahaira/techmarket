@@ -2,9 +2,12 @@ import React from "react";
 import Hero from "../Hero";
 import CategorySection from "../CategorySection";
 import { _mockCategories } from "@/shared/_mock/_category";
-import { _mockBestOfferProducts } from "@/shared/_mock/_product";
 import FeaturesSection from "../FeaturesSection";
 import ProductCarouselSection from "../../components/ProductCarouselSection";
+import {
+  _mockBestOfferProducts,
+  _mockBestSellersProducts,
+} from "@/shared/_mock/_product";
 
 const HomePage = () => {
   return (
@@ -14,11 +17,13 @@ const HomePage = () => {
       <ProductCarouselSection
         products={_mockBestOfferProducts}
         title="Our Best Offers"
+        seeMoreLink="/promotions"
       />
       <FeaturesSection />
       <ProductCarouselSection
-        products={_mockBestOfferProducts}
+        products={_mockBestSellersProducts}
         title="Best Sellers"
+        showSeeMore={false}
       />
     </div>
   );
