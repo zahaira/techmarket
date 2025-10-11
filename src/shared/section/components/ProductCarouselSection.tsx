@@ -5,6 +5,9 @@ import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import ProductCard from "./ProductCard";
 import Link from "next/link";
+import { FreeMode, Mousewheel } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/free-mode";
 
 interface ProductCarouselSectionProps {
   title: string;
@@ -36,11 +39,15 @@ const ProductCarouselSection = ({
 
       <div className="flex justify-center">
         <Swiper
+          modules={[Mousewheel, FreeMode]}
           slidesPerView="auto"
           breakpoints={{
             0: { spaceBetween: 5 },
             640: { spaceBetween: 30 },
           }}
+          freeMode={{ enabled: true, momentum: true }}
+          mousewheel={{ forceToAxis: true, sensitivity: 1.2 }}
+          speed={600}
         >
           {products.map((product) => (
             <SwiperSlide

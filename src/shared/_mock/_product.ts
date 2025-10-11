@@ -1,7 +1,6 @@
 import type {
   Product,
-  ProductVariant,
-  Discount,
+  ProductAttribute,
   ProductCardItem,
 } from "../types/product";
 import { _mockCategories } from "./_category";
@@ -173,90 +172,178 @@ const mockProductNames = {
 };
 
 // Generate discount
-const generateDiscount = (index: number): Discount | undefined => {
+const generateDiscount = (index: number): number | undefined => {
   if (index % 3 === 0) {
-    return {
-      type: "percentage",
-      value: [10, 15, 20, 25, 30][index % 5],
-      startAt: new Date().toISOString(),
-      endAt: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(),
-    };
+    return [10, 15, 20, 25, 30][index % 5];
   }
   return undefined;
 };
 
-// Generate variants
-const generateVariants = (
-  productId: string,
-  category: string,
-  basePrice: number
-): ProductVariant[] => {
-  if (
-    category === CATEGORIES.ANDROID_PHONES ||
-    category === CATEGORIES.IPHONES
-  ) {
-    return [
-      {
-        id: `var-${productId}-1`,
-        productId,
-        name: "128GB, Black",
-        price: basePrice,
-        stock: 10,
-        attributes: { storage: "128GB", color: "Black" },
-      },
-      {
-        id: `var-${productId}-2`,
-        productId,
-        name: "256GB, Silver",
-        price: basePrice + 100,
-        stock: 8,
-        attributes: { storage: "256GB", color: "Silver" },
-      },
-      {
-        id: `var-${productId}-3`,
-        productId,
-        name: "512GB, Gold",
-        price: basePrice + 200,
-        stock: 5,
-        attributes: { storage: "512GB", color: "Gold" },
-      },
-    ];
-  }
+export const generateAttributesAndKeyPoints = (
+  category: string
+): { attributes?: ProductAttribute; keyPoints?: ProductAttribute } => {
+  switch (category) {
+    // 💻 Laptops (Gaming, Ultrabooks, etc.)
+    case CATEGORIES.GAMING_LAPTOPS:
+    case CATEGORIES.ULTRABOOKS:
+    case CATEGORIES.DESKTOP_PCS:
+      return {
+        attributes: {
+          Marque: "Lenovo",
+          État: "Neuf",
+          "Modèle du Processeur": "AMD Ryzen 5",
+          "Type de Processeur": "Ryzen 5 7520U",
+          "Vitesse de Processeur": "2,8 GHz (jusqu’à 4,3 GHz en mode boost)",
+          "Taille de la Mémoire": "16 Go",
+          "Type de Mémoire": "LPDDR5",
+          "Disque Dur": "SSD 512 Go",
+          "Disque Secondaire": "Aucun",
+          "Type de Disque": "SSD (Solid State Drive)",
+          "Format de Disque": "M.2 NVMe",
+          "Graphique Intégrée": "AMD Radeon™ 610M",
+          "Taille de l'Écran": "15.6 Pouces",
+          Résolution: "1920 x 1080 pixels",
+          "Type de Dalle": "TN",
+          "Écran Tactile": "Non",
+          "Réseau Sans-fil": "Bluetooth, WiFi",
+          "WebCam Intégrée": "Oui",
+          "Haut-Parleurs Intégrés": "Oui",
+          "Norme du Clavier": "AZERTY",
+          Couleur: "Cloud Grey",
+          Batterie: "3 cellules 47Whr",
+          "Système d’Exploitation": "Windows 11 Famille",
+        },
+        keyPoints: {
+          CPU: "AMD Ryzen™ 5 7520U",
+          RAM: "16GB LPDDR5-5500",
+          Stockage: "512GB SSD M.2 NVMe 4.0×4",
+          GPU: "AMD Radeon™ 610M",
+          Écran: "15.6″ TN Full-HD (1920×1080)",
+          Communication: "Wi-Fi + Bluetooth",
+          Clavier: "AZERTY Français",
+          Système: "Windows 11 Famille",
+          Cadeau: "Sacoche 15.6″ Casual Toploader",
+        },
+      };
 
-  if (
-    category === CATEGORIES.GAMING_LAPTOPS ||
-    category === CATEGORIES.ULTRABOOKS ||
-    category === CATEGORIES.DESKTOP_PCS
-  ) {
-    return [
-      {
-        id: `var-${productId}-1`,
-        productId,
-        name: "8GB RAM, 256GB SSD",
-        price: basePrice,
-        stock: 7,
-        attributes: { ram: "8GB", storage: "256GB" },
-      },
-      {
-        id: `var-${productId}-2`,
-        productId,
-        name: "16GB RAM, 512GB SSD",
-        price: basePrice + 200,
-        stock: 6,
-        attributes: { ram: "16GB", storage: "512GB" },
-      },
-      {
-        id: `var-${productId}-3`,
-        productId,
-        name: "32GB RAM, 1TB SSD",
-        price: basePrice + 400,
-        stock: 4,
-        attributes: { ram: "32GB", storage: "1TB" },
-      },
-    ];
-  }
+    // 📱 Téléphones Android
+    case CATEGORIES.ANDROID_PHONES:
+      return {
+        attributes: {
+          Marque: "Samsung",
+          Modèle: "Galaxy A55",
+          "Capacité de Stockage": "256 Go",
+          RAM: "8 Go",
+          Batterie: "5000 mAh",
+          "Taille de l’Écran": "6.6 pouces",
+          "Type d’Écran": "Super AMOLED",
+          Résolution: "1080 x 2340 pixels",
+          AppareilPhoto: "50MP + 12MP + 5MP",
+          "AppareilPhoto Avant": "32MP",
+          Système: "Android 14",
+          Couleur: "Noir Graphite",
+        },
+        keyPoints: {
+          Performance: "Processeur Exynos 1480 octa-core",
+          Écran: "Super AMOLED 120Hz immersif",
+          AppareilPhoto: "50MP avec stabilisation optique",
+          Batterie: "Autonomie de 2 jours + charge rapide 25W",
+          Design: "Finition en métal premium",
+        },
+      };
 
-  return [];
+    // 🍏 iPhones
+    case CATEGORIES.IPHONES:
+      return {
+        attributes: {
+          Marque: "Apple",
+          Modèle: "iPhone 15",
+          "Capacité de Stockage": "128 Go",
+          RAM: "6 Go",
+          Batterie: "3349 mAh",
+          "Taille de l’Écran": "6.1 pouces",
+          "Type d’Écran": "Super Retina XDR OLED",
+          Résolution: "1179 x 2556 pixels",
+          AppareilPhoto: "48MP + 12MP",
+          "AppareilPhoto Avant": "12MP",
+          Système: "iOS 17",
+          Couleur: "Bleu",
+        },
+        keyPoints: {
+          Performance: "Puce A16 Bionic ultra-rapide",
+          AppareilPhoto: "48MP avec mode portrait amélioré",
+          Design: "Bords arrondis en aluminium recyclé",
+          Sécurité: "Face ID et protection IP68",
+          Écosystème: "Compatible MagSafe et AirPods",
+        },
+      };
+
+    // ⌨️ Claviers
+    case CATEGORIES.KEYBOARDS:
+      return {
+        attributes: {
+          Marque: "Logitech",
+          Modèle: "MX Mechanical",
+          Connectivité: "Bluetooth / USB-C",
+          Type: "Mécanique",
+          "Type d’Interrupteur": "Tactile",
+          Rétroéclairage: "Blanc ajustable",
+          Autonomie: "15 jours (ou 10 mois sans rétroéclairage)",
+          Compatibilité: "Windows / macOS / Linux",
+        },
+        keyPoints: {
+          Confort: "Touches ultra-stables pour frappe fluide",
+          Connectivité: "Multi-device via Easy-Switch",
+          Design: "Structure aluminium haut de gamme",
+        },
+      };
+
+    // 🖱️ Souris
+    case CATEGORIES.MICE:
+      return {
+        attributes: {
+          Marque: "Logitech",
+          Modèle: "MX Master 3S",
+          DPI: "8000",
+          Boutons: 7,
+          Connectivité: "Bluetooth / USB-C",
+          Autonomie: "70 jours",
+          Couleur: "Graphite",
+        },
+        keyPoints: {
+          Précision: "Capteur Darkfield 8000 DPI",
+          Confort: "Forme ergonomique sculptée",
+          Productivité: "Molette Magspeed silencieuse et rapide",
+        },
+      };
+
+    // 🎧 Casques
+    case CATEGORIES.HEADPHONES:
+      return {
+        attributes: {
+          Marque: "Sony",
+          Modèle: "WH-1000XM5",
+          Type: "Over-ear",
+          "Réduction de Bruit": "Active",
+          Autonomie: "30 heures",
+          Connectivité: "Bluetooth 5.2 / Jack 3.5mm",
+          Poids: "250g",
+          Couleur: "Noir Mat",
+        },
+        keyPoints: {
+          Son: "Audio haute résolution avec LDAC",
+          Confort: "Coussinets doux en mousse à mémoire",
+          Technologie: "Annulation de bruit adaptative IA",
+        },
+      };
+
+    // 🖥️ Par défaut (autres catégories)
+    default:
+      return {
+        attributes: { Marque: "Generic", État: "Neuf" },
+        keyPoints: { Qualité: "Produit fiable et certifié" },
+      };
+  }
 };
 
 // Get image by category
@@ -336,11 +423,11 @@ const generateProductsForCategory = (
           category === CATEGORIES.DESKTOP_PCS
         ? 600 + Math.floor(Math.random() * 2000)
         : 30 + Math.floor(Math.random() * 300);
-
+    const { attributes, keyPoints } = generateAttributesAndKeyPoints(category);
     const isOutOfStock = i % 15 === 0;
     const stock = isOutOfStock ? 0 : 3 + Math.floor(Math.random() * 50);
-    const isBestSeller = i % 4 === 0;
-    const discount = generateDiscount(index);
+    const isisBestSeller = i % 4 === 0;
+    const discountPercentage = generateDiscount(index);
 
     products.push({
       productId: `prod-${index}`,
@@ -351,14 +438,20 @@ const generateProductsForCategory = (
       description: `High-quality ${name} with excellent features and performance. Perfect for everyday use and professional tasks.`,
       subDescription: `Premium product with advanced technology`,
       price: basePrice,
-      discount,
+      discountPercentage,
+      priceSale: discountPercentage
+        ? basePrice - (basePrice * discountPercentage) / 100
+        : undefined,
       stock,
       coverUrl: images.coverUrl,
       images: images.images,
       categoryIds: [category],
+      primaryCategoryId: category[0],
       warranty: 1 + (i % 3),
-      bestSeller: isBestSeller,
-      variants: generateVariants(`prod-${index}`, category, basePrice),
+      isBestSeller: isisBestSeller,
+      isNew: Math.random() > 0.7,
+      attributes,
+      keyPoints,
       createdAt: new Date(
         Date.now() - Math.random() * 365 * 24 * 60 * 60 * 1000
       ),
@@ -417,6 +510,10 @@ export const getProductById = (productId: string): Product | undefined => {
   return mockProducts.find((p) => p.productId === productId);
 };
 
+export const getProductBySlug = (productSlug: string): Product | undefined => {
+  return mockProducts.find((p) => p.slug === productSlug);
+};
+
 export const getProductsByCategory = (categoryId: string): Product[] => {
   return mockProducts.filter((p) => p.categoryIds.includes(categoryId));
 };
@@ -440,12 +537,12 @@ export const getProductsByCategorySlug = (slug: string): Product[] => {
   return shuffleArray(products);
 };
 
-export const getBestSellerProducts = (): Product[] => {
-  return mockProducts.filter((p) => p.bestSeller === true);
+export const getisBestSellerProducts = (): Product[] => {
+  return mockProducts.filter((p) => p.isBestSeller === true);
 };
 
 export const getPromotionProducts = (): Product[] => {
-  return mockProducts.filter((p) => p.discount !== undefined);
+  return mockProducts.filter((p) => p.discountPercentage !== undefined);
 };
 
 // ProductCardItem versions
@@ -463,8 +560,8 @@ export const getProductCardItemsByCategorySlug = (
   return getProductCardItems(products);
 };
 
-export const getBestSellerProductCardItems = (): ProductCardItem[] => {
-  const products = getBestSellerProducts();
+export const getisBestSellerProductCardItems = (): ProductCardItem[] => {
+  const products = getisBestSellerProducts();
   return getProductCardItems(products);
 };
 
@@ -475,34 +572,34 @@ export const getPromotionProductCardItems = (): ProductCardItem[] => {
 
 export const getProductCardItems = (products: Product[]): ProductCardItem[] => {
   return products.map((product) => {
-    const discount = product.discount;
+    const discount = product.discountPercentage;
     const priceSale =
-      discount && discount.value > 0
-        ? product.price - (product.price * discount.value) / 100
+      discount && discount > 0
+        ? product.price - (product.price * discount) / 100
         : product.price;
 
-    const discountPercentage =
-      discount && discount.value > 0 ? discount.value : 0;
+    const discountPercentage = discount && discount > 0 ? discount : 0;
 
     return {
       productId: product.productId,
       name: product.name,
       price: product.price,
       priceSale,
+      slug: product.slug,
       ...(discountPercentage > 0 && { discountPercentage }),
       coverUrl: product.coverUrl,
-      new: Math.random() > 0.7,
+      isNew: Math.random() > 0.7,
     };
   });
 };
 
 // Best offers for homepage
 export const _mockBestOfferProducts: ProductCardItem[] = getProductCardItems(
-  mockProducts.filter((p) => p.discount !== undefined).slice(0, 12)
+  mockProducts.filter((p) => p.discountPercentage !== undefined).slice(0, 12)
 );
 
 export const _mockBestSellersProducts: ProductCardItem[] = getProductCardItems(
-  mockProducts.filter((p) => p.bestSeller === true).slice(0, 12)
+  mockProducts.filter((p) => p.isBestSeller === true).slice(0, 12)
 );
 
 // _heroMockProducts - Updated with new category IDs
@@ -514,19 +611,15 @@ export const _heroMockProducts: Product[] = [
     subDescription:
       "Computer Monitors LED-backlit LCD 1080p High-definition television 16:9",
     price: 1200,
-    discount: {
-      type: "percentage",
-      value: 10,
-      startAt: new Date().toISOString(),
-      endAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(),
-    },
+    discountPercentage: 15,
+    priceSale: 1200 - (1200 * 15) / 100,
     stock: 15,
     coverUrl: "/images/lcd/lcd.png",
     images: [],
     categoryIds: ["2-3"], // Desktop PCs
+    primaryCategoryId: "2-3",
     warranty: 2,
-    bestSeller: true,
-    variants: [],
+    isBestSeller: true,
     createdAt: new Date(),
     updatedAt: new Date(),
   },
@@ -536,7 +629,8 @@ export const _heroMockProducts: Product[] = [
     slug: "samsung-galaxy-s25",
     subDescription: "Powerful Samsung phone with cutting-edge features.",
     price: 1100,
-    discount: undefined,
+    discountPercentage: 15,
+    priceSale: 1100 - (1100 * 15) / 100,
     stock: 20,
     coverUrl: "/images/tel/tel1.png",
     images: [
@@ -544,10 +638,10 @@ export const _heroMockProducts: Product[] = [
       "https://images.pexels.com/photos/14979021/pexels-photo-14979021.jpeg?auto=compress&cs=tinysrgb&",
     ],
     categoryIds: ["3-1"], // Android Phones
+    primaryCategoryId: "3-1",
     warranty: 1,
-    bestSeller: false,
+    isBestSeller: false,
     bgGradient: "from-orange-50 via-pink-50 to-blue-50",
-    variants: [],
     createdAt: new Date(),
     updatedAt: new Date(),
   },
@@ -557,7 +651,8 @@ export const _heroMockProducts: Product[] = [
     slug: "asus-vivobook",
     subDescription: "Asus Vivobook 15 X1504VA-NJ446W – Intel i5-1335U",
     price: 250,
-    discount: { type: "fixed", value: 30 },
+    discountPercentage: 15,
+    priceSale: 250 - (250 * 15) / 100,
     stock: 30,
     coverUrl: "/images/pc/pc.png",
     images: [
@@ -565,10 +660,10 @@ export const _heroMockProducts: Product[] = [
       "https://images.pexels.com/photos/205421/pexels-photo-205421.jpeg?auto=compress&cs=tinysrgb&",
     ],
     categoryIds: ["2-2"], // Ultrabooks
+    primaryCategoryId: "2-2",
     warranty: 1,
-    bestSeller: true,
+    isBestSeller: true,
     bgGradient: "from-yellow-50 via-yellow-100 to-blue-100",
-    variants: [],
     createdAt: new Date(),
     updatedAt: new Date(),
   },
@@ -579,7 +674,8 @@ export const _heroMockProducts: Product[] = [
     subDescription:
       "Hp Elitedesk 600 G3 Mini Core i5 - 6th Gén - 8Go , 256Go SSD",
     price: 2500,
-    discount: { type: "percentage", value: 15 },
+    discountPercentage: 15,
+    priceSale: 2500 - (2500 * 15) / 100,
     stock: 5,
     coverUrl: "/images/pc/pc1.png",
     images: [
@@ -587,10 +683,10 @@ export const _heroMockProducts: Product[] = [
       "https://images.pexels.com/photos/5202961/pexels-photo-5202961.jpeg?auto=compress&cs=tinysrgb&",
     ],
     categoryIds: ["2-3"], // Desktop PCs
+    primaryCategoryId: "2-3",
     warranty: 3,
-    bestSeller: true,
+    isBestSeller: true,
     bgGradient: "from-purple-50 via-blue-50 to-cyan-50",
-    variants: [],
     createdAt: new Date(),
     updatedAt: new Date(),
   },
@@ -600,7 +696,8 @@ export const _heroMockProducts: Product[] = [
     slug: "xiaomi-redmi",
     subDescription: 'XIAOMI Redmi 15C 6.9" – 4GB + 128GB',
     price: 80,
-    discount: undefined,
+    discountPercentage: 10,
+    priceSale: 80 - (80 * 10) / 100,
     stock: 50,
     coverUrl: "/images/tel/tel3.png",
     images: [
@@ -608,10 +705,10 @@ export const _heroMockProducts: Product[] = [
       "https://images.pexels.com/photos/969462/pexels-photo-969462.jpeg?auto=compress&cs=tinysrgb&",
     ],
     categoryIds: ["3-1"], // Android Phones
+    primaryCategoryId: "3-1",
     warranty: 2,
-    bestSeller: false,
+    isBestSeller: false,
     bgGradient: "from-orange-50 via-pink-50 to-blue-50",
-    variants: [],
     createdAt: new Date(),
     updatedAt: new Date(),
   },

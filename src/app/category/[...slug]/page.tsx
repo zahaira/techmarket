@@ -20,7 +20,13 @@ const CategoryPage = async ({ params }: CategoryPageProps) => {
   if (!category) {
     return NotFound();
   }
-  const breadcrumbs = buildBreadcrumbs(category, _mockCategories);
+  const breadcrumbLinks = [
+    { name: "Accueil", href: "/" },
+    ...buildBreadcrumbs(category, _mockCategories).map((item) => ({
+      name: item.name,
+      href: item.slugPath ? `/category/${item.slugPath.join("/")}` : undefined,
+    })),
+  ];
 
   const products = await getProductCardItemsByCategorySlug(
     slug[slug.length - 1]
@@ -28,7 +34,7 @@ const CategoryPage = async ({ params }: CategoryPageProps) => {
 
   return (
     <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <Breadcrumbs items={breadcrumbs} slugArray={slug} />
+      <Breadcrumbs links={breadcrumbLinks} />
       <ProductListView products={products} category={category} />
     </div>
   );

@@ -1,10 +1,22 @@
 import React from "react";
 
-const NewBadge = () => {
+interface NewBadgeProps {
+  size?: "sm" | "md" | "lg";
+}
+
+const sizeStyles = {
+  sm: "text-[10px] px-1.5 py-0.5",
+  md: "text-xs px-2 py-0.5",
+  lg: "text-sm px-3 py-1",
+};
+
+const NewBadge: React.FC<NewBadgeProps> = ({ size = "md" }) => {
   return (
-    <span className="bg-gradient-to-r from-green-500 to-emerald-600 text-white px-2 sm:px-3 py-1 sm:py-1.5 text-base font-semibold rounded-full shadow-md sm:shadow-lg w-max">
+    <div
+      className={`rounded-full bg-green-500 font-bold text-green-50 shadow w-max ${sizeStyles[size]}`}
+    >
       NEW
-    </span>
+    </div>
   );
 };
 
