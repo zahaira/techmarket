@@ -3,7 +3,6 @@ import Image from "next/image";
 import React from "react";
 import WarrantyBadge from "../components/WarrantyBadge";
 import { fCurrency } from "@/shared/utils/format-number";
-import { isNew } from "@/shared/utils/help";
 import NewBadge from "../components/NewBadge";
 
 interface props {
@@ -26,12 +25,12 @@ const CardHero = ({ product }: props) => {
         <p className="text-sm sm:text-base md:text-lg text-gray-700 mt-2 flex-1">
           {product.subDescription}
         </p>
-        {product.discount && (
+        {product.discountPercentage && (
           <span className=" text-primary-dark px-2 py-1 text-3xl rounded-2xl w-max font-semibold ">
-            -{product.discount.value}% Off
+            -{product.discountPercentage}% Off
           </span>
         )}
-        {!product.discount && isNew(product.createdAt) && <NewBadge />}
+        {!product.discountPercentage && product.isNew && <NewBadge />}
 
         <span
           className="inline-block bg-white text-3xl md:text-3xl text-primary-dark font-bold px-4 py-2 rounded-2xl shadow-md w-max"
