@@ -4,7 +4,7 @@ import type {
   ProductCardItem,
 } from "../types/product";
 import { _mockCategories } from "./_category";
-import { _mock } from "./_mock";
+import { _mock, randomNumbers } from "./_mock";
 import {
   _desktopImages,
   _headPhonesImages,
@@ -170,6 +170,12 @@ const mockProductNames = {
     "Nomad Leather Case",
   ],
 };
+
+const mockDates = [
+  "2025-10-12T12:00:00Z",
+  "2025-10-11T09:30:00Z",
+  "2025-10-10T15:45:00Z",
+];
 
 // Generate discount
 const generateDiscount = (index: number): number | undefined => {
@@ -417,15 +423,15 @@ const generateProductsForCategory = (
 
     const basePrice =
       category === CATEGORIES.ANDROID_PHONES || category === CATEGORIES.IPHONES
-        ? 400 + Math.floor(Math.random() * 1000)
+        ? 400 + Math.floor(randomNumbers[i] * 1000)
         : category === CATEGORIES.GAMING_LAPTOPS ||
           category === CATEGORIES.ULTRABOOKS ||
           category === CATEGORIES.DESKTOP_PCS
-        ? 600 + Math.floor(Math.random() * 2000)
-        : 30 + Math.floor(Math.random() * 300);
+        ? 600 + Math.floor(randomNumbers[i] * 2000)
+        : 30 + Math.floor(randomNumbers[i] * 300);
     const { attributes, keyPoints } = generateAttributesAndKeyPoints(category);
     const isOutOfStock = i % 15 === 0;
-    const stock = isOutOfStock ? 0 : 3 + Math.floor(Math.random() * 50);
+    const stock = isOutOfStock ? 0 : 3 + Math.floor(randomNumbers[i] * 50);
     const isisBestSeller = i % 4 === 0;
     const discountPercentage = generateDiscount(index);
 
@@ -449,26 +455,30 @@ const generateProductsForCategory = (
       primaryCategoryId: category[0],
       warranty: 1 + (i % 3),
       isBestSeller: isisBestSeller,
-      isNew: Math.random() > 0.7,
+      isNew: true,
       attributes,
       keyPoints,
-      createdAt: new Date(
-        Date.now() - Math.random() * 365 * 24 * 60 * 60 * 1000
-      ),
-      updatedAt: new Date(),
+      createdAt: new Date(mockDates[index % mockDates.length]),
+      updatedAt: new Date("2025-10-12T12:00:00Z"),
     });
   }
 
   return products;
 };
 
-// Helper function to shuffle array
-const shuffleArray = <T>(array: T[]): T[] => {
+let randomIndex = 0;
+
+export const shuffleArray = <T>(array: T[]): T[] => {
   const shuffled = [...array];
+
   for (let i = shuffled.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
+    const randomValue = randomNumbers[randomIndex % randomNumbers.length];
+    randomIndex++;
+
+    const j = Math.floor(randomValue * (i + 1));
     [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
   }
+
   return shuffled;
 };
 
@@ -585,10 +595,11 @@ export const getProductCardItems = (products: Product[]): ProductCardItem[] => {
       name: product.name,
       price: product.price,
       priceSale,
+      stock: 12,
       slug: product.slug,
       ...(discountPercentage > 0 && { discountPercentage }),
       coverUrl: product.coverUrl,
-      isNew: Math.random() > 0.7,
+      isNew: true,
     };
   });
 };
@@ -620,8 +631,8 @@ export const _heroMockProducts: Product[] = [
     primaryCategoryId: "2-3",
     warranty: 2,
     isBestSeller: true,
-    createdAt: new Date(),
-    updatedAt: new Date(),
+    createdAt: new Date("2025-10-12T12:00:00Z"),
+    updatedAt: new Date("2025-10-12T12:00:00Z"),
   },
   {
     productId: "prod-hero-2",
@@ -642,8 +653,8 @@ export const _heroMockProducts: Product[] = [
     warranty: 1,
     isBestSeller: false,
     bgGradient: "from-orange-50 via-pink-50 to-blue-50",
-    createdAt: new Date(),
-    updatedAt: new Date(),
+    createdAt: new Date("2025-10-12T12:00:00Z"),
+    updatedAt: new Date("2025-10-12T12:00:00Z"),
   },
   {
     productId: "prod-hero-3",
@@ -664,8 +675,8 @@ export const _heroMockProducts: Product[] = [
     warranty: 1,
     isBestSeller: true,
     bgGradient: "from-yellow-50 via-yellow-100 to-blue-100",
-    createdAt: new Date(),
-    updatedAt: new Date(),
+    createdAt: new Date("2025-10-12T12:00:00Z"),
+    updatedAt: new Date("2025-10-12T12:00:00Z"),
   },
   {
     productId: "prod-hero-4",
@@ -687,8 +698,8 @@ export const _heroMockProducts: Product[] = [
     warranty: 3,
     isBestSeller: true,
     bgGradient: "from-purple-50 via-blue-50 to-cyan-50",
-    createdAt: new Date(),
-    updatedAt: new Date(),
+    createdAt: new Date("2025-10-12T12:00:00Z"),
+    updatedAt: new Date("2025-10-12T12:00:00Z"),
   },
   {
     productId: "prod-hero-5",
@@ -709,7 +720,7 @@ export const _heroMockProducts: Product[] = [
     warranty: 2,
     isBestSeller: false,
     bgGradient: "from-orange-50 via-pink-50 to-blue-50",
-    createdAt: new Date(),
-    updatedAt: new Date(),
+    createdAt: new Date("2025-10-12T12:00:00Z"),
+    updatedAt: new Date("2025-10-12T12:00:00Z"),
   },
 ];

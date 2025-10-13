@@ -10,6 +10,7 @@ interface props {
 }
 
 const CardHero = ({ product }: props) => {
+  if (!product) return null;
   return (
     <div
       className={`p-8 md:p-12 lg:p-16 h-[500px] md:h-[400px]  rounded-4xl flex flex-col md:grid md:grid-cols-2 gap-4 bg-gradient-to-br ${

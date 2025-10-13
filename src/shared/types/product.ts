@@ -30,8 +30,9 @@ export interface Product {
 export interface ProductCardItem {
   productId: string;
   name: string;
+  stock: number;
   price: number;
-  priceSale: number;
+  priceSale?: number;
   slug: string;
   discountPercentage?: number;
   isNew?: boolean;

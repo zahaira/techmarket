@@ -3,21 +3,40 @@
 import { ProductCardItem } from "@/shared/types/product";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect } from "react";
 import { FiHeart } from "react-icons/fi";
 import { LuShoppingCart } from "react-icons/lu";
 import NewBadge from "./NewBadge";
+import { useWishlistStore } from "@/shared/api/stores/wishlistStore";
+import { FaHeart } from "react-icons/fa";
 
 interface ProductCardProps {
   product: ProductCardItem;
 }
 
 const ProductCard = ({ product }: ProductCardProps) => {
+  const [mounted, setMounted] = React.useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const { addToWishlist, removeFromWishlist, isInWishlist } =
+    useWishlistStore();
+  const isWishlisted = isInWishlist(product.productId);
+  const handleWishlistClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (isWishlisted) {
+      removeFromWishlist(product.productId);
+    } else {
+      addToWishlist(product);
+    }
+  };
+
   const handleAddToCart = () => {
     console.log("added to cart");
-  };
-  const handleWishlist = () => {
-    console.log("added to wishlist");
   };
 
   return (
@@ -50,10 +69,14 @@ const ProductCard = ({ product }: ProductCardProps) => {
 
           {/* Wishlist Button */}
           <button
-            onClick={handleWishlist}
+            onClick={handleWishlistClick}
             className="absolute right-2 top-2 rounded-full bg-white p-1.5 shadow transition-all duration-300 hover:bg-red-50 hover:scale-110 cursor-pointer"
           >
-            <FiHeart className="h-4 w-4 text-gray-600 hover:text-primary" />
+            {mounted && isWishlisted ? (
+              <FaHeart className="h-4 w-4 text-primary" />
+            ) : (
+              <FiHeart className="h-4 w-4 text-gray-600 hover:text-primary" />
+            )}
           </button>
 
           {/* Quick Add Overlay */}
@@ -79,12 +102,20 @@ const ProductCard = ({ product }: ProductCardProps) => {
 
           {/* Price Section */}
           <div className="flex items-center gap-2 mt-2">
-            <span className="text-lg font-bold text-primary-dark">
-              ${product.priceSale.toFixed(2)}
-            </span>
-            <span className="text-sm text-gray-400 line-through">
-              ${product.price.toFixed(2)}
-            </span>
+            {product.priceSale ? (
+              <>
+                <span className="text-lg font-bold text-primary-dark">
+                  ${product.priceSale.toFixed(2)}
+                </span>
+                <span className="text-sm text-gray-400 line-through">
+                  ${product.price.toFixed(2)}
+                </span>
+              </>
+            ) : (
+              <span className="text-lg font-bold text-primary-dark">
+                ${product.price.toFixed(2)}
+              </span>
+            )}
           </div>
         </div>
       </div>
