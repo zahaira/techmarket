@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Product } from "@/shared/types/product";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Thumbs, FreeMode } from "swiper/modules";
@@ -10,20 +10,40 @@ import "swiper/css/free-mode";
 import Image from "next/image";
 import type { Swiper as SwiperType } from "swiper";
 import NewBadge from "../components/NewBadge";
+import { useWishlistStore } from "@/shared/api/stores/wishlistStore";
+import { toProductCardItem } from "@/shared/utils/product";
+import { FaHeart } from "react-icons/fa";
+import { FiHeart } from "react-icons/fi";
 
 type ProductDetailsCarouselProps = {
-  images?: Product["images"];
-  isNew?: boolean;
+  product: Product;
 };
 
-const ProductDetailsCarousel = ({
-  images = [],
-  isNew = false,
-}: ProductDetailsCarouselProps) => {
+const ProductDetailsCarousel = ({ product }: ProductDetailsCarouselProps) => {
   const [thumbsSwiper, setThumbsSwiper] = useState<SwiperType | null>(null);
   const [activeIndex, setActiveIndex] = useState<number>(0);
 
-  if (!images.length) return <div>No images available</div>;
+  const [mounted, setMounted] = React.useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const { addToWishlist, removeFromWishlist, isInWishlist } =
+    useWishlistStore();
+  const isWishlisted = isInWishlist(product.productId);
+  const handleWishlistClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (isWishlisted) {
+      removeFromWishlist(product.productId);
+    } else {
+      addToWishlist(toProductCardItem(product));
+    }
+  };
+
+  if (!product.images.length) return <div>No images available</div>;
 
   return (
     <div className="w-full flex flex-col gap-4">
@@ -35,11 +55,22 @@ const ProductDetailsCarousel = ({
         modules={[FreeMode, Thumbs]}
         className="w-full rounded-2xl overflow-hidden"
       >
-        {images.map((img, idx) => (
+        {product.images.map((img, idx) => (
           <SwiperSlide key={idx}>
             <div className="relative w-full h-[400px] sm:h-[500px] md:h-[600px]">
-              {isNew && (
-                <div className="absolute top-2 right-2 z-20">
+              <button
+                onClick={handleWishlistClick}
+                className="absolute right-2 top-2 z-20 rounded-full bg-white p-1.5 shadow transition-all duration-300 hover:bg-red-50 hover:scale-110 cursor-pointer"
+              >
+                {mounted && isWishlisted ? (
+                  <FaHeart className="h-6 w-6 text-primary" />
+                ) : (
+                  <FiHeart className="h-6 w-6 text-gray-600 hover:text-primary" />
+                )}
+              </button>
+
+              {product.isNew && (
+                <div className="absolute top-2 left-2 z-20">
                   <NewBadge size="lg" />
                 </div>
               )}
@@ -66,7 +97,7 @@ const ProductDetailsCarousel = ({
         modules={[FreeMode, Thumbs]}
         className="w-full"
       >
-        {images.map((img, idx) => (
+        {product.images.map((img, idx) => (
           <SwiperSlide key={idx}>
             <div
               className={`relative w-full aspect-square cursor-pointer rounded-lg overflow-hidden ${

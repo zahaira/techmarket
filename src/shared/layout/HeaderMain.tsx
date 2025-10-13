@@ -1,45 +1,26 @@
+"use client";
+
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import { BsSearch } from "react-icons/bs";
 import { FiHeart, FiUser } from "react-icons/fi";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { LuShoppingCart } from "react-icons/lu";
+import { useWishlistStore } from "../api/stores/wishlistStore";
+import IconWithBadge from "./component/IconWithBadge";
+import Wishlist from "../section/wishlist/Wishlist";
+import Modal from "./component/Modal";
 
 interface HeaderMainProps {
   toggleSidebar: () => void;
 }
 
-interface IconWithBadgeProps {
-  icon: React.ReactElement;
-  count?: number;
-  ariaLabel?: string;
-  onClick?: () => void;
-}
-
-const IconWithBadge = ({
-  icon,
-  count,
-  ariaLabel,
-  onClick,
-}: IconWithBadgeProps) => (
-  <button
-    type="button"
-    aria-label={ariaLabel}
-    onClick={onClick}
-    className="relative cursor-pointer hover:text-blue-600 transition focus:outline-none"
-  >
-    {icon}
-    {count !== undefined && count > 0 && (
-      <span className="absolute -top-2 -right-2 bg-red-600 text-white text-[10px] font-semibold rounded-full w-4 h-4 grid place-items-center">
-        {count}
-      </span>
-    )}
-  </button>
-);
-
 const HeaderMain = ({ toggleSidebar }: HeaderMainProps) => {
-  const wishlistCount = 0;
+  const { items } = useWishlistStore();
+  const wishlistCount = items.length;
   const cartCount = 0;
+
+  const [isWishlistOpen, setIsWishlistOpen] = useState(false);
 
   return (
     <header className="border-b border-gray-200 py-4 sm:ml-[70px]">
@@ -70,6 +51,7 @@ const HeaderMain = ({ toggleSidebar }: HeaderMainProps) => {
               icon={<FiHeart />}
               count={wishlistCount}
               ariaLabel="Wishlist"
+              onClick={() => setIsWishlistOpen(true)}
             />
             <IconWithBadge
               icon={<LuShoppingCart />}
@@ -98,6 +80,7 @@ const HeaderMain = ({ toggleSidebar }: HeaderMainProps) => {
             icon={<FiHeart />}
             count={wishlistCount}
             ariaLabel="Wishlist"
+            onClick={() => setIsWishlistOpen(true)}
           />
           <IconWithBadge
             icon={<LuShoppingCart />}
@@ -106,6 +89,11 @@ const HeaderMain = ({ toggleSidebar }: HeaderMainProps) => {
           />
         </div>
       </div>
+
+      {/* Modal Wishlist */}
+      <Modal isOpen={isWishlistOpen} onClose={() => setIsWishlistOpen(false)}>
+        <Wishlist onClose={() => setIsWishlistOpen(false)} />
+      </Modal>
     </header>
   );
 };
