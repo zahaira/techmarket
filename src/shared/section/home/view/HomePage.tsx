@@ -11,7 +11,7 @@ import {
 
 const HomePage = () => {
   return (
-    <div>
+    <div className="bg-gray-50 p-2 md:p-8">
       <Hero />
       <CategorySection categories={_mockCategories} />
       <ProductCarouselSection

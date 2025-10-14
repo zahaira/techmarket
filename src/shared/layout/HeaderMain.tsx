@@ -10,15 +10,18 @@ import { useWishlistStore } from "../api/stores/wishlistStore";
 import IconWithBadge from "./component/IconWithBadge";
 import Wishlist from "../section/wishlist/Wishlist";
 import Modal from "./component/Modal";
+import { useCartStore } from "../api/stores/CartStore";
 
 interface HeaderMainProps {
   toggleSidebar: () => void;
 }
 
 const HeaderMain = ({ toggleSidebar }: HeaderMainProps) => {
-  const { items } = useWishlistStore();
-  const wishlistCount = items.length;
-  const cartCount = 0;
+  const { items: wishlistItems } = useWishlistStore();
+  const { items: cartItems } = useCartStore();
+
+  const wishlistCount = wishlistItems.length;
+  const cartCount = cartItems.length;
 
   const [isWishlistOpen, setIsWishlistOpen] = useState(false);
 
@@ -57,6 +60,7 @@ const HeaderMain = ({ toggleSidebar }: HeaderMainProps) => {
               icon={<LuShoppingCart />}
               count={cartCount}
               ariaLabel="Shopping cart"
+              href="/cart"
             />
           </div>
         </div>
@@ -86,6 +90,7 @@ const HeaderMain = ({ toggleSidebar }: HeaderMainProps) => {
             icon={<LuShoppingCart />}
             count={cartCount}
             ariaLabel="Shopping cart"
+            href="/cart"
           />
         </div>
       </div>

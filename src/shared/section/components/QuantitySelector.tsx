@@ -1,5 +1,6 @@
 "use client";
-import React, { useState, useEffect } from "react";
+
+import React, { useState } from "react";
 
 interface QuantitySelectorProps {
   stock?: number; // stock peut être undefined
@@ -29,20 +30,16 @@ const QuantitySelector = ({
   size = "md",
   onChange,
 }: QuantitySelectorProps) => {
-  const safeStock = Math.max(0, stock); // protège contre stock undefined ou négatif
+  const safeStock = Math.max(0, stock);
   const [quantity, setQuantity] = useState<number>(
     safeStock > 0 ? Math.min(initial, safeStock) : 0
   );
 
   const classes = SIZE_CLASSES[size] ?? SIZE_CLASSES.md;
-
-  // Notifie changement initial
-  useEffect(() => {
-    onChange?.(quantity);
-  }, [quantity, onChange]);
+  const isOutOfStock = safeStock === 0;
 
   const decrement = () => {
-    if (safeStock === 0) return;
+    if (isOutOfStock) return;
     setQuantity((q) => {
       const newQ = Math.max(1, q - 1);
       onChange?.(newQ);
@@ -51,7 +48,7 @@ const QuantitySelector = ({
   };
 
   const increment = () => {
-    if (safeStock === 0) return;
+    if (isOutOfStock) return;
     setQuantity((q) => {
       const newQ = Math.min(q + 1, safeStock);
       onChange?.(newQ);
@@ -60,26 +57,22 @@ const QuantitySelector = ({
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (safeStock === 0) return;
-
-    let value = parseInt(e.target.value);
-    if (isNaN(value)) value = 1;
-    value = Math.max(1, Math.min(value, safeStock));
-    setQuantity(value);
-    onChange?.(value);
+    if (isOutOfStock) return;
+    let val = parseInt(e.target.value);
+    if (isNaN(val)) val = 1;
+    val = Math.max(1, Math.min(val, safeStock));
+    setQuantity(val);
+    onChange?.(val);
   };
-
-  const isOutOfStock = safeStock === 0;
 
   return (
     <div className="flex border border-gray-400 text-gray-700 rounded-full overflow-hidden w-max bg-gray-50">
-      {/* Bouton - */}
       <button
         type="button"
         disabled={isOutOfStock || quantity <= 1}
         className={`py-1 transition ${classes.btn} ${
           isOutOfStock || quantity <= 1
-            ? "text-gray-400 "
+            ? "text-gray-400"
             : "cursor-pointer hover:bg-gray-100"
         }`}
         onClick={decrement}
@@ -87,22 +80,22 @@ const QuantitySelector = ({
         -
       </button>
 
-      {/* Input */}
       <input
         type="text"
         value={quantity.toString()}
         onChange={handleChange}
         readOnly={isOutOfStock}
-        className={`text-center focus:outline-none bg-gray-50 ${classes.input}`}
+        className={`text-center focus:outline-none ${classes.input} ${
+          isOutOfStock ? "bg-gray-200" : "bg-gray-50"
+        }`}
       />
 
-      {/* Bouton + */}
       <button
         type="button"
         disabled={isOutOfStock || quantity >= safeStock}
         className={`py-1 transition ${classes.btn} ${
           isOutOfStock || quantity >= safeStock
-            ? "text-gray-400 "
+            ? "text-gray-400"
             : "cursor-pointer hover:bg-gray-100"
         }`}
         onClick={increment}
