@@ -3,10 +3,15 @@
 import React, { useState } from "react";
 
 interface QuantitySelectorProps {
-  stock?: number; // stock peut être undefined
-  initial?: number;
+  name?: string;
+  quantity: number;
+  disabledIncrease?: boolean;
+  disabledDecrease?: boolean;
+  onIncrease: () => void;
+  onDecrease: () => void;
+  onChange?: (value: number) => void;
+  max: number;
   size?: "sm" | "md" | "lg";
-  onChange?: (quantity: number) => void;
 }
 
 const SIZE_CLASSES = {
@@ -25,43 +30,21 @@ const SIZE_CLASSES = {
 };
 
 const QuantitySelector = ({
-  stock = 0,
-  initial = 1,
-  size = "md",
+  quantity,
+  onIncrease,
+  onDecrease,
+  disabledIncrease,
+  disabledDecrease,
   onChange,
+  max,
+  size = "md",
 }: QuantitySelectorProps) => {
-  const safeStock = Math.max(0, stock);
-  const [quantity, setQuantity] = useState<number>(
-    safeStock > 0 ? Math.min(initial, safeStock) : 0
-  );
-
   const classes = SIZE_CLASSES[size] ?? SIZE_CLASSES.md;
-  const isOutOfStock = safeStock === 0;
-
-  const decrement = () => {
-    if (isOutOfStock) return;
-    setQuantity((q) => {
-      const newQ = Math.max(1, q - 1);
-      onChange?.(newQ);
-      return newQ;
-    });
-  };
-
-  const increment = () => {
-    if (isOutOfStock) return;
-    setQuantity((q) => {
-      const newQ = Math.min(q + 1, safeStock);
-      onChange?.(newQ);
-      return newQ;
-    });
-  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (isOutOfStock) return;
     let val = parseInt(e.target.value);
     if (isNaN(val)) val = 1;
-    val = Math.max(1, Math.min(val, safeStock));
-    setQuantity(val);
+    val = Math.max(1, Math.min(val, max));
     onChange?.(val);
   };
 
@@ -69,36 +52,34 @@ const QuantitySelector = ({
     <div className="flex border border-gray-400 text-gray-700 rounded-full overflow-hidden w-max bg-gray-50">
       <button
         type="button"
-        disabled={isOutOfStock || quantity <= 1}
+        disabled={disabledDecrease}
         className={`py-1 transition ${classes.btn} ${
-          isOutOfStock || quantity <= 1
+          disabledDecrease
             ? "text-gray-400"
             : "cursor-pointer hover:bg-gray-100"
         }`}
-        onClick={decrement}
+        onClick={onDecrease}
       >
         -
       </button>
 
       <input
         type="text"
-        value={quantity.toString()}
+        value={quantity}
         onChange={handleChange}
-        readOnly={isOutOfStock}
-        className={`text-center focus:outline-none ${classes.input} ${
-          isOutOfStock ? "bg-gray-200" : "bg-gray-50"
-        }`}
+        // readOnly={isOutOfStock}
+        className={`text-center focus:outline-none bg-gray-50 ${classes.input}`}
       />
 
       <button
         type="button"
-        disabled={isOutOfStock || quantity >= safeStock}
+        disabled={disabledIncrease}
         className={`py-1 transition ${classes.btn} ${
-          isOutOfStock || quantity >= safeStock
+          disabledIncrease
             ? "text-gray-400"
             : "cursor-pointer hover:bg-gray-100"
         }`}
-        onClick={increment}
+        onClick={onIncrease}
       >
         +
       </button>

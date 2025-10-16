@@ -63,9 +63,9 @@ const ProductDetailsCarousel = ({ product }: ProductDetailsCarouselProps) => {
                 className="absolute right-2 top-2 z-20 rounded-full bg-white p-1.5 shadow transition-all duration-300 hover:bg-red-50 hover:scale-110 cursor-pointer"
               >
                 {mounted && isWishlisted ? (
-                  <FaHeart className="h-6 w-6 text-primary" />
+                  <FaHeart className="h-6 w-6 text-primary-main" />
                 ) : (
-                  <FiHeart className="h-6 w-6 text-gray-600 hover:text-primary" />
+                  <FiHeart className="h-6 w-6 text-gray-600 hover:text-primary-main" />
                 )}
               </button>
 
@@ -101,7 +101,7 @@ const ProductDetailsCarousel = ({ product }: ProductDetailsCarouselProps) => {
           <SwiperSlide key={idx}>
             <div
               className={`relative w-full aspect-square cursor-pointer rounded-lg overflow-hidden ${
-                idx === activeIndex ? "border-2 border-primary" : ""
+                idx === activeIndex ? "border-2 border-primary-main" : ""
               }`}
             >
               <Image

@@ -76,7 +76,7 @@ const ProductWishlistedCard = ({ product }: ProductWishlistedCardProps) => {
           ) : (
             <button
               onClick={handleAddToCart}
-              className="text-sm text-black font-medium cursor-pointer hover:text-primary transition-colors"
+              className="text-sm text-black font-medium cursor-pointer hover:text-primary-main transition-colors"
             >
               Add to cart
             </button>

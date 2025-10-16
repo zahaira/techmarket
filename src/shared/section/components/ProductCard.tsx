@@ -73,9 +73,9 @@ const ProductCard = ({ product }: ProductCardProps) => {
             className="absolute right-2 top-2 rounded-full bg-white p-1.5 shadow transition-all duration-300 hover:bg-red-50 hover:scale-110 cursor-pointer"
           >
             {mounted && isWishlisted ? (
-              <FaHeart className="h-4 w-4 text-primary" />
+              <FaHeart className="h-4 w-4 text-primary-main" />
             ) : (
-              <FiHeart className="h-4 w-4 text-gray-600 hover:text-primary" />
+              <FiHeart className="h-4 w-4 text-gray-600 hover:text-primary-main" />
             )}
           </button>
 

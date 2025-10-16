@@ -110,11 +110,11 @@ const Footer = () => {
             <input
               type="email"
               placeholder="Enter your email"
-              className="w-full px-3 py-2 rounded-l-md bg-gray-800 text-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+              className="w-full px-3 py-2 rounded-l-md bg-gray-800 text-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-primary-main"
             />
             <button
               type="submit"
-              className="bg-primary text-black px-4 py-2 rounded-r-md hover:bg-primary-dark transition-all"
+              className="bg-primary-main text-black px-4 py-2 rounded-r-md hover:bg-primary-dark transition-all"
             >
               <FiMail className="h-5 w-5" />
             </button>

@@ -40,8 +40,8 @@ const ProductAddToCartButton = ({
         product.stock === 0
           ? "bg-gray-300 text-gray-600"
           : size === "md"
-          ? "bg-primary-dark hover:bg-primary text-white cursor-pointer"
-          : "bg-white text-black hover:text-primary cursor-pointer"
+          ? "bg-primary-dark hover:bg-primary-main text-white cursor-pointer"
+          : "bg-white text-black hover:text-primary-main cursor-pointer"
       }`}
     >
       <LuShoppingCart className={`${sizeStyles[size].icon}`} />

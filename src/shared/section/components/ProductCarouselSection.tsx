@@ -32,7 +32,7 @@ const ProductCarouselSection = ({
             className="text-sm font-semibold text-gray-700 tracking-wide hover:text-gray-600 relative group cursor-pointer"
           >
             See More +
-            <span className="absolute left-0 -bottom-0.5 w-0 h-[2px] bg-primary transition-all duration-300 group-hover:w-full"></span>
+            <span className="absolute left-0 -bottom-0.5 w-0 h-[2px] bg-primary-main transition-all duration-300 group-hover:w-full"></span>
           </Link>
         )}
       </div>

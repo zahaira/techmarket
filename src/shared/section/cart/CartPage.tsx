@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import { useCartStore } from "@/shared/api/stores/CartStore";
 import { fCurrency } from "@/shared/utils/format-number";
 import Link from "next/link";
+import { CustomButton } from "@/components/CustomButton";
 
 const CartPage = () => {
   const router = useRouter();
@@ -24,7 +25,7 @@ const CartPage = () => {
         <p className="text-xl font-semibold">Your cart is empty</p>
         <button
           onClick={() => router.push("/")}
-          className="mt-4 px-4 py-2 cursor-pointer bg-primary text-white rounded hover:bg-primary-dark transition"
+          className="mt-4 px-4 py-2 cursor-pointer bg-primary-main text-white rounded hover:bg-primary-dark transition"
         >
           Continue Shopping
         </button>
@@ -35,8 +36,8 @@ const CartPage = () => {
     <div>
       <h1 className="text-2xl font-bold mb-6">Shopping Cart</h1>
 
-      <div className="flex flex-col lg:flex-row gap-8">
-        <div className="flex-1 bg-white p-12 shadow-sm rounded-lg">
+      <div className="flex flex-col lg:flex-row gap-4 lg:gap-8">
+        <div className="flex-1 bg-white p-6 lg:p-12 shadow-sm rounded-lg">
           <div className="hidden md:grid grid-cols-[25px_90px_1fr_100px_120px_100px] gap-4 font-semibold text-gray-600 border-b border-gray-300 pb-2">
             <div></div>
             <div></div>
@@ -65,7 +66,7 @@ const CartPage = () => {
                   </button>
 
                   {/* --- MOBILE --- */}
-                  <div className="md:hidden grid grid-cols-[90px_1fr] gap-4 items-start">
+                  <div className="md:hidden grid grid-cols-[90px_1fr] gap-2 items-start">
                     {/* Image */}
                     <div className="relative w-20 h-20 flex-shrink-0">
                       <Link href={`/product/${product.slug}`}>
@@ -107,12 +108,29 @@ const CartPage = () => {
                         <div className="flex justify-between items-center text-sm">
                           <span className="text-gray-700">Quantity:</span>
                           <QuantitySelector
-                            stock={product.stock}
-                            initial={product.quantity}
-                            size="sm"
-                            onChange={(q) =>
-                              updateQuantity(product.productId, q)
+                            quantity={product.quantity}
+                            onIncrease={() =>
+                              updateQuantity(
+                                product.productId,
+                                Math.min(product.quantity + 1, product.stock)
+                              )
                             }
+                            onDecrease={() =>
+                              updateQuantity(
+                                product.productId,
+                                Math.max(product.quantity - 1, 1)
+                              )
+                            }
+                            onChange={(val) =>
+                              updateQuantity(
+                                product.productId,
+                                Math.max(1, Math.min(val, product.stock))
+                              )
+                            }
+                            disabledDecrease={product.quantity <= 1}
+                            disabledIncrease={product.quantity >= product.stock}
+                            max={product.stock}
+                            size="sm"
                           />
                         </div>
 
@@ -148,10 +166,29 @@ const CartPage = () => {
 
                   <div className="hidden md:flex justify-center">
                     <QuantitySelector
-                      stock={product.stock}
-                      initial={product.quantity}
+                      quantity={product.quantity}
+                      onIncrease={() =>
+                        updateQuantity(
+                          product.productId,
+                          Math.min(product.quantity + 1, product.stock)
+                        )
+                      }
+                      onDecrease={() =>
+                        updateQuantity(
+                          product.productId,
+                          Math.max(product.quantity - 1, 1)
+                        )
+                      }
+                      onChange={(val) =>
+                        updateQuantity(
+                          product.productId,
+                          Math.max(1, Math.min(val, product.stock))
+                        )
+                      }
+                      disabledDecrease={product.quantity <= 1}
+                      disabledIncrease={product.quantity >= product.stock}
+                      max={product.stock}
                       size="sm"
-                      onChange={(q) => updateQuantity(product.productId, q)}
                     />
                   </div>
 
@@ -204,12 +241,12 @@ const CartPage = () => {
               <span>{subtotal.toFixed(2)} Dhs</span>
             </div>
 
-            <button
+            <CustomButton
+              className="mt-4"
               onClick={() => router.push("/checkout")}
-              className="mt-4 w-full bg-primary-dark cursor-pointer text-white py-2 rounded-md hover:bg-primary transition"
             >
               Proceed to Checkout
-            </button>
+            </CustomButton>
           </div>
         </div>
       </div>
