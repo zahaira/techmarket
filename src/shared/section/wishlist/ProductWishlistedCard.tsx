@@ -3,9 +3,10 @@
 import { useWishlistStore } from "@/shared/api/stores/wishlistStore";
 import { ProductCardItem } from "@/shared/types/product";
 import Image from "next/image";
-import React from "react";
+import React, { useCallback, useState } from "react";
 import { AiOutlineDelete } from "react-icons/ai";
 import QuantitySelector from "../components/QuantitySelector";
+import { useCartStore } from "@/shared/api/stores/CartStore";
 
 interface ProductWishlistedCardProps {
   product: ProductCardItem;
@@ -13,11 +14,16 @@ interface ProductWishlistedCardProps {
 
 const ProductWishlistedCard = ({ product }: ProductWishlistedCardProps) => {
   const { removeFromWishlist } = useWishlistStore();
+  const { addToCart } = useCartStore();
+  const [quantity, setQuantity] = useState<number>(1);
 
-  const handleAddToCart = () => {
-    if (!product.stock || product.stock <= 0) return;
-    console.log(`Added ${product.name} to cart`);
-  };
+  const handleAddCart = useCallback(() => {
+    try {
+      addToCart?.(product, quantity);
+    } catch (error) {
+      console.error(error);
+    }
+  }, [addToCart, product, quantity]);
 
   const isOutOfStock = !product.stock || product.stock <= 0;
 
@@ -64,9 +70,13 @@ const ProductWishlistedCard = ({ product }: ProductWishlistedCardProps) => {
         <div className="flex justify-between items-center">
           <QuantitySelector
             size="sm"
-            stock={product.stock}
-            initial={1}
-            onChange={(q) => console.log("Quantity changed:", q)}
+            quantity={quantity}
+            disabledDecrease={quantity <= 1}
+            disabledIncrease={quantity >= product.stock}
+            onIncrease={() => setQuantity(quantity + 1)}
+            onDecrease={() => setQuantity(quantity - 1)}
+            onChange={(val) => setQuantity(val)}
+            max={product.stock}
           />
 
           {isOutOfStock ? (
@@ -75,7 +85,7 @@ const ProductWishlistedCard = ({ product }: ProductWishlistedCardProps) => {
             </span>
           ) : (
             <button
-              onClick={handleAddToCart}
+              onClick={handleAddCart}
               className="text-sm text-black font-medium cursor-pointer hover:text-primary-main transition-colors"
             >
               Add to cart
