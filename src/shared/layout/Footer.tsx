@@ -1,150 +1,126 @@
-"use client";
-
 import React from "react";
-import {
-  FaFacebookF,
-  FaInstagram,
-  FaTwitter,
-  FaCcVisa,
-  FaCcMastercard,
-  FaPaypal,
-} from "react-icons/fa";
-import { FiMail } from "react-icons/fi";
+import { Facebook, Twitter, Instagram, Linkedin } from "lucide-react";
+import Link from "next/link";
 
 const Footer = () => {
   return (
-    <footer className="bg-primary-light text-gray-900 sm:pl-[70px]">
-      {/* Main Footer */}
-      <div className="max-w-7xl mx-auto px-6 sm:px-10 py-12 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10 border-b border-gray-700">
-        {/* Column 1 - Shop */}
+    <footer className="bg-gray-900 text-gray-300 pt-12 pb-6 sm:pl-[70px]">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-8">
+        {/* About Section */}
         <div>
-          <h3 className="text-black text-lg font-semibold mb-4">Shop</h3>
-          <ul className="space-y-2 text-sm">
-            <li>
-              <a href="#" className="hover:text-black transition-colors">
-                Laptops
-              </a>
-            </li>
-            <li>
-              <a href="#" className="hover:text-black transition-colors">
-                Phones
-              </a>
-            </li>
-            <li>
-              <a href="#" className="hover:text-black transition-colors">
-                Accessories
-              </a>
-            </li>
-            <li>
-              <a href="#" className="hover:text-black transition-colors">
-                New Arrivals
-              </a>
-            </li>
-          </ul>
-        </div>
-
-        {/* Column 2 - Support */}
-        <div>
-          <h3 className="text-black text-lg font-semibold mb-4">Support</h3>
-          <ul className="space-y-2 text-sm">
-            <li>
-              <a href="#" className="hover:text-black transition-colors">
-                Help Center
-              </a>
-            </li>
-            <li>
-              <a href="#" className="hover:text-black transition-colors">
-                Warranty
-              </a>
-            </li>
-            <li>
-              <a href="#" className="hover:text-black transition-colors">
-                Returns
-              </a>
-            </li>
-            <li>
-              <a href="#" className="hover:text-black transition-colors">
-                Track My Order
-              </a>
-            </li>
-          </ul>
-        </div>
-
-        {/* Column 3 - About */}
-        <div>
-          <h3 className="text-black text-lg font-semibold mb-4">About</h3>
-          <ul className="space-y-2 text-sm">
-            <li>
-              <a href="#" className="hover:text-black transition-colors">
-                About Us
-              </a>
-            </li>
-            <li>
-              <a href="#" className="hover:text-black transition-colors">
-                Careers
-              </a>
-            </li>
-            <li>
-              <a href="#" className="hover:text-black transition-colors">
-                Terms & Conditions
-              </a>
-            </li>
-            <li>
-              <a href="#" className="hover:text-black transition-colors">
-                Privacy Policy
-              </a>
-            </li>
-          </ul>
-        </div>
-
-        {/* Column 4 - Newsletter */}
-        <div>
-          <h3 className="text-black text-lg font-semibold mb-4">
-            Stay Updated
+          <h3 className="text-white font-bold text-lg mb-4">
+            Teck Market Shop
           </h3>
-          <p className="text-sm text-gray-400 mb-4">
-            Subscribe to our newsletter and get the latest updates on new
-            products and offers.
+          <p className="text-gray-400 text-sm">
+            Your go-to shop for PC accessories and mobile devices. Quality
+            products, fast shipping, and great support.
           </p>
-          <form className="flex items-center">
-            <input
-              type="email"
-              placeholder="Enter your email"
-              className="w-full px-3 py-2 rounded-l-md bg-gray-800 text-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-primary-main"
-            />
-            <button
-              type="submit"
-              className="bg-primary-main text-black px-4 py-2 rounded-r-md hover:bg-primary-dark transition-all"
-            >
-              <FiMail className="h-5 w-5" />
-            </button>
-          </form>
+        </div>
 
-          {/* Social Links */}
-          <div className="flex items-center gap-4 mt-6 text-gray-400">
-            <a href="#" className="hover:text-black">
-              <FaFacebookF />
+        {/* Quick Links */}
+        <div>
+          <h4 className="text-white font-semibold mb-4">Quick Links</h4>
+          <ul className="space-y-2">
+            <li>
+              <Link href="/" className="hover:text-white transition-colors">
+                Home
+              </Link>
+            </li>
+            <li>
+              <Link href="/shop" className="hover:text-white transition-colors">
+                Shop
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/about"
+                className="hover:text-white transition-colors"
+              >
+                About Us
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/contact"
+                className="hover:text-white transition-colors"
+              >
+                Contact
+              </Link>
+            </li>
+          </ul>
+        </div>
+
+        {/* Customer Support */}
+        <div>
+          <h4 className="text-white font-semibold mb-4">Support</h4>
+          <ul className="space-y-2 text-gray-400 text-sm">
+            <li>
+              <Link href="/faq" className="hover:text-white transition-colors">
+                FAQ
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/shipping"
+                className="hover:text-white transition-colors"
+              >
+                Shipping & Returns
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/privacy"
+                className="hover:text-white transition-colors"
+              >
+                Privacy Policy
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/terms"
+                className="hover:text-white transition-colors"
+              >
+                Terms & Conditions
+              </Link>
+            </li>
+          </ul>
+        </div>
+
+        {/* Social Media */}
+        <div>
+          <h4 className="text-white font-semibold mb-4">Follow Us</h4>
+          <div className="flex space-x-4">
+            <a
+              href="#"
+              className="text-gray-400 hover:text-white transition-colors"
+            >
+              <Facebook size={24} />
             </a>
-            <a href="#" className="hover:text-black">
-              <FaInstagram />
+            <a
+              href="#"
+              className="text-gray-400 hover:text-white transition-colors"
+            >
+              <Twitter size={24} />
             </a>
-            <a href="#" className="hover:text-black">
-              <FaTwitter />
+            <a
+              href="#"
+              className="text-gray-400 hover:text-white transition-colors"
+            >
+              <Instagram size={24} />
+            </a>
+            <a
+              href="#"
+              className="text-gray-400 hover:text-white transition-colors"
+            >
+              <Linkedin size={24} />
             </a>
           </div>
         </div>
       </div>
 
-      {/* Sub-Footer */}
-      <div className="flex flex-col md:flex-row items-center justify-between max-w-7xl mx-auto px-6 sm:px-10 py-6 text-sm text-gray-500">
-        <p>© {new Date().getFullYear()} YourStore. All rights reserved.</p>
-
-        {/* Payment Methods */}
-        <div className="flex items-center gap-4 mt-4 md:mt-0 text-gray-400 text-xl">
-          <FaCcVisa />
-          <FaCcMastercard />
-          <FaPaypal />
-        </div>
+      {/* Footer Bottom */}
+      <div className="mt-12 border-t border-gray-700 pt-6 text-center text-gray-500 text-sm">
+        &copy; {new Date().getFullYear()} Teck Market Shop. All rights reserved.
       </div>
     </footer>
   );
