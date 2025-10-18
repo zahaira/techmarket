@@ -1,17 +1,43 @@
 "use client";
 
-import React from "react";
+import React, { useCallback } from "react";
 import { Product } from "@/shared/types/product";
-import { LuShoppingCart } from "react-icons/lu";
 import QuantitySelector from "../components/QuantitySelector";
 import BestSellerBadge from "../components/BestSellerBadge";
 import { fCurrency } from "@/shared/utils/format-number";
+import ProductAddToCartButton from "../components/ProductAddToCartButton";
+import { useCartStore } from "@/shared/api/stores/CartStore";
+import { useForm } from "react-hook-form";
+import { CustomButton } from "@/components/CustomButton";
 
 interface ProductDetailsSummaryProps {
   product: Product;
 }
 
 const ProductDetailsSummary = ({ product }: ProductDetailsSummaryProps) => {
+  const { addToCart, items } = useCartStore();
+  const isInCart = items.some((i) => i.productId === product.productId);
+
+  const defaultValues = {
+    quantity: isInCart
+      ? items.find((i) => i.productId === product.productId)?.quantity ?? 1
+      : product.stock < 1
+      ? 0
+      : 1,
+  };
+
+  const methods = useForm({ defaultValues });
+  const { watch, setValue } = methods;
+  const values = watch();
+
+  const handleAddCart = useCallback(() => {
+    try {
+      addToCart?.(product, values.quantity);
+    } catch (error) {
+      console.error(error);
+    }
+  }, [addToCart, values]);
+
   return (
     <div className="flex flex-col gap-4 sm:px-6">
       <div className="flex flex-col gap-2">
@@ -55,17 +81,6 @@ const ProductDetailsSummary = ({ product }: ProductDetailsSummaryProps) => {
         </div>
       )}
 
-      {product.stock > 0 && (
-        <div className="flex items-center justify-between">
-          <p className="text-gray-600">Quantity</p>
-          <QuantitySelector
-            stock={product.stock}
-            initial={1}
-            onChange={(q) => console.log("Quantity changed:", q)}
-          />
-        </div>
-      )}
-
       {/* Variantes / attributs */}
       {product.attributes && Object.keys(product.attributes).length > 0 && (
         <div className="mt-4">
@@ -87,17 +102,38 @@ const ProductDetailsSummary = ({ product }: ProductDetailsSummaryProps) => {
       <p className="text-gray-500 text-sm">
         Livraison gratuite à partir de 50€ d&apos;achat.
       </p>
+
+      {product.stock > 0 && (
+        <div className="flex items-center justify-between">
+          <p className="text-gray-600">Quantity</p>
+          <QuantitySelector
+            name="quantity"
+            quantity={values.quantity}
+            disabledDecrease={values.quantity <= 1}
+            disabledIncrease={values.quantity >= product.stock}
+            onIncrease={() => setValue("quantity", values.quantity + 1)}
+            onDecrease={() => setValue("quantity", values.quantity - 1)}
+            onChange={(val) => setValue("quantity", val)}
+            max={product.stock}
+          />
+        </div>
+      )}
+
       <div className="flex flex-col sm:flex-row items-center gap-4 mt-4 w-full">
         {/* Add to Cart */}
-        <button className="flex items-center justify-center gap-2 bg-primary-dark hover:bg-primary text-white px-6 py-3 rounded-[12px] font-semibold transition w-full sm:w-1/2">
-          <LuShoppingCart className="w-5 h-5" />
-          Add to Cart
-        </button>
+        <div className="w-full sm:w-1/2">
+          <ProductAddToCartButton
+            product={product}
+            isInCart={isInCart}
+            addToCart={handleAddCart}
+            size="md"
+          />
+        </div>
 
         {/* Buy Now */}
-        <button className="bg-black hover:bg-gray-800 text-white px-6 py-3 rounded-[12px] font-semibold transition w-full sm:w-1/2">
+        <CustomButton variant="secondary" className="sm:w-1/2">
           Buy Now
-        </button>
+        </CustomButton>
       </div>
     </div>
   );

@@ -10,7 +10,7 @@ import { _heroMockProducts } from "@/shared/_mock/_product";
 
 const Hero = () => {
   return (
-    <div className="m-2 md:m-8 rounded-2xl overflow-hidden ">
+    <div className="rounded-2xl overflow-hidden ">
       <Swiper
         modules={[Pagination, Autoplay]}
         pagination={{ clickable: true }}

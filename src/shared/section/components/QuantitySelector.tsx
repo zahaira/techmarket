@@ -1,11 +1,17 @@
 "use client";
-import React, { useState, useEffect } from "react";
+
+import React, { useState } from "react";
 
 interface QuantitySelectorProps {
-  stock?: number; // stock peut être undefined
-  initial?: number;
+  name?: string;
+  quantity: number;
+  disabledIncrease?: boolean;
+  disabledDecrease?: boolean;
+  onIncrease: () => void;
+  onDecrease: () => void;
+  onChange?: (value: number) => void;
+  max: number;
   size?: "sm" | "md" | "lg";
-  onChange?: (quantity: number) => void;
 }
 
 const SIZE_CLASSES = {
@@ -24,88 +30,56 @@ const SIZE_CLASSES = {
 };
 
 const QuantitySelector = ({
-  stock = 0,
-  initial = 1,
-  size = "md",
+  quantity,
+  onIncrease,
+  onDecrease,
+  disabledIncrease,
+  disabledDecrease,
   onChange,
+  max,
+  size = "md",
 }: QuantitySelectorProps) => {
-  const safeStock = Math.max(0, stock); // protège contre stock undefined ou négatif
-  const [quantity, setQuantity] = useState<number>(
-    safeStock > 0 ? Math.min(initial, safeStock) : 0
-  );
-
   const classes = SIZE_CLASSES[size] ?? SIZE_CLASSES.md;
 
-  // Notifie changement initial
-  useEffect(() => {
-    onChange?.(quantity);
-  }, [quantity, onChange]);
-
-  const decrement = () => {
-    if (safeStock === 0) return;
-    setQuantity((q) => {
-      const newQ = Math.max(1, q - 1);
-      onChange?.(newQ);
-      return newQ;
-    });
-  };
-
-  const increment = () => {
-    if (safeStock === 0) return;
-    setQuantity((q) => {
-      const newQ = Math.min(q + 1, safeStock);
-      onChange?.(newQ);
-      return newQ;
-    });
-  };
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (safeStock === 0) return;
-
-    let value = parseInt(e.target.value);
-    if (isNaN(value)) value = 1;
-    value = Math.max(1, Math.min(value, safeStock));
-    setQuantity(value);
-    onChange?.(value);
+    let val = parseInt(e.target.value);
+    if (isNaN(val)) val = 1;
+    val = Math.max(1, Math.min(val, max));
+    onChange?.(val);
   };
-
-  const isOutOfStock = safeStock === 0;
 
   return (
     <div className="flex border border-gray-400 text-gray-700 rounded-full overflow-hidden w-max bg-gray-50">
-      {/* Bouton - */}
       <button
         type="button"
-        disabled={isOutOfStock || quantity <= 1}
+        disabled={disabledDecrease}
         className={`py-1 transition ${classes.btn} ${
-          isOutOfStock || quantity <= 1
-            ? "text-gray-400 "
+          disabledDecrease
+            ? "text-gray-400"
             : "cursor-pointer hover:bg-gray-100"
         }`}
-        onClick={decrement}
+        onClick={onDecrease}
       >
         -
       </button>
 
-      {/* Input */}
       <input
         type="text"
-        value={quantity.toString()}
+        value={quantity}
         onChange={handleChange}
-        readOnly={isOutOfStock}
+        // readOnly={isOutOfStock}
         className={`text-center focus:outline-none bg-gray-50 ${classes.input}`}
       />
 
-      {/* Bouton + */}
       <button
         type="button"
-        disabled={isOutOfStock || quantity >= safeStock}
+        disabled={disabledIncrease}
         className={`py-1 transition ${classes.btn} ${
-          isOutOfStock || quantity >= safeStock
-            ? "text-gray-400 "
+          disabledIncrease
+            ? "text-gray-400"
             : "cursor-pointer hover:bg-gray-100"
         }`}
-        onClick={increment}
+        onClick={onIncrease}
       >
         +
       </button>

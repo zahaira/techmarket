@@ -13,22 +13,22 @@ const benefits: Benefit[] = [
   {
     title: "15 Years of Expertise",
     subtitle: "At your service",
-    icon: <FiAward className="w-8 h-8 text-primary" />,
+    icon: <FiAward className="w-8 h-8 text-primary-main" />,
   },
   {
     title: "Home Delivery",
     subtitle: "Available in Morocco",
-    icon: <FiTruck className="w-8 h-8 text-primary" />,
+    icon: <FiTruck className="w-8 h-8 text-primary-main" />,
   },
   {
     title: "Customer Support 24/7",
     subtitle: "In-store and online",
-    icon: <FiHeadphones className="w-8 h-8 text-primary" />,
+    icon: <FiHeadphones className="w-8 h-8 text-primary-main" />,
   },
   {
     title: "Returns & Refunds",
     subtitle: "17 days to change your mind",
-    icon: <FiRefreshCw className="w-8 h-8 text-primary" />,
+    icon: <FiRefreshCw className="w-8 h-8 text-primary-main" />,
   },
 ];
 

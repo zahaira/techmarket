@@ -5,10 +5,11 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect } from "react";
 import { FiHeart } from "react-icons/fi";
-import { LuShoppingCart } from "react-icons/lu";
 import NewBadge from "./NewBadge";
 import { useWishlistStore } from "@/shared/api/stores/wishlistStore";
 import { FaHeart } from "react-icons/fa";
+import { useCartStore } from "@/shared/api/stores/CartStore";
+import ProductAddToCartButton from "./ProductAddToCartButton";
 
 interface ProductCardProps {
   product: ProductCardItem;
@@ -20,6 +21,9 @@ const ProductCard = ({ product }: ProductCardProps) => {
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  const { addToCart, items } = useCartStore();
+  const isInCart = items.some((i) => i.productId === product.productId);
 
   const { addToWishlist, removeFromWishlist, isInWishlist } =
     useWishlistStore();
@@ -33,10 +37,6 @@ const ProductCard = ({ product }: ProductCardProps) => {
     } else {
       addToWishlist(product);
     }
-  };
-
-  const handleAddToCart = () => {
-    console.log("added to cart");
   };
 
   return (
@@ -73,21 +73,19 @@ const ProductCard = ({ product }: ProductCardProps) => {
             className="absolute right-2 top-2 rounded-full bg-white p-1.5 shadow transition-all duration-300 hover:bg-red-50 hover:scale-110 cursor-pointer"
           >
             {mounted && isWishlisted ? (
-              <FaHeart className="h-4 w-4 text-primary" />
+              <FaHeart className="h-4 w-4 text-primary-main" />
             ) : (
-              <FiHeart className="h-4 w-4 text-gray-600 hover:text-primary" />
+              <FiHeart className="h-4 w-4 text-gray-600 hover:text-primary-main" />
             )}
           </button>
 
           {/* Quick Add Overlay */}
           <div className="absolute inset-x-0 bottom-0 translate-y-full bg-gradient-to-t from-black/60 to-transparent p-2 transition-transform duration-300 group-hover:translate-y-0">
-            <button
-              onClick={handleAddToCart}
-              className="flex w-full items-center justify-center gap-1 rounded-md bg-white py-2 text-sm font-semibold text-gray-900 transition-all duration-300 hover:text-primary-dark cursor-pointer"
-            >
-              <LuShoppingCart className="h-4 w-4" />
-              Add
-            </button>
+            <ProductAddToCartButton
+              product={product}
+              isInCart={isInCart}
+              addToCart={addToCart}
+            />
           </div>
         </div>
 
