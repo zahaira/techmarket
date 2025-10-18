@@ -1,10 +1,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { ProductCardItem } from "@/shared/types/product";
-
-interface CartItem extends ProductCardItem {
-  quantity: number;
-}
+import { CartItem } from "@/shared/types/checkout";
 
 interface CartStore {
   items: CartItem[];

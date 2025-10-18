@@ -21,24 +21,29 @@ const variantClasses: Record<ButtonVariant, string> = {
   secondary: "bg-black text-white hover:bg-gray-800",
 };
 
+const disabledClasses = "bg-gray-400 text-gray-700 hover:bg-gray-400";
+
 export const CustomButton = ({
   children,
   size = "md",
   variant = "primary",
   className,
+  disabled = false,
   ...props
 }: ButtonProps) => {
   const baseClasses =
-    "rounded-lg font-semibold transition-all duration-300 cursor-pointer w-full";
+    "rounded-lg font-semibold transition-all duration-300 w-full";
 
   return (
     <button
       className={clsx(
         baseClasses,
         sizeClasses[size],
-        variantClasses[variant],
+        disabled ? disabledClasses : variantClasses[variant],
+        !disabled && "cursor-pointer",
         className
       )}
+      disabled={disabled}
       {...props}
     >
       {children}
