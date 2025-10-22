@@ -1,6 +1,9 @@
 // 2. Product
 export interface ProductAttribute {
-  [key: string]: string | number | boolean; // { color: "red", storage: "128GB"}
+  name_en: string;
+  name_ar: string;
+  value_en: string | boolean | number;
+  value_ar: string | boolean | number;
 }
 export interface Product {
   productId: string;
@@ -18,8 +21,8 @@ export interface Product {
   images: string[];
   categoryIds: string[];
   primaryCategoryId: string; // used for breadcrumbs and canonical paths
-  keyPoints?: ProductAttribute;
-  attributes?: ProductAttribute;
+  keyPoints?: ProductAttribute[];
+  attributes?: ProductAttribute[];
   warranty?: number;
   isNew?: boolean;
   isBestSeller?: boolean;

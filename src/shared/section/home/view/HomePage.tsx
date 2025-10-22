@@ -8,15 +8,17 @@ import {
   _mockBestOfferProducts,
   _mockBestSellersProducts,
 } from "@/shared/_mock/_product";
+import { useTranslations } from "next-intl";
 
 const HomePage = () => {
+  const t = useTranslations("homePage");
   return (
     <div className="bg-gray-50 p-2 md:p-8">
       <Hero />
       <CategorySection categories={_mockCategories} />
       <ProductCarouselSection
         products={_mockBestOfferProducts}
-        title="Our Best Offers"
+        title={t("best_offer")}
         seeMoreLink="/promotions"
       />
       <FeaturesSection />

@@ -1,8 +1,24 @@
-import React from "react";
+"use client";
+
+import React, { useTransition } from "react";
 import { Facebook, Twitter, Instagram, Linkedin } from "lucide-react";
 import Link from "next/link";
+import { useRouter, usePathname } from "@/i18n/navigation";
+import { useLocale } from "next-intl";
 
 const Footer = () => {
+  const router = useRouter();
+  const pathname = usePathname();
+  const locale = useLocale();
+  const [isPending, startTransition] = useTransition();
+
+  const changeLocale = (nextLocale: string) => {
+    if (nextLocale === locale) return;
+    startTransition(() => {
+      router.replace({ pathname }, { locale: nextLocale });
+    });
+  };
+
   return (
     <footer className="bg-gray-900 text-gray-300 pt-12 pb-6 sm:pl-[70px]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-8">
@@ -50,7 +66,7 @@ const Footer = () => {
           </ul>
         </div>
 
-        {/* Customer Support */}
+        {/* Support */}
         <div>
           <h4 className="text-white font-semibold mb-4">Support</h4>
           <ul className="space-y-2 text-gray-400 text-sm">
@@ -86,7 +102,7 @@ const Footer = () => {
           </ul>
         </div>
 
-        {/* Social Media */}
+        {/* Social */}
         <div>
           <h4 className="text-white font-semibold mb-4">Follow Us</h4>
           <div className="flex space-x-4">
@@ -118,8 +134,33 @@ const Footer = () => {
         </div>
       </div>
 
+      {/* Language Switcher */}
+      <div className="mt-8 text-center">
+        <span
+          onClick={() => changeLocale("en")}
+          className={`mx-2 ${
+            locale === "en"
+              ? "text-white font-semibold cursor-default"
+              : "text-gray-400 hover:text-white cursor-pointer"
+          }`}
+        >
+          EN
+        </span>
+        |
+        <span
+          onClick={() => changeLocale("ar")}
+          className={`mx-2 ${
+            locale === "ar"
+              ? "text-white font-semibold cursor-default"
+              : "text-gray-400 hover:text-white cursor-pointer"
+          }`}
+        >
+          العربية
+        </span>
+      </div>
+
       {/* Footer Bottom */}
-      <div className="mt-12 border-t border-gray-700 pt-6 text-center text-gray-500 text-sm">
+      <div className="mt-6 border-t border-gray-700 pt-6 text-center text-gray-500 text-sm">
         &copy; {new Date().getFullYear()} Teck Market Shop. All rights reserved.
       </div>
     </footer>

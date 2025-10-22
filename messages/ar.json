@@ -1,0 +1,75 @@
+{
+  "auth": {
+    "login": "تسجيل الدخول",
+    "signup": "إنشاء حساب",
+    "logout": "تسجيل الخروج",
+    "email": "البريد الإلكتروني",
+    "password": "كلمة المرور",
+    "confirm_password": "تأكيد كلمة المرور",
+    "forgot_password": "نسيت كلمة المرور؟",
+    "remember_me": "تذكرني",
+    "or": "أو",
+    "login_with": "تسجيل الدخول بواسطة {provider}"
+  },
+  "nav": {
+    "home": "الرئيسية",
+    "shop": "المتجر",
+    "about": "من نحن",
+    "contact": "اتصل بنا",
+    "profile": "الحساب",
+    "cart": "السلة"
+  },
+  "footer": {
+    "newsletter": "اشترك في النشرة البريدية",
+    "follow_us": "تابعنا",
+    "privacy_policy": "سياسة الخصوصية",
+    "terms_conditions": "الشروط والأحكام",
+    "copyright": "© {year} شركتك. كل الحقوق محفوظة."
+  },
+  "buttons": {
+    "submit": "إرسال",
+    "cancel": "إلغاء",
+    "continue": "متابعة",
+    "add_to_cart": "أضف إلى السلة",
+    "checkout": "إتمام الشراء",
+    "view_details": "عرض التفاصيل"
+  },
+  "placeholders": {
+    "enter_email": "أدخل بريدك الإلكتروني",
+    "enter_password": "أدخل كلمة المرور",
+    "search": "ابحث...",
+    "full_name": "الاسم الكامل",
+    "address": "العنوان"
+  },
+  "notifications": {
+    "success": "نجاح",
+    "error": "خطأ",
+    "warning": "تحذير",
+    "info": "معلومات",
+    "item_added": "تمت إضافة المنتج إلى السلة",
+    "item_removed": "تمت إزالة المنتج من السلة",
+    "order_placed": "تم تقديم طلبك بنجاح"
+  },
+  "shop": {
+    "price": "السعر",
+    "description": "الوصف",
+    "stock": "المخزون",
+    "quantity": "الكمية",
+    "total": "الإجمالي"
+  },
+  "checkout": {
+    "shipping": "الشحن",
+    "payment": "الدفع",
+    "order_summary": "ملخص الطلب",
+    "place_order": "تقديم الطلب",
+    "billing_address": "عنوان الفوترة"
+  },
+   "homePage": {
+    "best_offer":"أفضل العروض"
+  },
+  "LocaleSwitcher": {
+    "label": "تغيير اللغة",
+    "locale": "{locale, select, en {English} ar {العربية} other {غير معروف}}"  
+  }
+}
+

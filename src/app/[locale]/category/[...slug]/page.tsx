@@ -1,4 +1,4 @@
-import NotFound from "@/app/not-found";
+import NotFound from "@/app/[locale]/not-found";
 import { _mockCategories } from "@/shared/_mock/_category";
 import { getProductCardItemsByCategorySlug } from "@/shared/_mock/_product";
 import Breadcrumbs from "@/shared/section/components/Breadcrumbs";

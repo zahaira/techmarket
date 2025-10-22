@@ -1,0 +1,75 @@
+{
+  "auth": {
+    "login": "Login",
+    "signup": "Sign Up",
+    "logout": "Logout",
+    "email": "Email",
+    "password": "Password",
+    "confirm_password": "Confirm Password",
+    "forgot_password": "Forgot Password?",
+    "remember_me": "Remember Me",
+    "or": "or",
+    "login_with": "Login with {provider}"
+  },
+  "nav": {
+    "home": "Home",
+    "shop": "Shop",
+    "about": "About",
+    "contact": "Contact",
+    "profile": "Profile",
+    "cart": "Cart"
+  },
+  "footer": {
+    "newsletter": "Subscribe to our newsletter",
+    "follow_us": "Follow us",
+    "privacy_policy": "Privacy Policy",
+    "terms_conditions": "Terms & Conditions",
+    "copyright": "© {year} Your Company. All rights reserved."
+  },
+  "buttons": {
+    "submit": "Submit",
+    "cancel": "Cancel",
+    "continue": "Continue",
+    "add_to_cart": "Add to Cart",
+    "checkout": "Checkout",
+    "view_details": "View Details"
+  },
+  "placeholders": {
+    "enter_email": "Enter your email",
+    "enter_password": "Enter your password",
+    "search": "Search...",
+    "full_name": "Full Name",
+    "address": "Address"
+  },
+  "notifications": {
+    "success": "Success",
+    "error": "Error",
+    "warning": "Warning",
+    "info": "Info",
+    "item_added": "Item added to cart",
+    "item_removed": "Item removed from cart",
+    "order_placed": "Your order has been placed successfully"
+  },
+  "shop": {
+    "price": "Price",
+    "description": "Description",
+    "stock": "Stock",
+    "quantity": "Quantity",
+    "total": "Total"
+  },
+  "checkout": {
+    "shipping": "Shipping",
+    "payment": "Payment",
+    "order_summary": "Order Summary",
+    "place_order": "Place Order",
+    "billing_address": "Billing Address"
+  },
+  "homePage":{
+    "best_offer":"Our Best Offers"
+  },
+  "LocaleSwitcher": {
+    "label": "Change language",
+    "locale": "{locale, select, ar {العربية} en {English} other {Unknown}}"
+  }
+}
+
