@@ -3,13 +3,31 @@
     "login": "Login",
     "signup": "Sign Up",
     "logout": "Logout",
-    "email": "Email",
     "password": "Password",
     "confirm_password": "Confirm Password",
     "forgot_password": "Forgot Password?",
     "remember_me": "Remember Me",
     "or": "or",
-    "login_with": "Login with {provider}"
+    "login_with": "Login with {provider}",
+    "already_have_account": "Already have an account?",
+    "no_account": "Don't have an account?",
+    "first_name": "First Name",
+    "last_name": "Last Name",
+    "email": "Email",
+    "phone_number": "Phone Number",
+    "additional_phone_number": "Additional Phone Number",
+    "additional_information": "Additional Information",
+    "address": "Address",
+    "region": "Region",
+    "city": "City",
+    "first_name_required": "First name is required!",
+    "last_name_required": "Last name is required!",
+    "email_required": "Email is required!",
+    "email_invalid": "Email must be a valid email address!",
+    "phone_number_required": "Phone number is required!",
+    "address_required": "Address is required!",
+    "region_required": "Region is required!",
+    "city_required": "City is required!"
   },
   "nav": {
     "home": "Home",
@@ -20,19 +38,39 @@
     "cart": "Cart"
   },
   "footer": {
-    "newsletter": "Subscribe to our newsletter",
-    "follow_us": "Follow us",
+    "shop_name": "Tech Market Shop",
+    "about_text": "Your go-to shop for PC accessories and mobile devices. Quality products, fast shipping, and great support.",
+  
+    "quick_links": "Quick Links",
+    "home": "Home",
+    "shop": "Shop",
+    "about_us": "About Us",
+    "contact": "Contact",
+  
+    "support": "Support",
+    "faq": "FAQ",
+    "shipping_returns": "Shipping & Returns",
     "privacy_policy": "Privacy Policy",
     "terms_conditions": "Terms & Conditions",
-    "copyright": "© {year} Your Company. All rights reserved."
+  
+    "follow_us": "Follow Us",
+  
+    "language_en": "EN",
+    "language_ar": "العربية",
+  
+    "copyright": "All rights reserved."
   },
   "buttons": {
     "submit": "Submit",
     "cancel": "Cancel",
+    "delete": "Delete Product",
     "continue": "Continue",
     "add_to_cart": "Add to Cart",
     "checkout": "Checkout",
-    "view_details": "View Details"
+    "view_details": "View Details",
+    "view_cart": "View Cart",
+    "buy_now": "Buy Now",
+    "proceedToCheckout": "Proceed to Checkout"
   },
   "placeholders": {
     "enter_email": "Enter your email",
@@ -51,11 +89,39 @@
     "order_placed": "Your order has been placed successfully"
   },
   "shop": {
+    "product":"Product",
     "price": "Price",
     "description": "Description",
     "stock": "Stock",
     "quantity": "Quantity",
-    "total": "Total"
+    "total": "Total",
+    "new": "New",
+    "warranty": "Warranty",
+    "years": "Years",
+    "features": "Features",
+    "best_seller": "Best Seller",
+    "new_arrivals": "New Arrivals",
+    "see_more": "See More",
+    "add_to_wishlist": "Add to Wishlist",
+    "quick_view": "Quick View",
+    "sale": "Sale",
+    "in_stock": "In Stock",
+    "out_of_stock": "Out of Stock",
+    "rating": "Rating",
+    "reviews": "Reviews",
+    "key_points": "Key Points",
+    "freeShipping": "Free shipping from €50 purchase",
+    "details": "Product Details"
+  },
+  "cart": {
+    "title": "Shopping Cart",
+    "total": "Total",
+    "summary": "Summary",
+    "continueShopping": "Continue Shopping",
+    "emptyCart": "Your cart is empty",
+    "subtotal": "Subtotal",
+    "shipping":"Shipping",
+    "free":"Free"
   },
   "checkout": {
     "shipping": "Shipping",
@@ -65,11 +131,39 @@
     "billing_address": "Billing Address"
   },
   "homePage":{
-    "best_offer":"Our Best Offers"
+    "best_offer":"Our Best Offers",
+    "best_sellers": "Best Sellers"
   },
   "LocaleSwitcher": {
     "label": "Change language",
     "locale": "{locale, select, ar {العربية} en {English} other {Unknown}}"
+  },
+  "benefits": {
+    "expertise_title": "15 Years of Expertise",
+    "expertise_subtitle": "At your service",
+    
+    "delivery_title": "Home Delivery",
+    "delivery_subtitle": "Available in Morocco",
+    
+    "support_title": "Customer Support 24/7",
+    "support_subtitle": "In-store and online",
+    
+    "refund_title": "Returns & Refunds",
+    "refund_subtitle": "17 days to change your mind"
+  },
+  "Wishlist": {
+    "title": "My Wishlist",
+    "empty": "Your wishlist is empty",
+    "notSaved": "Wishlist is not saved permanently yet. Please",
+    "logIn": "log in",
+    "or": "or",
+    "createAccount": "Create Account",
+    "toSave": "to save it."
+  },
+  "NotFound": {
+    "title": "Oops! Page not found",
+    "description": "The page you’re looking for might have been moved, deleted, or doesn’t exist anymore.",
+    "backHome": "Back to Home"
   }
 }
 

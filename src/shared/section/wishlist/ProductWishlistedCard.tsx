@@ -7,12 +7,15 @@ import React, { useCallback, useState } from "react";
 import { AiOutlineDelete } from "react-icons/ai";
 import QuantitySelector from "../components/QuantitySelector";
 import { useCartStore } from "@/shared/api/stores/CartStore";
+import { useTranslations } from "next-intl";
 
 interface ProductWishlistedCardProps {
   product: ProductCardItem;
 }
 
 const ProductWishlistedCard = ({ product }: ProductWishlistedCardProps) => {
+  const tBtn = useTranslations("buttons");
+  const tShop = useTranslations("shop");
   const { removeFromWishlist } = useWishlistStore();
   const { addToCart } = useCartStore();
   const [quantity, setQuantity] = useState<number>(1);
@@ -61,7 +64,7 @@ const ProductWishlistedCard = ({ product }: ProductWishlistedCardProps) => {
                group-hover:opacity-100 transition-opacity duration-200
                whitespace-nowrap pointer-events-none"
             >
-              Delete product
+              {tBtn("delete")}
             </span>
           </div>
         </div>
@@ -81,14 +84,14 @@ const ProductWishlistedCard = ({ product }: ProductWishlistedCardProps) => {
 
           {isOutOfStock ? (
             <span className="text-gray-400 text-sm font-medium">
-              Out of stock
+              {tShop("out_of_stock")}
             </span>
           ) : (
             <button
               onClick={handleAddCart}
               className="text-sm text-black font-medium cursor-pointer hover:text-primary-main transition-colors"
             >
-              Add to cart
+              {tBtn("add_to_cart")}
             </button>
           )}
         </div>

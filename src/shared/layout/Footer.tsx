@@ -2,14 +2,15 @@
 
 import React, { useTransition } from "react";
 import { Facebook, Twitter, Instagram, Linkedin } from "lucide-react";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { useRouter, usePathname } from "@/i18n/navigation";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
 const Footer = () => {
   const router = useRouter();
   const pathname = usePathname();
   const locale = useLocale();
+  const t = useTranslations("footer");
   const [isPending, startTransition] = useTransition();
 
   const changeLocale = (nextLocale: string) => {
@@ -20,47 +21,42 @@ const Footer = () => {
   };
 
   return (
-    <footer className="bg-gray-900 text-gray-300 pt-12 pb-6 sm:pl-[70px]">
+    <footer
+      className={`bg-gray-900 text-gray-300 pt-12 pb-6 ${
+        locale === "ar" ? "sm:mr-[70px]" : "sm:ml-[70px]"
+      }`}
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-8">
         {/* About Section */}
         <div>
           <h3 className="text-white font-bold text-lg mb-4">
-            Teck Market Shop
+            {t("shop_name")}
           </h3>
-          <p className="text-gray-400 text-sm">
-            Your go-to shop for PC accessories and mobile devices. Quality
-            products, fast shipping, and great support.
-          </p>
+          <p className="text-gray-400 text-sm">{t("about_text")}</p>
         </div>
 
         {/* Quick Links */}
         <div>
-          <h4 className="text-white font-semibold mb-4">Quick Links</h4>
+          <h4 className="text-white font-semibold mb-4">{t("quick_links")}</h4>
           <ul className="space-y-2">
             <li>
               <Link href="/" className="hover:text-white transition-colors">
-                Home
+                {t("home")}
               </Link>
             </li>
             <li>
-              <Link href="/shop" className="hover:text-white transition-colors">
-                Shop
+              <Link href="/" className="hover:text-white transition-colors">
+                {t("shop")}
               </Link>
             </li>
             <li>
-              <Link
-                href="/about"
-                className="hover:text-white transition-colors"
-              >
-                About Us
+              <Link href="/" className="hover:text-white transition-colors">
+                {t("about_us")}
               </Link>
             </li>
             <li>
-              <Link
-                href="/contact"
-                className="hover:text-white transition-colors"
-              >
-                Contact
+              <Link href="/" className="hover:text-white transition-colors">
+                {t("contact")}
               </Link>
             </li>
           </ul>
@@ -68,35 +64,26 @@ const Footer = () => {
 
         {/* Support */}
         <div>
-          <h4 className="text-white font-semibold mb-4">Support</h4>
+          <h4 className="text-white font-semibold mb-4">{t("support")}</h4>
           <ul className="space-y-2 text-gray-400 text-sm">
             <li>
-              <Link href="/faq" className="hover:text-white transition-colors">
-                FAQ
+              <Link href="/" className="hover:text-white transition-colors">
+                {t("faq")}
               </Link>
             </li>
             <li>
-              <Link
-                href="/shipping"
-                className="hover:text-white transition-colors"
-              >
-                Shipping & Returns
+              <Link href="/" className="hover:text-white transition-colors">
+                {t("shipping_returns")}
               </Link>
             </li>
             <li>
-              <Link
-                href="/privacy"
-                className="hover:text-white transition-colors"
-              >
-                Privacy Policy
+              <Link href="/" className="hover:text-white transition-colors">
+                {t("privacy_policy")}
               </Link>
             </li>
             <li>
-              <Link
-                href="/terms"
-                className="hover:text-white transition-colors"
-              >
-                Terms & Conditions
+              <Link href="/" className="hover:text-white transition-colors">
+                {t("terms_conditions")}
               </Link>
             </li>
           </ul>
@@ -104,7 +91,7 @@ const Footer = () => {
 
         {/* Social */}
         <div>
-          <h4 className="text-white font-semibold mb-4">Follow Us</h4>
+          <h4 className="text-white font-semibold mb-4">{t("follow_us")}</h4>
           <div className="flex space-x-4">
             <a
               href="#"
@@ -135,7 +122,7 @@ const Footer = () => {
       </div>
 
       {/* Language Switcher */}
-      <div className="mt-8 text-center">
+      <div className="mt-6 border-t border-gray-700 pt-6 text-center text-gray-500 text-sm">
         <span
           onClick={() => changeLocale("en")}
           className={`mx-2 ${
@@ -144,7 +131,7 @@ const Footer = () => {
               : "text-gray-400 hover:text-white cursor-pointer"
           }`}
         >
-          EN
+          {t("language_en")}
         </span>
         |
         <span
@@ -155,13 +142,8 @@ const Footer = () => {
               : "text-gray-400 hover:text-white cursor-pointer"
           }`}
         >
-          العربية
+          {t("language_ar")}
         </span>
-      </div>
-
-      {/* Footer Bottom */}
-      <div className="mt-6 border-t border-gray-700 pt-6 text-center text-gray-500 text-sm">
-        &copy; {new Date().getFullYear()} Teck Market Shop. All rights reserved.
       </div>
     </footer>
   );

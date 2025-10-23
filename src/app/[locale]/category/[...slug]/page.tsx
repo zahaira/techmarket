@@ -1,4 +1,4 @@
-import NotFound from "@/app/[locale]/not-found";
+import { Link } from "@/i18n/navigation";
 import { _mockCategories } from "@/shared/_mock/_category";
 import { getProductCardItemsByCategorySlug } from "@/shared/_mock/_product";
 import Breadcrumbs from "@/shared/section/components/Breadcrumbs";
@@ -7,6 +7,7 @@ import {
   buildBreadcrumbs,
   findCategoryBySlugPath,
 } from "@/shared/utils/category";
+import { getTranslations } from "next-intl/server";
 import React from "react";
 
 interface CategoryPageProps {
@@ -15,13 +16,27 @@ interface CategoryPageProps {
 
 const CategoryPage = async ({ params }: CategoryPageProps) => {
   const { slug } = await params;
-
+  const tNotFound = await getTranslations("NotFound");
+  const t = await getTranslations("nav");
   const category = findCategoryBySlugPath(slug, _mockCategories);
   if (!category) {
-    return NotFound();
+    return (
+      <div className="flex flex-col items-center justify-center text-center px-6 py-12">
+        <h2 className="text-2xl sm:text-3xl font-semibold text-gray-900 mb-3">
+          {tNotFound("title")}
+        </h2>
+        <p className="text-gray-600 mb-6">{tNotFound("description")}</p>
+        <Link
+          href="/"
+          className="bg-primary-dark text-white px-6 py-3 rounded-full hover:bg-primary-main transition"
+        >
+          {tNotFound("backHome")}
+        </Link>
+      </div>
+    );
   }
   const breadcrumbLinks = [
-    { name: "Accueil", href: "/" },
+    { name: t("home"), href: "/" },
     ...buildBreadcrumbs(category, _mockCategories).map((item) => ({
       name: item.name,
       href: item.slugPath ? `/category/${item.slugPath.join("/")}` : undefined,

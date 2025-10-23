@@ -1,4 +1,5 @@
 import { ProductCardItem } from "@/shared/types/product";
+import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { LuShoppingCart } from "react-icons/lu";
 
@@ -20,6 +21,8 @@ const ProductAddToCartButton = ({
   addToCart,
   size = "sm",
 }: ProductAddToCartButtonProps) => {
+  const tBtn = useTranslations("buttons");
+  const tShop = useTranslations("shop");
   const router = useRouter();
 
   const handleClick = () => {
@@ -46,10 +49,10 @@ const ProductAddToCartButton = ({
     >
       <LuShoppingCart className={`${sizeStyles[size].icon}`} />
       {product.stock === 0
-        ? "Out of Stock"
+        ? tShop("out_of_stock")
         : isInCart
-        ? "View Cart"
-        : "Add to Cart"}
+        ? tBtn("view_cart")
+        : tBtn("add_to_cart")}
     </button>
   );
 };

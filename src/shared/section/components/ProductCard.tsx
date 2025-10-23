@@ -2,7 +2,7 @@
 
 import { ProductCardItem } from "@/shared/types/product";
 import Image from "next/image";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import React, { useEffect } from "react";
 import { FiHeart } from "react-icons/fi";
 import NewBadge from "./NewBadge";

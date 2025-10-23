@@ -21,18 +21,26 @@ export function buildBreadcrumbs(
   allCategories: Category[]
 ) {
   const breadcrumbs: { name: string; slugPath: string[] }[] = [];
-  let current: Category | undefined = category;
-  const path: string[] = [];
+  const stack: Category[] = [];
 
+  // Construire la pile de parents du root vers current
+  let current: Category | undefined = category;
   while (current) {
-    path.unshift(current.slug); // build full path from root to current
-    breadcrumbs.unshift({
-      name: current.name,
-      slugPath: [...path], // full path for each breadcrumb
-    });
+    stack.unshift(current);
     current = allCategories.find((c) => c.categoryId === current?.parentId);
   }
 
+  // Construire les slugPath correctement
+  const path: string[] = [];
+  for (const cat of stack) {
+    path.push(cat.slug); // ajoute seulement jusqu'à ce cat
+    breadcrumbs.push({
+      name: cat.name,
+      slugPath: [...path],
+    });
+  }
+
+  console.log("breadcrumbs", breadcrumbs);
   return breadcrumbs;
 }
 

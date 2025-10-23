@@ -24,7 +24,7 @@ const HomePage = () => {
       <FeaturesSection />
       <ProductCarouselSection
         products={_mockBestSellersProducts}
-        title="Best Sellers"
+        title={t("best_sellers")}
         showSeeMore={false}
       />
     </div>
