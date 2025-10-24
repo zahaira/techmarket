@@ -1,9 +1,13 @@
 import { useCartStore } from "@/shared/api/stores/CartStore";
 import { fCurrency } from "@/shared/utils/format-number";
+import { useTranslations } from "next-intl";
 import Image from "next/image";
 import React from "react";
 
 const SummarySection = () => {
+  const tCart = useTranslations("cart");
+  const tCheckout = useTranslations("checkout");
+  const tShop = useTranslations("shop");
   const { items } = useCartStore();
   const subtotal = items.reduce(
     (acc, item) => acc + (item.priceSale ?? item.price) * item.quantity,
@@ -13,12 +17,14 @@ const SummarySection = () => {
   return (
     <div className="w-full lg:w-100 flex-shrink-0">
       <div className="rounded-lg p-4 shadow-sm bg-white sticky top-24 space-y-4">
-        <h2 className="text-lg font-semibold mb-2">Order Summary</h2>
+        <h2 className="text-lg font-semibold mb-2">
+          {tCheckout("order_summary")}
+        </h2>
 
         <div className="">
           <div className="grid grid-cols-[3fr_1fr] border-b border-gray-300 pb-2">
-            <div>Product</div>
-            <div className="text-end">Subtotal</div>
+            <div>{tShop("product")}</div>
+            <div className="text-end">{tCart("subtotal")}</div>
           </div>
           <div className="divide-y divide-gray-200">
             {items.map((product) => {
@@ -44,7 +50,7 @@ const SummarySection = () => {
                         {product.name}
                       </span>
                       <span className="text-xs text-gray-700">
-                        Quantity : {product.quantity}
+                        {tShop("quantity")} : {product.quantity}
                       </span>
                     </div>
                   </div>
@@ -60,7 +66,7 @@ const SummarySection = () => {
         <hr className="border-gray-300" />
 
         <div className="flex justify-between font-bold text-lg text-primary-dark">
-          <span>Total</span>
+          <span>{tCart("total")}</span>
           <span>{fCurrency(subtotal)}</span>
         </div>
       </div>
