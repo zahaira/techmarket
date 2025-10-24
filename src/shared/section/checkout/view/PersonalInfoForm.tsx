@@ -36,13 +36,13 @@ const PersonalInfoForm = () => {
   const tBtn = useTranslations("buttons");
   const locale = useLocale();
   const defaultValues = {
-    firstName: "ddd",
-    lastName: "ddd",
-    email: "aaa@gmail.com",
-    phoneNumber: "677777777",
+    firstName: "",
+    lastName: "",
+    email: "",
+    phoneNumber: "",
     additionalPhoneNumber: "",
     additionalInformation: "",
-    address: "klhjh",
+    address: "",
     region: "",
     city: "",
   };
