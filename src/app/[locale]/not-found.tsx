@@ -1,23 +1,26 @@
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
+import { cookies } from "next/headers";
 import React from "react";
 import { FaSearch } from "react-icons/fa";
+import en from "../../../messages/en.json";
+import ar from "../../../messages/ar.json";
 
-const NotFound = () => {
+const NotFound = async () => {
+  const locale = (await cookies()).get("NEXT_LOCALE")?.value || "en";
+  const messages = locale === "ar" ? ar.NotFound : en.NotFound;
+
   return (
     <div className="flex flex-col items-center justify-center min-h-screen text-center px-6">
       <FaSearch className="text-primary-dark text-6xl mb-6 animate-bounce" />
       <h2 className="text-2xl sm:text-3xl font-semibold text-gray-900 mb-3">
-        Oops! Page not found
+        {messages.title}
       </h2>
-      <p className="text-gray-600 mb-6">
-        The page you’re looking for might have been moved, deleted, or doesn’t
-        exist anymore.
-      </p>
+      <p className="text-gray-600 mb-6">{messages.description}</p>
       <Link
         href="/"
         className="bg-primary-dark text-white px-6 py-3 rounded-full hover:bg-primary-main transition"
       >
-        Retour à l’accueil
+        {messages.backHome}
       </Link>
     </div>
   );

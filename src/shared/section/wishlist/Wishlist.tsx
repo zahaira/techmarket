@@ -4,22 +4,22 @@ import { useWishlistStore } from "@/shared/api/stores/wishlistStore";
 import React from "react";
 import { FiX } from "react-icons/fi";
 import ProductWishlistedCard from "./ProductWishlistedCard";
-import Link from "next/link";
-
+import { Link } from "@/i18n/navigation";
+import { useTranslations } from "next-intl";
 interface WishlistProps {
   onClose: () => void;
 }
 
 const Wishlist = ({ onClose }: WishlistProps) => {
   const { items } = useWishlistStore();
-
+  const t = useTranslations("Wishlist");
   return (
     <div className="h-[calc(100vh-2rem)] overflow-y-auto p-6 md:w-[600px]">
       <div className="flex justify-between items-center px-3 py-2 border-b border-gray-100">
         <div className="flex flex-col gap-3">
           <div className="flex justify-between">
             <h3 className="text-2xl font-semibold text-gray-800">
-              My Wishlist
+              {t("title")}
             </h3>
 
             <button
@@ -31,15 +31,15 @@ const Wishlist = ({ onClose }: WishlistProps) => {
             </button>
           </div>
           <p className="text-gray-800 text-sm">
-            Wishlist is not saved permanently yet. Please
+            {t("notSaved")}
             <Link href="/login" className="text-blue-600 hover:underline px-1">
-              log in
+              {t("logIn")}
             </Link>
-            or
+            {t("or")}
             <Link href="/signup" className="text-blue-600 hover:underline px-1">
-              Create Account
+              {t("createAccount")}
             </Link>
-            to save it.
+            {t("toSave")}
           </p>
         </div>
       </div>
@@ -47,9 +47,7 @@ const Wishlist = ({ onClose }: WishlistProps) => {
       {/* Wishlist content */}
       <div className="p-3">
         {items.length === 0 ? (
-          <p className="text-gray-500 text-sm text-center">
-            Your wishlist is empty 💔
-          </p>
+          <p className="text-gray-500 text-sm text-center">{t("empty")} 💔</p>
         ) : (
           items.map((item) => (
             <ProductWishlistedCard key={item.productId} product={item} />

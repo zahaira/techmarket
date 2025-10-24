@@ -5,6 +5,7 @@ import { z as zod } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { TextInput } from "@/components/TextInput";
 import { CustomButton } from "@/components/CustomButton";
+import { useTranslations } from "next-intl";
 
 interface AuthPageProps {
   onClose: () => void;
@@ -24,6 +25,8 @@ export const PersonalInfoSchema = zod.object({
 export type PersonalInfoType = zod.infer<typeof PersonalInfoSchema>;
 
 const AuthPage = ({ onClose }: AuthPageProps) => {
+  const tAuth = useTranslations("auth");
+  const tBtn = useTranslations("buttons");
   const [activeTab, setActiveTab] = useState<"login" | "signup">("login");
   const defaultValues = {
     firstName: "ddd",
@@ -40,9 +43,7 @@ const AuthPage = ({ onClose }: AuthPageProps) => {
     defaultValues,
   });
 
-  const onSubmit = (data: PersonalInfoType) => {
-    console.log("✅ Saved Personal Info:", data);
-  };
+  const onSubmit = (data: PersonalInfoType) => {};
 
   return (
     <div className="h-[calc(100vh-2rem)] relative  overflow-y-auto p-6 md:w-[600px] flex justify-center">
@@ -57,7 +58,7 @@ const AuthPage = ({ onClose }: AuthPageProps) => {
       </div>
       <div className="max-w-md w-full p-8 space-y-6">
         <h1 className="text-2xl font-bold text-gray-700 text-center mb-6">
-          {activeTab === "login" ? "Se connecter" : "Créer un compte"}
+          {activeTab === "login" ? tAuth("login") : tAuth("signup")}
         </h1>
 
         {/* Tabs */}
@@ -72,7 +73,7 @@ const AuthPage = ({ onClose }: AuthPageProps) => {
                   : "text-gray-500 hover:text-gray-700 cursor-pointer"
               }`}
             >
-              {tab === "login" ? "Connexion" : "Inscription"}
+              {tab === "login" ? tAuth("login") : tAuth("signup")}
               {activeTab === tab && (
                 <div className="absolute bottom-0 left-0 right-0 h-1 bg-blue-600 rounded-t" />
               )}
@@ -88,7 +89,7 @@ const AuthPage = ({ onClose }: AuthPageProps) => {
                 control={control}
                 render={({ field, fieldState }) => (
                   <TextInput
-                    label="First Name"
+                    label={tAuth("first_name")}
                     {...field}
                     error={fieldState.error?.message}
                   />
@@ -99,7 +100,7 @@ const AuthPage = ({ onClose }: AuthPageProps) => {
                 control={control}
                 render={({ field, fieldState }) => (
                   <TextInput
-                    label="Last Name"
+                    label={tAuth("last_name")}
                     {...field}
                     error={fieldState.error?.message}
                   />
@@ -115,7 +116,7 @@ const AuthPage = ({ onClose }: AuthPageProps) => {
               control={control}
               render={({ field, fieldState }) => (
                 <TextInput
-                  label="Email"
+                  label={tAuth("email")}
                   {...field}
                   error={fieldState.error?.message}
                 />
@@ -130,7 +131,7 @@ const AuthPage = ({ onClose }: AuthPageProps) => {
               control={control}
               render={({ field, fieldState }) => (
                 <TextInput
-                  label="Password"
+                  label={tAuth("password")}
                   {...field}
                   type="password"
                   error={fieldState.error?.message}
@@ -138,37 +139,35 @@ const AuthPage = ({ onClose }: AuthPageProps) => {
               )}
             />
           </div>
-          <CustomButton type="submit">
-            {activeTab === "login" ? "Se connecter" : "S’inscrire"}
-          </CustomButton>
+          <CustomButton type="submit">{tBtn("submit")} </CustomButton>
         </form>
 
         <div className="text-center text-gray-500 text-sm">
           {activeTab === "login" ? (
-            <div className="flex flex-col gap-2">
-              <div>
-                Pas de compte ?{" "}
+            <div className="flex flex-col gap-2 ">
+              <div className="flex gap-1 justify-center">
+                <span>{tAuth("no_account")}</span>
                 <button
                   className="text-primary-dark hover:underline  cursor-pointer"
                   onClick={() => setActiveTab("signup")}
                 >
-                  S’inscrire
+                  {tAuth("signup")}
                 </button>
               </div>
               <button className="text-primary-dark hover:underline  cursor-pointer">
-                Lost your password?
+                {tAuth("forgot_password")}
               </button>
             </div>
           ) : (
-            <>
-              Déjà un compte ?{" "}
+            <div className="flex gap-1 justify-center">
+              <span> {tAuth("already_have_account")}</span>
               <button
                 className="text-primary-dark hover:underline cursor-pointer"
                 onClick={() => setActiveTab("login")}
               >
-                Se connecter
+                {tAuth("login")}
               </button>
-            </>
+            </div>
           )}
         </div>
       </div>

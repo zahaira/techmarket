@@ -4,10 +4,11 @@ import { ProductCardItem } from "@/shared/types/product";
 import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import ProductCard from "./ProductCard";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { FreeMode, Mousewheel } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/free-mode";
+import { useTranslations } from "next-intl";
 
 interface ProductCarouselSectionProps {
   title: string;
@@ -22,6 +23,7 @@ const ProductCarouselSection = ({
   showSeeMore = true,
   seeMoreLink = "#",
 }: ProductCarouselSectionProps) => {
+  const tShop = useTranslations("shop");
   return (
     <section className="py-8 px-1 sm:px-4 bg-gray-50">
       <div className="flex items-center justify-between mb-6 px-4 sm:px-0">
@@ -31,7 +33,7 @@ const ProductCarouselSection = ({
             href={seeMoreLink}
             className="text-sm font-semibold text-gray-700 tracking-wide hover:text-gray-600 relative group cursor-pointer"
           >
-            See More +
+            {tShop("see_more")} +
             <span className="absolute left-0 -bottom-0.5 w-0 h-[2px] bg-primary-main transition-all duration-300 group-hover:w-full"></span>
           </Link>
         )}

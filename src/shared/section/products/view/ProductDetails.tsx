@@ -1,21 +1,27 @@
-import { _mockCategories } from "@/shared/_mock/_category";
 import { Product } from "@/shared/types/product";
 import { findCategoryPathById } from "@/shared/utils/category";
 import React from "react";
 import Breadcrumbs from "../../components/Breadcrumbs";
 import ProductDetailsSummary from "../ProductDetailsSummary";
 import ProductDetailsCarousel from "../ProductDetailsCarousel";
+import { useLocale, useTranslations } from "next-intl";
+import { mapCategoriesToLocale } from "@/shared/_mock/service";
+import { _mockCategories } from "@/shared/_mock/_category";
 
 interface ProductDetailsProps {
   product: Product;
 }
 
 const ProductDetails = ({ product }: ProductDetailsProps) => {
+  const tShop = useTranslations("shop");
+  const t = useTranslations("nav");
+  const locale = useLocale();
+  const categories = mapCategoriesToLocale(_mockCategories, locale);
   const categoryPath =
-    findCategoryPathById(_mockCategories, product.primaryCategoryId) || [];
+    findCategoryPathById(categories, product.primaryCategoryId) || [];
 
   const links = [
-    { name: "Accueil", href: "/" },
+    { name: t("home"), href: "/" },
     ...categoryPath.map((cat, idx) => ({
       name: cat.name,
       href: `/category/${categoryPath
@@ -35,27 +41,25 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
       </div>
       <div className="space-y-6 mt-20">
         {/* Titre du produit */}
-        <h1 className="text-2xl font-bold text-gray-800">Product Details</h1>
+        <h1 className="text-2xl font-bold text-gray-800">{tShop("details")}</h1>
 
         {/* Description */}
         <p className="text-gray-700 leading-relaxed">{product.description}</p>
 
         {/* Attributs */}
-        {product.attributes && (
+        {product.attributes && product.attributes.length > 0 && (
           <div className="mt-6">
-            <h1 className="text-2xl font-bold text-gray-800">
-              Caracteristiques
-            </h1>
-
             <div className="overflow-x-auto mt-6">
-              <table className="min-w-full">
+              <table className="min-w-full border border-gray-200 rounded-lg">
                 <tbody className="bg-white divide-y divide-gray-200">
-                  {Object.entries(product.attributes).map(([key, value]) => (
-                    <tr key={key}>
+                  {product.attributes.map((attr, index) => (
+                    <tr key={index}>
                       <td className="px-4 py-2 font-medium text-gray-700">
-                        {key}
+                        {attr.name}
                       </td>
-                      <td className="px-4 py-2 text-gray-900">{value}</td>
+                      <td className="px-4 py-2 text-gray-900">
+                        {String(attr.value)}
+                      </td>
                     </tr>
                   ))}
                 </tbody>

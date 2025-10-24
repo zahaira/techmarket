@@ -1,6 +1,7 @@
-import NotFound from "@/app/not-found";
-import { getProductBySlug } from "@/shared/_mock/_product";
+import NotFound from "@/app/[locale]/not-found";
+import { getProductBySlug } from "@/shared/_mock/_productMock";
 import ProductDetails from "@/shared/section/products/view/ProductDetails";
+import { cookies } from "next/headers";
 import React from "react";
 
 interface props {
@@ -9,7 +10,8 @@ interface props {
 
 const page = async ({ params }: props) => {
   const { slug } = await params;
-  const product = getProductBySlug(slug);
+  const locale = (await cookies()).get("NEXT_LOCALE")?.value || "en";
+  const product = getProductBySlug(slug, locale);
   if (!product) {
     return NotFound();
   }

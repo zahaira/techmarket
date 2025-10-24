@@ -1,7 +1,7 @@
 import { Category } from "@/shared/types/category";
 import Image from "next/image";
 import React from "react";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/i18n/navigation";
 import { _mockCategories } from "@/shared/_mock/_category";
 
 interface CategoryCardProps {

@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import React from "react";
 
 interface NewBadgeProps {
@@ -11,11 +12,12 @@ const sizeStyles = {
 };
 
 const NewBadge: React.FC<NewBadgeProps> = ({ size = "md" }) => {
+  const tShop = useTranslations("shop");
   return (
     <div
       className={`rounded-full bg-green-500 font-bold text-green-50 shadow w-max ${sizeStyles[size]}`}
     >
-      NEW
+      {tShop("new")}
     </div>
   );
 };

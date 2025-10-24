@@ -56,9 +56,7 @@ const PersonalInfoForm = () => {
   const selectedRegionId = selectedRegion ? Number(selectedRegion) : undefined;
   const cities = selectedRegionId ? getCitiesByRegion(selectedRegionId) : [];
 
-  const onSubmit = (data: PersonalInfoType) => {
-    console.log("✅ Saved Personal Info:", data);
-  };
+  const onSubmit = (data: PersonalInfoType) => {};
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
       <div className="grid grid-cols-2 gap-4">

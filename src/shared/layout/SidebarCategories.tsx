@@ -4,7 +4,9 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { IoClose } from "react-icons/io5";
 import { _mockCategories } from "../_mock/_category";
 import { iconMap } from "../utils/iconMap";
-import { useRouter } from "next/navigation";
+import { useLocale, useTranslations } from "next-intl";
+import { mapCategoriesToLocale } from "../_mock/service";
+import { useRouter } from "@/i18n/navigation";
 
 interface SidebarProps {
   isOpen: boolean;
@@ -12,9 +14,10 @@ interface SidebarProps {
 }
 
 const SidebarCategories = ({ isOpen, setIsOpen }: SidebarProps) => {
+  const t = useTranslations("homePage");
   const router = useRouter();
   const [isDesktop, setIsDesktop] = useState(false);
-
+  const locale = useLocale();
   useEffect(() => {
     const handleResize = () => setIsDesktop(window.innerWidth >= 640);
     handleResize();
@@ -22,6 +25,8 @@ const SidebarCategories = ({ isOpen, setIsOpen }: SidebarProps) => {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
+  const categories = mapCategoriesToLocale(_mockCategories, locale);
 
   return (
     <>
@@ -40,7 +45,9 @@ const SidebarCategories = ({ isOpen, setIsOpen }: SidebarProps) => {
 
       <motion.aside
         className={`
-          fixed top-0 left-0 h-full bg-white shadow-lg border-r border-gray-200 z-50 
+          fixed top-0 ${
+            locale === "ar" ? "right-0" : "left-0"
+          }  h-full bg-white shadow-lg border-r border-gray-200 z-50 
           flex flex-col items-start py-4
           sm:translate-x-0
           ${!isOpen ? "-translate-x-full sm:translate-x-0" : "translate-x-0"}
@@ -66,7 +73,9 @@ const SidebarCategories = ({ isOpen, setIsOpen }: SidebarProps) => {
             className="relative flex items-center h-[46px] w-full"
           >
             <motion.div
-              className="absolute top-0 left-0 h-full bg-[#4da6ff] rounded-full shadow-md"
+              className={`absolute top-0 ${
+                locale === "ar" ? "right-0" : "left-0"
+              } h-full bg-[#4da6ff] rounded-full shadow-md`}
               initial={false}
               animate={{ width: isOpen ? "100%" : "46px" }}
               transition={{
@@ -99,7 +108,7 @@ const SidebarCategories = ({ isOpen, setIsOpen }: SidebarProps) => {
                     transition={{ duration: 0.2, ease: "easeOut" }}
                     className="text-sm font-medium tracking-wide whitespace-nowrap text-white z-10"
                   >
-                    All Categories
+                    {t("categories")}
                   </motion.span>
                 )}
               </AnimatePresence>
@@ -109,7 +118,7 @@ const SidebarCategories = ({ isOpen, setIsOpen }: SidebarProps) => {
 
         {/* Categories */}
         <div className="flex flex-col gap-4 w-full">
-          {_mockCategories.map((cat, i) => {
+          {categories.map((cat, i) => {
             const Icon = iconMap[cat.iconName];
 
             return (

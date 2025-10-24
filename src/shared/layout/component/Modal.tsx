@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useLocale } from "next-intl";
 
 interface ModalProps {
   isOpen: boolean;
@@ -11,6 +12,8 @@ interface ModalProps {
 
 const Modal = ({ isOpen, onClose, children }: ModalProps) => {
   const modalRef = useRef<HTMLDivElement | null>(null);
+  const locale = useLocale(); // "en" ou "ar"
+  const isRTL = locale === "ar";
 
   // Close when clicking outside
   useEffect(() => {
@@ -42,9 +45,9 @@ const Modal = ({ isOpen, onClose, children }: ModalProps) => {
           {/* Modal content */}
           <motion.div
             ref={modalRef}
-            initial={{ x: 300, opacity: 0 }}
+            initial={{ x: isRTL ? -300 : 300, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
-            exit={{ x: 300, opacity: 0 }}
+            exit={{ x: isRTL ? -300 : 300, opacity: 0 }}
             transition={{ type: "spring", stiffness: 300, damping: 30 }}
             className="relative z-10 max-h-screen bg-white rounded-2xl shadow-xl m-4"
           >

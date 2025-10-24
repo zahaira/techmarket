@@ -9,12 +9,17 @@ import ProductAddToCartButton from "../components/ProductAddToCartButton";
 import { useCartStore } from "@/shared/api/stores/CartStore";
 import { useForm } from "react-hook-form";
 import { CustomButton } from "@/components/CustomButton";
+import { useLocale, useTranslations } from "next-intl";
+import { getArabicYearText } from "@/shared/utils/helper";
 
 interface ProductDetailsSummaryProps {
   product: Product;
 }
 
 const ProductDetailsSummary = ({ product }: ProductDetailsSummaryProps) => {
+  const tShop = useTranslations("shop");
+  const tBtn = useTranslations("buttons");
+  const locale = useLocale();
   const { addToCart, items } = useCartStore();
   const isInCart = items.some((i) => i.productId === product.productId);
 
@@ -47,7 +52,7 @@ const ProductDetailsSummary = ({ product }: ProductDetailsSummaryProps) => {
             product.stock > 0 ? "text-green-600" : "text-red-600"
           }`}
         >
-          {product.stock > 0 ? "In Stock" : "Out of Stock"}
+          {product.stock > 0 ? tShop("in_stock") : tShop("out_of_stock")}
         </p>
 
         {/* Badge Best Seller */}
@@ -76,22 +81,38 @@ const ProductDetailsSummary = ({ product }: ProductDetailsSummaryProps) => {
 
       {product.warranty && product.warranty > 0 && (
         <div className="flex gap-3 bg-gray-100 w-max p-4 sm:px-9 mx-auto text-gray-700">
-          <p>Warranty:</p>
-          <div>{product.warranty} years</div>
+          <p>{tShop("warranty")} :</p>
+          <div>
+            <span>
+              {locale === "ar" ? (
+                getArabicYearText(product.warranty)
+              ) : product.warranty === 1 ? (
+                <>
+                  <span>{product.warranty}</span> {tShop("year")}
+                </>
+              ) : (
+                <>
+                  <span>{product.warranty}</span> {tShop("years")}
+                </>
+              )}
+            </span>
+          </div>
         </div>
       )}
 
       {/* Variantes / attributs */}
-      {product.attributes && Object.keys(product.attributes).length > 0 && (
+      {product.attributes && product.attributes.length > 0 && (
         <div className="mt-4">
           <h3 className="text-lg font-semibold text-gray-800 mb-2">
-            Key Points
+            {tShop("key_points")}
           </h3>
           <ul className="list-disc list-inside space-y-1 text-gray-500">
-            {Object.entries(product.attributes).map(([key, value]) => (
-              <li key={key}>
-                <span className="font-semibold capitalize pr-2">{key} :</span>
-                <span>{value}</span>
+            {product.attributes.map((attr, index) => (
+              <li key={index} className="space-x-1">
+                <span className="font-semibold capitalize pr-2">
+                  {attr.name} :
+                </span>
+                <span>{String(attr.value)}</span>
               </li>
             ))}
           </ul>
@@ -99,13 +120,11 @@ const ProductDetailsSummary = ({ product }: ProductDetailsSummaryProps) => {
       )}
 
       {/* Short Description / Shipping Info */}
-      <p className="text-gray-500 text-sm">
-        Livraison gratuite à partir de 50€ d&apos;achat.
-      </p>
+      <p className="text-gray-500 text-sm">{tShop("freeShipping")}</p>
 
       {product.stock > 0 && (
         <div className="flex items-center justify-between">
-          <p className="text-gray-600">Quantity</p>
+          <p className="text-gray-600">{tShop("quantity")}</p>
           <QuantitySelector
             name="quantity"
             quantity={values.quantity}
@@ -132,7 +151,7 @@ const ProductDetailsSummary = ({ product }: ProductDetailsSummaryProps) => {
 
         {/* Buy Now */}
         <CustomButton variant="secondary" className="sm:w-1/2">
-          Buy Now
+          {tBtn("buy_now")}
         </CustomButton>
       </div>
     </div>
