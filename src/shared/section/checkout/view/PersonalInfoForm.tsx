@@ -13,6 +13,7 @@ import {
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
 import { z as zod } from "zod";
+import { useLocale, useTranslations } from "next-intl";
 
 export const PersonalInfoSchema = zod.object({
   firstName: zod.string().min(1, { message: "Name is required!" }),
@@ -31,6 +32,9 @@ export const PersonalInfoSchema = zod.object({
 export type PersonalInfoType = zod.infer<typeof PersonalInfoSchema>;
 
 const PersonalInfoForm = () => {
+  const tAuth = useTranslations("auth");
+  const tBtn = useTranslations("buttons");
+  const locale = useLocale();
   const defaultValues = {
     firstName: "ddd",
     lastName: "ddd",
@@ -51,10 +55,12 @@ const PersonalInfoForm = () => {
     resolver: zodResolver(PersonalInfoSchema),
     defaultValues,
   });
-  const regions = getRegions();
+  const regions = getRegions(locale as "fr" | "en" | "ar");
   const selectedRegion = watch("region");
   const selectedRegionId = selectedRegion ? Number(selectedRegion) : undefined;
-  const cities = selectedRegionId ? getCitiesByRegion(selectedRegionId) : [];
+  const cities = selectedRegionId
+    ? getCitiesByRegion(selectedRegionId, locale as "fr" | "en" | "ar")
+    : [];
 
   const onSubmit = (data: PersonalInfoType) => {};
   return (
@@ -65,7 +71,7 @@ const PersonalInfoForm = () => {
           control={control}
           render={({ field, fieldState }) => (
             <TextInput
-              label="First Name"
+              label={tAuth("first_name")}
               {...field}
               error={fieldState.error?.message}
             />
@@ -76,7 +82,7 @@ const PersonalInfoForm = () => {
           control={control}
           render={({ field, fieldState }) => (
             <TextInput
-              label="Last Name"
+              label={tAuth("last_name")}
               {...field}
               error={fieldState.error?.message}
             />
@@ -96,7 +102,7 @@ const PersonalInfoForm = () => {
               htmlFor="prefix"
               className="absolute -top-2 left-3 bg-white px-1 text-xs text-gray-600"
             >
-              Prefix
+              {tAuth("prefix")}
             </label>
           </div>
           <Controller
@@ -104,7 +110,7 @@ const PersonalInfoForm = () => {
             control={control}
             render={({ field, fieldState }) => (
               <TextInput
-                label="Phone"
+                label={tAuth("phone_number")}
                 {...field}
                 error={fieldState.error?.message}
               />
@@ -124,7 +130,7 @@ const PersonalInfoForm = () => {
               htmlFor="aprefix"
               className="absolute -top-2 left-3 bg-white px-1 text-xs text-gray-600"
             >
-              Prefix
+              {tAuth("prefix")}
             </label>
           </div>
           <Controller
@@ -132,7 +138,7 @@ const PersonalInfoForm = () => {
             control={control}
             render={({ field, fieldState }) => (
               <TextInput
-                label="Additional Phone"
+                label={tAuth("additional_phone_number")}
                 {...field}
                 error={fieldState.error?.message}
               />
@@ -145,7 +151,7 @@ const PersonalInfoForm = () => {
         control={control}
         render={({ field, fieldState }) => (
           <TextInput
-            label="Email"
+            label={tAuth("email")}
             {...field}
             error={fieldState.error?.message}
           />
@@ -156,7 +162,7 @@ const PersonalInfoForm = () => {
         control={control}
         render={({ field, fieldState }) => (
           <TextInput
-            label="Address"
+            label={tAuth("address")}
             {...field}
             error={fieldState.error?.message}
           />
@@ -167,7 +173,7 @@ const PersonalInfoForm = () => {
         control={control}
         render={({ field, fieldState }) => (
           <TextInput
-            label="Additional Information"
+            label={tAuth("additional_information")}
             {...field}
             error={fieldState.error?.message}
           />
@@ -184,7 +190,7 @@ const PersonalInfoForm = () => {
                 value={field.value ?? undefined}
               >
                 <SelectTrigger className="w-full border-gray-300 focus:ring-2 focus:ring-primary-main">
-                  <SelectValue placeholder="Select Region" />
+                  <SelectValue placeholder={tAuth("select_region")} />
                 </SelectTrigger>
                 <SelectContent>
                   {regions.map((region) => (
@@ -213,7 +219,7 @@ const PersonalInfoForm = () => {
                 value={field.value ?? undefined}
               >
                 <SelectTrigger className="w-full border-gray-300 focus:ring-2 focus:ring-primary-main">
-                  <SelectValue placeholder="Select City" />
+                  <SelectValue placeholder={tAuth("select_city")} />
                 </SelectTrigger>
                 <SelectContent>
                   {cities.map((city) => (
@@ -234,7 +240,7 @@ const PersonalInfoForm = () => {
       </div>
 
       <CustomButton type="submit" disabled={isSubmitting}>
-        {isSubmitting ? "Saving..." : "Save Information"}
+        {isSubmitting ? tBtn("saving") : tBtn("submit")}
       </CustomButton>
     </form>
   );

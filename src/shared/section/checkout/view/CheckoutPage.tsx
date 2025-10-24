@@ -12,29 +12,33 @@ import {
   AccordionContent,
 } from "@/components/ui/accordion";
 import CheckoutSection from "./CheckoutSection";
+import { useTranslations } from "next-intl";
 
 const CheckoutPage = () => {
   const router = useRouter();
   const { items } = useCartStore();
+  const tCheckout = useTranslations("checkout");
+  const tCart = useTranslations("cart");
+  const tBenefits = useTranslations("benefits");
 
   const [shippingMethod, setShippingMethod] = useState("home");
 
   if (items.length === 0)
     return (
       <div className="flex flex-col items-center justify-center py-20 text-gray-700">
-        <p className="text-xl font-semibold">Your cart is empty</p>
+        <p className="text-xl font-semibold">{tCart("emptyCart")}</p>
         <button
           onClick={() => router.push("/")}
           className="mt-4 px-4 py-2 bg-primary-main text-white rounded hover:bg-primary-dark transition"
         >
-          Continue Shopping
+          {tCart("continueShopping")}
         </button>
       </div>
     );
 
   return (
     <div>
-      <h1 className="text-2xl font-bold mb-6">Checkout</h1>
+      <h1 className="text-2xl font-bold mb-6">{tCheckout("title")}</h1>
 
       <div className="flex flex-col lg:flex-row gap-6">
         <div className="w-full flex flex-col gap-6">
@@ -46,7 +50,7 @@ const CheckoutPage = () => {
             <AccordionItem value="item-1" className="group">
               <AccordionTrigger className="hover:no-underline focus:no-underline w-full">
                 <span className="font-medium text-base">
-                  1. Customer address
+                  1. {tCheckout("customer_address")}
                 </span>
               </AccordionTrigger>
               <div className="px-1 flex flex-col gap-1 group-data-[state=open]:hidden transition-all duration-300">
@@ -67,7 +71,9 @@ const CheckoutPage = () => {
           {/* Shipping Method */}
           <div className="bg-white p-3 rounded-lg shadow-sm">
             <div>
-              <h2 className="font-medium text-base">2. Shipping Method</h2>
+              <h2 className="font-medium text-base">
+                2. {tCheckout("shipping_method")}
+              </h2>
               <hr className="w-full border-gray-300 mb-3 mt-5" />
             </div>
 
@@ -80,7 +86,7 @@ const CheckoutPage = () => {
                   checked={shippingMethod === "home"}
                   onChange={() => setShippingMethod("home")}
                 />
-                Home Delivery (Free)
+                {tBenefits("delivery_title")} ({tCart("free")})
               </label>
               <label className="flex items-center gap-2">
                 <input
@@ -90,7 +96,7 @@ const CheckoutPage = () => {
                   checked={shippingMethod === "store"}
                   onChange={() => setShippingMethod("store")}
                 />
-                Pickup Store
+                {tCheckout("pickup_store")}
               </label>
             </div>
           </div>
@@ -98,7 +104,9 @@ const CheckoutPage = () => {
           {/* Peyment Method */}
           <div className="bg-white p-3 rounded-lg shadow-sm">
             <div>
-              <h2 className="font-medium text-base">3. Payment</h2>
+              <h2 className="font-medium text-base">
+                3. {tCheckout("payment")}
+              </h2>
               <hr className="w-full border-gray-300 mb-3 mt-5" />
             </div>
 

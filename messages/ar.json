@@ -15,11 +15,14 @@
     "last_name": "اسم العائلة",
     "email": "البريد الإلكتروني",
     "phone_number": "رقم الهاتف",
+    "prefix": "الرمز",
     "additional_phone_number": "رقم هاتف إضافي",
     "additional_information": "معلومات إضافية",
     "address": "العنوان",
     "region": "المنطقة",
     "city": "المدينة",
+    "select_region": "اختر المنطقة",
+    "select_city": "اختر المدينة",
     "first_name_required": "الاسم مطلوب!",
     "last_name_required": "اسم العائلة مطلوب!",
     "email_required": "البريد الإلكتروني مطلوب!",
@@ -70,7 +73,9 @@
     "view_details": "عرض التفاصيل",
     "view_cart": "عرض السلة",
     "buy_now": "اشترِ الآن",
-    "proceedToCheckout": "المتابعة إلى الدفع"
+    "proceedToCheckout": "المتابعة إلى الدفع",
+    "loading": "جاري التحميل...",
+    "saving": "جاري الحفظ..."
   },
   "placeholders": {
     "enter_email": "أدخل بريدك الإلكتروني",
@@ -127,7 +132,13 @@
     "free":"مجاني"
   },
   "checkout": {
+    "title": "إتمام الطلب",
+    "pickup_store": "الاستلام من المتجر",
+    "customer_address": "عنوان العميل",
+    "shipping_method": "طريقة الشحن",
     "shipping": "الشحن",
+    "pay": "ادفع",
+    "processing": "جارٍ المعالجة...",
     "payment": "الدفع",
     "order_summary": "ملخص الطلب",
     "place_order": "تقديم الطلب",

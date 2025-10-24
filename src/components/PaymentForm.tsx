@@ -9,6 +9,7 @@ import {
 import convertToSubcurrency from "@/shared/utils/convertToSubcurrency";
 import { CustomButton } from "./CustomButton";
 import { fCurrency } from "@/shared/utils/format-number";
+import { useTranslations } from "next-intl";
 
 export const PaymentForm = ({ amount }: { amount: number }) => {
   const stripe = useStripe();
@@ -16,7 +17,7 @@ export const PaymentForm = ({ amount }: { amount: number }) => {
   const [errorMessage, setErrorMessage] = useState<string>();
   const [clientSecret, setClientSecret] = useState("");
   const [loading, setLoading] = useState(false);
-
+  const tCheckout = useTranslations("checkout");
   useEffect(() => {
     fetch("/api/create-payment-intent", {
       method: "POST",
@@ -73,7 +74,7 @@ export const PaymentForm = ({ amount }: { amount: number }) => {
           role="status"
         >
           <span className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
-            Loading...
+            {tCheckout("loading")}
           </span>
         </div>
       </div>
@@ -89,7 +90,9 @@ export const PaymentForm = ({ amount }: { amount: number }) => {
       )}
       <div className="mt-2">
         <CustomButton type="submit" disabled={!stripe || loading}>
-          {!loading ? `Pay ${fCurrency(amount)}` : "Processing..."}
+          {!loading
+            ? `${tCheckout("pay")} ${fCurrency(amount)}`
+            : tCheckout("processing")}
         </CustomButton>
       </div>
     </form>
