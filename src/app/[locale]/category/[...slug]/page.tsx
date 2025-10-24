@@ -13,7 +13,7 @@ import { cookies } from "next/headers";
 import React from "react";
 
 interface CategoryPageProps {
-  params: { slug: string[] };
+  params: Promise<{ slug: string[] }>;
 }
 
 const CategoryPage = async ({ params }: CategoryPageProps) => {

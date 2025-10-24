@@ -5,7 +5,7 @@ import { cookies } from "next/headers";
 import React from "react";
 
 interface props {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }
 
 const page = async ({ params }: props) => {

@@ -3,6 +3,8 @@ import Image from "next/image";
 import React from "react";
 import { useRouter } from "@/i18n/navigation";
 import { _mockCategories } from "@/shared/_mock/_category";
+import { useLocale } from "next-intl";
+import { mapCategoriesToLocale } from "@/shared/_mock/service";
 
 interface CategoryCardProps {
   category: Category;
@@ -27,10 +29,12 @@ const getCategoryPath = (
 
 const CategoryCard = ({ category }: CategoryCardProps) => {
   const router = useRouter();
+  const locale = useLocale();
+  const categories = mapCategoriesToLocale(_mockCategories, locale);
 
   return (
     <div
-      onClick={() => router.push(getCategoryPath(category, _mockCategories))}
+      onClick={() => router.push(getCategoryPath(category, categories))}
       className="h-[140px] w-[120px] sm:h-[200px] sm:w-[200px] flex flex-col gap-4 justify-center items-center cursor-pointer"
     >
       <div className="relative w-[90px] h-[90px] sm:w-[150px] sm:h-[150px] rounded-full bg-blue-50 flex items-center justify-center overflow-hidden">
