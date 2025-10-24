@@ -23,24 +23,21 @@ export function buildBreadcrumbs(
   const breadcrumbs: { name: string; slugPath: string[] }[] = [];
   const stack: Category[] = [];
 
-  // Construire la pile de parents du root vers current
   let current: Category | undefined = category;
   while (current) {
     stack.unshift(current);
     current = allCategories.find((c) => c.categoryId === current?.parentId);
   }
 
-  // Construire les slugPath correctement
   const path: string[] = [];
   for (const cat of stack) {
-    path.push(cat.slug); // ajoute seulement jusqu'à ce cat
+    path.push(cat.slug);
     breadcrumbs.push({
       name: cat.name,
       slugPath: [...path],
     });
   }
 
-  console.log("breadcrumbs", breadcrumbs);
   return breadcrumbs;
 }
 

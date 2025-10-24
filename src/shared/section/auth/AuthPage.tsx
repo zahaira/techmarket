@@ -43,9 +43,7 @@ const AuthPage = ({ onClose }: AuthPageProps) => {
     defaultValues,
   });
 
-  const onSubmit = (data: PersonalInfoType) => {
-    console.log("✅ Saved Personal Info:", data);
-  };
+  const onSubmit = (data: PersonalInfoType) => {};
 
   return (
     <div className="h-[calc(100vh-2rem)] relative  overflow-y-auto p-6 md:w-[600px] flex justify-center">

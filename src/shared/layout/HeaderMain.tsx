@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import React, { useState } from "react";
 import { BsSearch } from "react-icons/bs";
 import { FiHeart, FiUser } from "react-icons/fi";
@@ -47,7 +47,7 @@ const HeaderMain = ({ toggleSidebar }: HeaderMainProps) => {
 
           {/* Logo */}
           <Link
-            href={`/${locale}`}
+            href="/"
             className="text-2xl sm:text-3xl font-bold text-gray-800 flex items-center"
           >
             Tech<span className="text-[#4da6ff] ml-1">Market</span>

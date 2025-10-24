@@ -97,6 +97,8 @@
     "total": "Total",
     "new": "New",
     "warranty": "Warranty",
+    "warranty_badge":"Warranty",
+    "year": "Year",
     "years": "Years",
     "features": "Features",
     "best_seller": "Best Seller",
@@ -132,7 +134,8 @@
   },
   "homePage":{
     "best_offer":"Our Best Offers",
-    "best_sellers": "Best Sellers"
+    "best_sellers": "Best Sellers",
+    "categories":"All Categories"
   },
   "LocaleSwitcher": {
     "label": "Change language",

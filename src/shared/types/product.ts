@@ -1,9 +1,7 @@
 // 2. Product
 export interface ProductAttribute {
-  name_en: string;
-  name_ar: string;
-  value_en: string | boolean | number;
-  value_ar: string | boolean | number;
+  name: string;
+  value: string | boolean | number;
 }
 export interface Product {
   productId: string;

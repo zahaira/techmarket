@@ -4,7 +4,7 @@ import React from "react";
 import QuantitySelector from "@/shared/section/components/QuantitySelector";
 import Image from "next/image";
 import { FiX } from "react-icons/fi";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/i18n/navigation";
 import { useCartStore } from "@/shared/api/stores/CartStore";
 import { fCurrency } from "@/shared/utils/format-number";
 import { Link } from "@/i18n/navigation";

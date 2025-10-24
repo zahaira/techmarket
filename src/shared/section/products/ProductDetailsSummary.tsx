@@ -82,29 +82,37 @@ const ProductDetailsSummary = ({ product }: ProductDetailsSummaryProps) => {
       {product.warranty && product.warranty > 0 && (
         <div className="flex gap-3 bg-gray-100 w-max p-4 sm:px-9 mx-auto text-gray-700">
           <p>{tShop("warranty")} :</p>
-          <div className="space-x-1">
-            <span>{product.warranty}</span>
-
+          <div>
             <span>
-              {locale === "ar"
-                ? getArabicYearText(product.warranty)
-                : tShop("years")}
+              {locale === "ar" ? (
+                getArabicYearText(product.warranty)
+              ) : product.warranty === 1 ? (
+                <>
+                  <span>{product.warranty}</span> {tShop("year")}
+                </>
+              ) : (
+                <>
+                  <span>{product.warranty}</span> {tShop("years")}
+                </>
+              )}
             </span>
           </div>
         </div>
       )}
 
       {/* Variantes / attributs */}
-      {product.attributes && Object.keys(product.attributes).length > 0 && (
+      {product.attributes && product.attributes.length > 0 && (
         <div className="mt-4">
           <h3 className="text-lg font-semibold text-gray-800 mb-2">
             {tShop("key_points")}
           </h3>
           <ul className="list-disc list-inside space-y-1 text-gray-500">
-            {Object.entries(product.attributes).map(([key, value]) => (
-              <li key={key}>
-                <span className="font-semibold capitalize pr-2">{key} :</span>
-                <span>{value}</span>
+            {product.attributes.map((attr, index) => (
+              <li key={index} className="space-x-1">
+                <span className="font-semibold capitalize pr-2">
+                  {attr.name} :
+                </span>
+                <span>{String(attr.value)}</span>
               </li>
             ))}
           </ul>

@@ -97,6 +97,7 @@
     "total": "الإجمالي",
     "new": "جديد",
     "warranty": "الضمان",
+    "warranty_badge":"ضمان",
     "year_one": "سنة",
     "year_two": "سنتان",
     "years": "سنوات",
@@ -134,7 +135,8 @@
   },
    "homePage": {
     "best_offer":"أفضل العروض",
-    "best_sellers": "الأكثر مبيعا"
+    "best_sellers": "الأكثر مبيعا",
+    "categories":"جميع الفئات"
   },
   "LocaleSwitcher": {
     "label": "تغيير اللغة",

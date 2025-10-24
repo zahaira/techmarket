@@ -9,8 +9,6 @@ type Props = {
   children: React.ReactNode;
   params: Promise<{ locale: string }>;
 };
-import en from "../../../messages/en.json";
-import ar from "../../../messages/ar.json";
 
 export default async function LocaleLayout({ children, params }: Props) {
   const { locale } = await params;
@@ -19,7 +17,6 @@ export default async function LocaleLayout({ children, params }: Props) {
   if (!hasLocale(routing.locales, locale)) {
     notFound();
   }
-  const messages = locale === "ar" ? ar.NotFound : en.NotFound;
   return (
     <html lang={locale} dir={dir}>
       <body>

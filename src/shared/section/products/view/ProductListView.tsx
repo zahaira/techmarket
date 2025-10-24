@@ -1,5 +1,4 @@
 import React from "react";
-import { _mockBestOfferProducts } from "@/shared/_mock/_product";
 import ProductList from "../../components/ProductList";
 import { ProductCardItem } from "@/shared/types/product";
 import { Category } from "@/shared/types/category";

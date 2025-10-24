@@ -1,8 +1,14 @@
 import { Link } from "@/i18n/navigation";
+import { cookies } from "next/headers";
 import React from "react";
 import { FaSearch } from "react-icons/fa";
+import en from "../../../messages/en.json";
+import ar from "../../../messages/ar.json";
 
-const NotFound = ({ messages }: { messages: Record<string, string> }) => {
+const NotFound = async () => {
+  const locale = (await cookies()).get("NEXT_LOCALE")?.value || "en";
+  const messages = locale === "ar" ? ar.NotFound : en.NotFound;
+
   return (
     <div className="flex flex-col items-center justify-center min-h-screen text-center px-6">
       <FaSearch className="text-primary-dark text-6xl mb-6 animate-bounce" />

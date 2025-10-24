@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/i18n/navigation";
 import { useCartStore } from "@/shared/api/stores/CartStore";
 import SummarySection from "../SummarySection";
 import PersonalInfoForm from "./PersonalInfoForm";

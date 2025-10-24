@@ -4,8 +4,9 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { IoClose } from "react-icons/io5";
 import { _mockCategories } from "../_mock/_category";
 import { iconMap } from "../utils/iconMap";
-import { useRouter } from "next/navigation";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
+import { mapCategoriesToLocale } from "../_mock/service";
+import { useRouter } from "@/i18n/navigation";
 
 interface SidebarProps {
   isOpen: boolean;
@@ -13,6 +14,7 @@ interface SidebarProps {
 }
 
 const SidebarCategories = ({ isOpen, setIsOpen }: SidebarProps) => {
+  const t = useTranslations("homePage");
   const router = useRouter();
   const [isDesktop, setIsDesktop] = useState(false);
   const locale = useLocale();
@@ -23,6 +25,8 @@ const SidebarCategories = ({ isOpen, setIsOpen }: SidebarProps) => {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
+  const categories = mapCategoriesToLocale(_mockCategories, locale);
 
   return (
     <>
@@ -104,7 +108,7 @@ const SidebarCategories = ({ isOpen, setIsOpen }: SidebarProps) => {
                     transition={{ duration: 0.2, ease: "easeOut" }}
                     className="text-sm font-medium tracking-wide whitespace-nowrap text-white z-10"
                   >
-                    All Categories
+                    {t("categories")}
                   </motion.span>
                 )}
               </AnimatePresence>
@@ -114,7 +118,7 @@ const SidebarCategories = ({ isOpen, setIsOpen }: SidebarProps) => {
 
         {/* Categories */}
         <div className="flex flex-col gap-4 w-full">
-          {_mockCategories.map((cat, i) => {
+          {categories.map((cat, i) => {
             const Icon = iconMap[cat.iconName];
 
             return (
