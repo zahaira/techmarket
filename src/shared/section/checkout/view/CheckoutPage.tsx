@@ -53,14 +53,14 @@ const CheckoutPage = () => {
                   1. {tCheckout("customer_address")}
                 </span>
               </AccordionTrigger>
-              <div className="px-1 flex flex-col gap-1 group-data-[state=open]:hidden transition-all duration-300">
+              {/* <div className="px-1 flex flex-col gap-1 group-data-[state=open]:hidden transition-all duration-300">
                 <hr className="w-full border-gray-300 my-1" />
 
                 <span className="text-gray-800 text-sm">zahaira jaada</span>
                 <span className="text-sm text-gray-600">
                   boukhakef, 122 rue jjj | sale | +2127655444
                 </span>
-              </div>
+              </div> */}
 
               <AccordionContent className="py-3 px-1">
                 <PersonalInfoForm />
