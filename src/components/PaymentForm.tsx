@@ -6,9 +6,9 @@ import {
   useStripe,
   useElements,
 } from "@stripe/react-stripe-js";
-import convertToSubcurrency from "@/shared/utils/convertToSubcurrency";
+import convertToSubcurrency from "@/utils/convertToSubcurrency";
 import { CustomButton } from "./CustomButton";
-import { fCurrency } from "@/shared/utils/format-number";
+import { fCurrency } from "@/utils/format-number";
 import { useTranslations } from "next-intl";
 
 export const PaymentForm = ({ amount }: { amount: number }) => {

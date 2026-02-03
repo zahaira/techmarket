@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
-import HeaderTop from "@/shared/layout/HeaderTop";
-import HeaderWithSidebar from "@/shared/layout/HeaderWithSidebar";
-import Footer from "@/shared/layout/Footer";
+import HeaderTop from "@/layouts/HeaderTop";
+import HeaderWithSidebar from "@/layouts/HeaderWithSidebar";
+import Footer from "@/layouts/Footer";
 import "./globals.css";
 type Props = {
   children: React.ReactNode;

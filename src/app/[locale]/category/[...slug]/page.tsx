@@ -1,13 +1,13 @@
 import { Link } from "@/i18n/navigation";
-import { _mockCategories } from "@/shared/_mock/_category";
-import { getProductCardItemsByCategorySlug } from "@/shared/_mock/_productMock";
-import { mapCategoriesToLocale } from "@/shared/_mock/service";
-import Breadcrumbs from "@/shared/section/components/Breadcrumbs";
-import ProductListView from "@/shared/section/products/view/ProductListView";
+import { _mockCategories } from "@/_mock/_category";
+import { getProductCardItemsByCategorySlug } from "@/_mock/_productMock";
+import { mapCategoriesToLocale } from "@/_mock/service";
+import Breadcrumbs from "@/sections/components/Breadcrumbs";
+import ProductListView from "@/sections/products/view/ProductListView";
 import {
   buildBreadcrumbs,
   findCategoryBySlugPath,
-} from "@/shared/utils/category";
+} from "@/utils/category";
 import { getTranslations } from "next-intl/server";
 import { cookies } from "next/headers";
 import React from "react";

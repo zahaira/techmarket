@@ -1,4 +1,4 @@
-import CartPage from "@/shared/section/cart/CartPage";
+import CartPage from "@/sections/cart/CartPage";
 import React from "react";
 
 const page = () => {
