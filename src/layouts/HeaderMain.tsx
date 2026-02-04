@@ -31,7 +31,7 @@ const HeaderMain = ({ toggleSidebar }: HeaderMainProps) => {
     <header
       className={` ${
         locale === "ar" ? " sm:mr-[70px]" : " sm:ml-[70px]"
-      } bg-primary-main border-b border-gray-200 py-4 sm:ml-[70px]`}
+      } bg-primary-main border-b border-gray-200 py-4`}
     >
       <div className="container mx-auto flex flex-col sm:flex-row justify-between items-center gap-4 px-4">
         <div className="flex items-center gap-4 w-full sm:w-auto justify-between sm:justify-start">
