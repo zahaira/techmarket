@@ -21,6 +21,7 @@ export interface ProductBackend {
   warranty?: number;
   isNew?: boolean;
   isBestSeller?: boolean;
+  totalSold: number;
   bgGradient?: string;
   createdAt: Date;
   updatedAt: Date;
@@ -36,6 +37,7 @@ export interface ProductTranslation {
   seoDescription: string;
 }
 
+import { paginate } from "@/lib/pagination";
 import { Product, ProductAttribute, ProductCardItem } from "../types/product";
 import { _mockCategories } from "./_category";
 import { _mock, randomNumbers } from "./_mock";
@@ -53,17 +55,6 @@ export const PRODUCT_STOCK_OPTIONS = [
   { value: "in stock", label: "In stock" },
   { value: "out of stock", label: "Out of stock" },
 ];
-
-const getCategoryIdBySlug = (slug: string): string | undefined => {
-  for (const cat of _mockCategories) {
-    if (cat.slug === slug) return cat.categoryId;
-    if (cat.children) {
-      const child = cat.children.find((c) => c.slug === slug);
-      if (child) return child.categoryId;
-    }
-  }
-  return undefined;
-};
 
 // Categories - Updated to match new structure
 const CATEGORIES = {
@@ -995,6 +986,7 @@ const generateProductsForCategory = (
       primaryCategoryId: category,
       warranty: 1 + (i % 3),
       isBestSeller,
+      totalSold: index + 33,
       isNew: true,
       attributes: localizedAttributes,
       keyPoints: localizedKeyPoints,
@@ -1157,6 +1149,9 @@ export const getProductCardItems = (
       ...(discountPercentage > 0 && { discountPercentage }),
       coverUrl: product.coverUrl,
       isNew: product.isNew,
+      createdAt: product.createdAt,
+      categoryIds: product.categoryIds,
+      totalSold: product.totalSold,
     };
   });
 };
@@ -1212,220 +1207,6 @@ export const _mockBestSellersProducts = (
   );
 };
 
-// // _heroMockProducts - Updated with translations
-// export const _heroMockProducts: Product[] = [
-//   {
-//     productId: "prod-hero-1",
-//     slug: "lcd-backlit",
-//     price: 1200,
-//     discountPercentage: 15,
-//     priceSale: 1200 - (1200 * 15) / 100,
-//     stock: 15,
-//     coverUrl: "/images/lcd/lcd.png",
-//     images: [],
-//     categoryIds: ["2-3"],
-//     primaryCategoryId: "2-3",
-//     warranty: 2,
-//     isBestSeller: true,
-//     createdAt: new Date("2025-10-12T12:00:00Z"),
-//     updatedAt: new Date("2025-10-12T12:00:00Z"),
-//     translations: [
-//       {
-//         locale: "en",
-//         name: "LCD Backlit Monitor",
-//         description:
-//           "High-quality LED-backlit LCD monitor with 1080p resolution and 16:9 aspect ratio. Perfect for gaming and professional work.",
-//         subDescription:
-//           "Computer Monitors LED-backlit LCD 1080p High-definition television 16:9",
-//         seoTitle: "LCD Backlit Monitor - Buy Online",
-//         seoDescription:
-//           "Shop LCD backlit monitor with 1080p resolution. High-quality display for work and entertainment.",
-//       },
-//       {
-//         locale: "ar",
-//         name: "شاشة LCD بإضاءة خلفية",
-//         description:
-//           "شاشة LCD عالية الجودة بإضاءة خلفية LED بدقة 1080p ونسبة عرض إلى ارتفاع 16:9. مثالية للألعاب والعمل الاحترافي.",
-//         subDescription:
-//           "شاشات كمبيوتر LED-backlit LCD 1080p تلفزيون عالي الدقة 16:9",
-//         seoTitle: "شاشة LCD بإضاءة خلفية - اشتري أونلاين",
-//         seoDescription:
-//           "تسوق شاشة LCD بإضاءة خلفية بدقة 1080p. عرض عالي الجودة للعمل والترفيه.",
-//       },
-//     ],
-//   },
-//   {
-//     productId: "prod-hero-2",
-//     slug: "samsung-galaxy-s25",
-//     price: 1100,
-//     discountPercentage: 15,
-//     priceSale: 1100 - (1100 * 15) / 100,
-//     stock: 20,
-//     coverUrl: "/images/tel/tel1.png",
-//     images: [
-//       "https://images.pexels.com/photos/30909359/pexels-photo-30909359.jpeg?auto=compress&cs=tinysrgb&",
-//       "https://images.pexels.com/photos/14979021/pexels-photo-14979021.jpeg?auto=compress&cs=tinysrgb&",
-//     ],
-//     categoryIds: ["3-1"],
-//     primaryCategoryId: "3-1",
-//     warranty: 1,
-//     isBestSeller: false,
-//     bgGradient: "from-orange-50 via-pink-50 to-blue-50",
-//     createdAt: new Date("2025-10-12T12:00:00Z"),
-//     updatedAt: new Date("2025-10-12T12:00:00Z"),
-//     translations: [
-//       {
-//         locale: "en",
-//         name: "Samsung Galaxy S25",
-//         description:
-//           "Powerful Samsung phone with cutting-edge features, incredible camera, and lightning-fast performance.",
-//         subDescription: "Powerful Samsung phone with cutting-edge features.",
-//         seoTitle: "Samsung Galaxy S25 - Buy Online",
-//         seoDescription:
-//           "Shop Samsung Galaxy S25 with best price. Powerful Android phone with amazing features.",
-//       },
-//       {
-//         locale: "ar",
-//         name: "سامسونج جالاكسي S25",
-//         description:
-//           "هاتف سامسونج قوي بمميزات متطورة وكاميرا رائعة وأداء فائق السرعة.",
-//         subDescription: "هاتف سامسونج قوي بمميزات متطورة.",
-//         seoTitle: "سامسونج جالاكسي S25 - اشتري أونلاين",
-//         seoDescription:
-//           "تسوق سامسونج جالاكسي S25 بأفضل سعر. هاتف أندرويد قوي بمميزات رائعة.",
-//       },
-//     ],
-//   },
-//   {
-//     productId: "prod-hero-3",
-//     slug: "asus-vivobook",
-//     price: 250,
-//     discountPercentage: 15,
-//     priceSale: 250 - (250 * 15) / 100,
-//     stock: 30,
-//     coverUrl: "/images/pc/pc.png",
-//     images: [
-//       "https://images.pexels.com/photos/5202961/pexels-photo-5202961.jpeg?auto=compress&cs=tinysrgb&",
-//       "https://images.pexels.com/photos/205421/pexels-photo-205421.jpeg?auto=compress&cs=tinysrgb&",
-//     ],
-//     categoryIds: ["2-2"],
-//     primaryCategoryId: "2-2",
-//     warranty: 1,
-//     isBestSeller: true,
-//     bgGradient: "from-yellow-50 via-yellow-100 to-blue-100",
-//     createdAt: new Date("2025-10-12T12:00:00Z"),
-//     updatedAt: new Date("2025-10-12T12:00:00Z"),
-//     translations: [
-//       {
-//         locale: "en",
-//         name: "Asus Vivobook",
-//         description:
-//           "Asus Vivobook 15 X1504VA-NJ446W with Intel i5-1335U processor. Perfect laptop for work and entertainment.",
-//         subDescription: "Asus Vivobook 15 X1504VA-NJ446W – Intel i5-1335U",
-//         seoTitle: "Asus Vivobook 15 - Buy Online",
-//         seoDescription:
-//           "Shop Asus Vivobook 15 with Intel i5 processor. Reliable laptop for everyday tasks.",
-//       },
-//       {
-//         locale: "ar",
-//         name: "أسوس فيفوبوك",
-//         description:
-//           "أسوس فيفوبوك 15 X1504VA-NJ446W مع معالج Intel i5-1335U. لابتوب مثالي للعمل والترفيه.",
-//         subDescription: "أسوس فيفوبوك 15 X1504VA-NJ446W – Intel i5-1335U",
-//         seoTitle: "أسوس فيفوبوك 15 - اشتري أونلاين",
-//         seoDescription:
-//           "تسوق أسوس فيفوبوك 15 مع معالج Intel i5. لابتوب موثوق للمهام اليومية.",
-//       },
-//     ],
-//   },
-//   {
-//     productId: "prod-hero-4",
-//     slug: "hp-elitedesk",
-//     price: 2500,
-//     discountPercentage: 15,
-//     priceSale: 2500 - (2500 * 15) / 100,
-//     stock: 5,
-//     coverUrl: "/images/pc/pc1.png",
-//     images: [
-//       "https://images.pexels.com/photos/18104/pexels-photo.jpg?auto=compress&cs=tinysrgb&",
-//       "https://images.pexels.com/photos/5202961/pexels-photo-5202961.jpeg?auto=compress&cs=tinysrgb&",
-//     ],
-//     categoryIds: ["2-3"],
-//     primaryCategoryId: "2-3",
-//     warranty: 3,
-//     isBestSeller: true,
-//     bgGradient: "from-purple-50 via-blue-50 to-cyan-50",
-//     createdAt: new Date("2025-10-12T12:00:00Z"),
-//     updatedAt: new Date("2025-10-12T12:00:00Z"),
-//     translations: [
-//       {
-//         locale: "en",
-//         name: 'HP Elitedesk 600 G3 Mini"',
-//         description:
-//           "HP Elitedesk 600 G3 Mini with Core i5 6th Gen, 8GB RAM, and 256GB SSD. Compact and powerful desktop PC.",
-//         subDescription:
-//           "HP Elitedesk 600 G3 Mini Core i5 - 6th Gen - 8GB, 256GB SSD",
-//         seoTitle: "HP Elitedesk 600 G3 Mini - Buy Online",
-//         seoDescription:
-//           "Shop HP Elitedesk 600 G3 Mini desktop. Powerful and compact PC for office work.",
-//       },
-//       {
-//         locale: "ar",
-//         name: 'إتش بي إليت ديسك 600 G3 ميني"',
-//         description:
-//           "إتش بي إليت ديسك 600 G3 ميني مع Core i5 الجيل السادس، 8 جيجابايت رام، و256 جيجابايت SSD. حاسوب مكتبي مدمج وقوي.",
-//         subDescription:
-//           "إتش بي إليت ديسك 600 G3 ميني Core i5 - الجيل السادس - 8 جيجابايت، 256 جيجابايت SSD",
-//         seoTitle: "إتش بي إليت ديسك 600 G3 ميني - اشتري أونلاين",
-//         seoDescription:
-//           "تسوق إتش بي إليت ديسك 600 G3 ميني. حاسوب مكتبي قوي ومدمج للعمل المكتبي.",
-//       },
-//     ],
-//   },
-//   {
-//     productId: "prod-hero-5",
-//     slug: "xiaomi-redmi",
-//     price: 80,
-//     discountPercentage: 10,
-//     priceSale: 80 - (80 * 10) / 100,
-//     stock: 50,
-//     coverUrl: "/images/tel/tel3.png",
-//     images: [
-//       "https://images.pexels.com/photos/1042143/pexels-photo-1042143.jpeg?auto=compress&cs=tinysrgb&",
-//       "https://images.pexels.com/photos/969462/pexels-photo-969462.jpeg?auto=compress&cs=tinysrgb&",
-//     ],
-//     categoryIds: ["3-1"],
-//     primaryCategoryId: "3-1",
-//     warranty: 2,
-//     isBestSeller: false,
-//     bgGradient: "from-orange-50 via-pink-50 to-blue-50",
-//     createdAt: new Date("2025-10-12T12:00:00Z"),
-//     updatedAt: new Date("2025-10-12T12:00:00Z"),
-//     translations: [
-//       {
-//         locale: "en",
-//         name: "XIAOMI Redmi 15C",
-//         description:
-//           'XIAOMI Redmi 15C with 6.9" display, 4GB RAM, and 128GB storage. Affordable smartphone with great features.',
-//         subDescription: 'XIAOMI Redmi 15C 6.9" – 4GB + 128GB',
-//         seoTitle: "XIAOMI Redmi 15C - Buy Online",
-//         seoDescription:
-//           "Shop XIAOMI Redmi 15C with large display. Affordable phone with excellent value.",
-//       },
-//       {
-//         locale: "ar",
-//         name: "شاومي ريدمي 15C",
-//         description:
-//           "شاومي ريدمي 15C مع شاشة 6.9 بوصة، 4 جيجابايت رام، و128 جيجابايت تخزين. هاتف ذكي بسعر مناسب ومميزات رائعة.",
-//         subDescription: 'شاومي ريدمي 15C 6.9" – 4 جيجابايت + 128 جيجابايت',
-//         seoTitle: "شاومي ريدمي 15C - اشتري أونلاين",
-//         seoDescription:
-//           "تسوق شاومي ريدمي 15C مع شاشة كبيرة. هاتف بسعر مناسب وقيمة ممتازة.",
-//       },
-//     ],
-//   },
-// ];
-
 // Raw hero products data
 const _heroMockProductsData: ProductBackend[] = [
   {
@@ -1441,6 +1222,7 @@ const _heroMockProductsData: ProductBackend[] = [
     primaryCategoryId: "2-3",
     warranty: 2,
     isBestSeller: true,
+    totalSold: 33,
     createdAt: new Date("2025-10-12T12:00:00Z"),
     updatedAt: new Date("2025-10-12T12:00:00Z"),
     translations: [
@@ -1484,6 +1266,7 @@ const _heroMockProductsData: ProductBackend[] = [
     primaryCategoryId: "3-1",
     warranty: 1,
     isBestSeller: false,
+    totalSold: 44,
     bgGradient: "from-orange-50 via-pink-50 to-blue-50",
     createdAt: new Date("2025-10-12T12:00:00Z"),
     updatedAt: new Date("2025-10-12T12:00:00Z"),
@@ -1526,6 +1309,7 @@ const _heroMockProductsData: ProductBackend[] = [
     primaryCategoryId: "2-2",
     warranty: 1,
     isBestSeller: true,
+    totalSold: 25,
     bgGradient: "from-yellow-50 via-yellow-100 to-blue-100",
     createdAt: new Date("2025-10-12T12:00:00Z"),
     updatedAt: new Date("2025-10-12T12:00:00Z"),
@@ -1568,6 +1352,7 @@ const _heroMockProductsData: ProductBackend[] = [
     primaryCategoryId: "2-3",
     warranty: 3,
     isBestSeller: true,
+    totalSold: 44,
     bgGradient: "from-purple-50 via-blue-50 to-cyan-50",
     createdAt: new Date("2025-10-12T12:00:00Z"),
     updatedAt: new Date("2025-10-12T12:00:00Z"),
@@ -1612,6 +1397,7 @@ const _heroMockProductsData: ProductBackend[] = [
     primaryCategoryId: "3-1",
     warranty: 2,
     isBestSeller: false,
+    totalSold: 64,
     bgGradient: "from-orange-50 via-pink-50 to-blue-50",
     createdAt: new Date("2025-10-12T12:00:00Z"),
     updatedAt: new Date("2025-10-12T12:00:00Z"),
@@ -1671,3 +1457,27 @@ export const _heroMockProducts = (locale: string = "en"): Product[] => {
     };
   });
 };
+
+export function getBestOfferProductsPaginated(
+  locale: string,
+  page: number,
+  limit: number
+) {
+  const products = getMockProducts(locale)
+    .filter((p) => p.discountPercentage);
+
+  const mapped = getProductCardItems(products, locale);
+
+  return paginate(mapped, page, limit);
+}
+
+export function getProductCardItemsByCategorySlugPaginated(
+  locale: string,
+  slug: string,
+  page: number,
+  limit: number
+) {
+  const products = getProductCardItemsByCategorySlug(slug, locale);
+
+  return paginate(products, page, limit);
+}

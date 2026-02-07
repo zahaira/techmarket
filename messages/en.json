@@ -178,6 +178,39 @@
     "title": "Oops! Page not found",
     "description": "The page you’re looking for might have been moved, deleted, or doesn’t exist anymore.",
     "backHome": "Back to Home"
+  },
+  "filter":{
+    "title": "Filters",
+    "open": "Filter",
+    "close": "Close",
+    "apply": "Apply filters",
+    "reset": "Reset",
+
+    "category": "Category",
+    "brand": "Brand",
+    "price": "Price",
+    "discount": "Discount rate",
+
+    "minPrice": "Min price",
+    "maxPrice": "Max price",
+
+    "all": "All",
+    "noResults": "No products found",
+    
+    "sort": {
+      "title": "Sort",
+      "popularity": "Popularity",
+      "priceLow": "Price: Low to High",
+      "priceHigh": "Price: High to Low",
+      "newest": "Newest"
+    },
+    "discountOptions": {
+      "50": "50% or more",
+      "40": "40% or more",
+      "30": "30% or more",
+      "20": "20% or more",
+      "10": "10% or more"
+  }
   }
 }
 

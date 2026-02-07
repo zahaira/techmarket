@@ -10,4 +10,7 @@ export const toProductCardItem = (product: Product): ProductCardItem => ({
   slug: product.slug,
   discountPercentage: product.discountPercentage,
   priceSale: product.priceSale,
+  categoryIds: product.categoryIds,
+  createdAt: product.createdAt,
+  totalSold: product.totalSold,
 });

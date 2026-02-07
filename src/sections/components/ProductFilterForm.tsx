@@ -1,108 +1,122 @@
-import { useState } from "react";
+"use client";
 
-export type ProductFilter = {
-  category?: string;
-  priceMin?: number;
-  priceMax?: number;
-  discount?: number;
-  search?: string;
-  page?: number;
-  pageSize?: number;
-};
+import { _mockCategories } from "@/_mock/_category";
+import { ProductFilter } from "@/types/product";
+import { useLocale, useTranslations } from "next-intl";
+import React from "react";
+import { FiRefreshCw } from "react-icons/fi";
+
 
 type Props = {
-  onFilterChange: (filter: ProductFilter) => void;
+  filters: ProductFilter;
+  setFilters: React.Dispatch<React.SetStateAction<ProductFilter>>;
+  canReset: boolean;
+  options: {
+    categories: { categoryId: string; name: string }[];
+  };
 };
 
-const categories = ["Electronics", "Clothing", "Books"];
-
-export default function ProductFilterForm({ onFilterChange }: Props) {
-  const [filter, setFilter] = useState<ProductFilter>({
-    category: "",
-    priceMin: undefined,
-    priceMax: undefined,
-    discount: undefined,
-    search: "",
-    page: 1,
-    pageSize: 10,
-  });
-
-  const handleChange = (key: keyof ProductFilter, value: any) => {
-    const updated = { ...filter, [key]: value };
-    setFilter(updated);
-    onFilterChange(updated);
-  };
+const ProductFilterForm = ({ filters, setFilters, canReset, options }: Props) => {
+  const tFilter = useTranslations("filter");
+  const instanceId = React.useId();
 
   return (
-    <div className="p-4 bg-white shadow rounded space-y-4">
-      {/* Search */}
-      <input
-        type="text"
-        placeholder="Search products..."
-        className="w-full border p-2 rounded"
-        value={filter.search}
-        onChange={(e) => handleChange("search", e.target.value)}
-      />
+    <aside className="w-full bg-white rounded-xl p-4 space-y-6">
+      {/* CATEGORY */}
+      <div>
+        <h3 className="font-semibold mb-3">{tFilter("category")}</h3>
+        <div className="space-y-2">
+          {options.categories.map((cat) => (
+            <label key={cat.categoryId} className="flex items-center gap-2 text-sm">
+              <input
+                type="checkbox"
+                checked={filters.categories.includes(cat.categoryId)}
+                onChange={(e) =>
+                  setFilters((prev) => ({
+                    ...prev,
+                    categories: e.target.checked
+                      ? [...prev.categories, cat.categoryId]
+                      : prev.categories.filter((c) => c !== cat.categoryId),
+                  }))
+                }
+                className="accent-primary-main"
+              />
+              {cat.name}
+            </label>
+          ))}
+        </div>
+      </div>
 
-      {/* Category */}
-      <select
-        className="w-full border p-2 rounded"
-        value={filter.category}
-        onChange={(e) => handleChange("category", e.target.value)}
+      {/* PRICE */}
+      <div>
+        <h3 className="font-semibold mb-3">{tFilter("price")}</h3>
+        <input
+          type="range"
+          min={0}
+          max={5000}
+          value={filters.price}
+          onChange={(e) =>
+            setFilters((prev) => ({
+              ...prev,
+              price: Number(e.target.value),
+            }))
+          }
+          className="w-full accent-primary-main"
+        />
+        <div className="flex justify-between text-xs text-gray-500 mt-1">
+          <span>0 DH</span>
+          <span>{filters.price} DH</span>
+        </div>
+      </div>
+
+      {/* DISCOUNT */}
+      <div>
+        <h3 className="font-semibold mb-3">{tFilter("discount")}</h3>
+        <div className="space-y-2">
+          {[50, 40, 30, 20, 10].map((percent) => (
+            <label
+              key={percent}
+              className="flex items-center gap-2 text-sm cursor-pointer select-none"
+            >
+              <input
+                type="radio"
+                name={`discount-${instanceId}`}
+                value={percent}
+                checked={filters.discount === percent}
+                onChange={(e) =>
+                  setFilters((prev) => ({
+                    ...prev,
+                    discount: Number(e.target.value), 
+                  }))
+                }
+                className="accent-primary-main w-4 h-4" 
+              />
+              {tFilter(`discountOptions.${percent}`)}
+            </label>
+          ))}
+        </div>
+      </div>
+
+      {/* RESET */}
+      <button
+        disabled={!canReset}
+        onClick={() =>
+          setFilters({
+            categories: [],
+            price: 5000,
+            discount: null,
+          })
+        }
+        className={`w-full flex items-center justify-center gap-2 text-sm py-2 rounded-lg border hover:bg-gray-100 transition
+          ${canReset ? "text-primary-main hover:bg-gray-100 cursor-pointer"
+          : "text-gray-400 cursor-default opacity-60"
+        }`}
       >
-        <option value="">All Categories</option>
-        {categories.map((c) => (
-          <option key={c} value={c}>
-            {c}
-          </option>
-        ))}
-      </select>
-
-      {/* Price */}
-      <div className="flex gap-2">
-        <input
-          type="number"
-          placeholder="Min Price"
-          className="w-1/2 border p-2 rounded"
-          value={filter.priceMin ?? ""}
-          onChange={(e) => handleChange("priceMin", Number(e.target.value))}
-        />
-        <input
-          type="number"
-          placeholder="Max Price"
-          className="w-1/2 border p-2 rounded"
-          value={filter.priceMax ?? ""}
-          onChange={(e) => handleChange("priceMax", Number(e.target.value))}
-        />
-      </div>
-
-      {/* Discount */}
-      <input
-        type="number"
-        placeholder="Min Discount (%)"
-        className="w-full border p-2 rounded"
-        value={filter.discount ?? ""}
-        onChange={(e) => handleChange("discount", Number(e.target.value))}
-      />
-
-      {/* Pagination */}
-      <div className="flex gap-2">
-        <input
-          type="number"
-          placeholder="Page"
-          className="w-1/2 border p-2 rounded"
-          value={filter.page ?? 1}
-          onChange={(e) => handleChange("page", Number(e.target.value))}
-        />
-        <input
-          type="number"
-          placeholder="Page Size"
-          className="w-1/2 border p-2 rounded"
-          value={filter.pageSize ?? 10}
-          onChange={(e) => handleChange("pageSize", Number(e.target.value))}
-        />
-      </div>
-    </div>
+        <FiRefreshCw className={canReset ? "text-primary-main" : "text-gray-600"} />
+        {tFilter("reset")}
+      </button>
+    </aside>
   );
-}
+};
 
+export default ProductFilterForm;

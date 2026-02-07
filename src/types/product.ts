@@ -1,7 +1,12 @@
 // 2. Product
 
 export type ProductFilter = {
-  categoryId?: string;
+  categories: string[];
+  price: number;
+  discount: number | null;
+};
+export type kProductFilter = {
+  categoryId?: string[];
   priceMin?: number;
   priceMax?: number;
   discount?: number;
@@ -35,6 +40,7 @@ export interface Product {
   warranty?: number;
   isNew?: boolean;
   isBestSeller?: boolean;
+  totalSold: number;
   bgGradient?: string;
   createdAt: Date;
   updatedAt: Date;
@@ -48,5 +54,8 @@ export interface ProductCardItem {
   slug: string;
   discountPercentage?: number;
   isNew?: boolean;
+  totalSold: number;
   coverUrl: string;
+  createdAt: Date;
+  categoryIds: string[];
 }

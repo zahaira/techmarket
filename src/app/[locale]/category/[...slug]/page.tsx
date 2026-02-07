@@ -1,6 +1,6 @@
 import { Link } from "@/i18n/navigation";
 import { _mockCategories } from "@/_mock/_category";
-import { getProductCardItemsByCategorySlug } from "@/_mock/_productMock";
+import { getProductCardItemsByCategorySlugPaginated } from "@/_mock/_productMock";
 import { mapCategoriesToLocale } from "@/_mock/service";
 import Breadcrumbs from "@/sections/components/Breadcrumbs";
 import ProductListView from "@/sections/products/view/ProductListView";
@@ -11,13 +11,18 @@ import {
 import { getTranslations } from "next-intl/server";
 import { cookies } from "next/headers";
 import React from "react";
+import Pagination from "@/components/Pagination";
 
 interface CategoryPageProps {
   params: Promise<{ slug: string[] }>;
+  searchParams: Promise<{ page?: string }>;
 }
 
-const CategoryPage = async ({ params }: CategoryPageProps) => {
+const CategoryPage = async ({ params, searchParams }: CategoryPageProps) => {
   const { slug } = await params;
+  const { page: pageParam } = await searchParams;
+  const page = Number(pageParam) || 1;
+  const limit = 22;
   const locale = (await cookies()).get("NEXT_LOCALE")?.value || "en";
   const categories = mapCategoriesToLocale(_mockCategories, locale);
   const tNotFound = await getTranslations("NotFound");
@@ -47,15 +52,16 @@ const CategoryPage = async ({ params }: CategoryPageProps) => {
     })),
   ];
 
-  const products = await getProductCardItemsByCategorySlug(
-    slug[slug.length - 1],
-    locale
-  );
+  const result = getProductCardItemsByCategorySlugPaginated(locale, slug[slug.length - 1], page,limit)
 
   return (
     <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-8 bg-gray-50">
       <Breadcrumbs links={breadcrumbLinks} />
-      <ProductListView products={products} category={category} />
+      <ProductListView products={result.data} category={category} />
+      <Pagination
+        currentPage={result.page}
+        totalPages={result.totalPages}
+      />
     </div>
   );
 };

@@ -280,3 +280,18 @@ export const _mockCategories: CategoryBackend[] = [
     ],
   },
 ];
+
+export const getCategoriesByLocale = (locale: string) => {
+  return _mockCategories
+    .flatMap((cat) => [
+      cat.translations.find((t) => t.locale === locale)
+        ? { categoryId: cat.categoryId, name: cat.translations.find((t) => t.locale === locale)!.name }
+        : null,
+      ...(cat.children?.map((child) => 
+        child.translations.find((t) => t.locale === locale)
+          ? { categoryId: child.categoryId, name: child.translations.find((t) => t.locale === locale)!.name }
+          : null
+      ) || [])
+    ])
+    .filter((item): item is { categoryId: string; name: string } => Boolean(item));
+};
