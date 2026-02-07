@@ -56,9 +56,9 @@ const CheckoutPage = () => {
               {/* <div className="px-1 flex flex-col gap-1 group-data-[state=open]:hidden transition-all duration-300">
                 <hr className="w-full border-gray-300 my-1" />
 
-                <span className="text-gray-800 text-sm">zahaira jaada</span>
+                <span className="text-gray-800 text-sm">kamara</span>
                 <span className="text-sm text-gray-600">
-                  boukhakef, 122 rue jjj | sale | +2127655444
+                  boukhakef, 122 rue jjj | kobros | +2427655444
                 </span>
               </div> */}
 

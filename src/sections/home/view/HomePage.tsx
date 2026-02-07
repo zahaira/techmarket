@@ -27,7 +27,6 @@ const HomePage = () => {
         title={t("best_offer")}
         seeMoreLink="/promotions"
       />
-      <FeaturesSection />
       <ProductCarouselSection
         products={bestSellersProducts}
         title={t("best_sellers")}
