@@ -18,6 +18,7 @@ const SidebarCategories = ({ isOpen, setIsOpen }: SidebarProps) => {
   const router = useRouter();
   const [isDesktop, setIsDesktop] = useState(false);
   const locale = useLocale();
+  
   useEffect(() => {
     const handleResize = () => setIsDesktop(window.innerWidth >= 640);
     handleResize();
@@ -30,6 +31,7 @@ const SidebarCategories = ({ isOpen, setIsOpen }: SidebarProps) => {
 
   return (
     <>
+      {/* Overlay pour mobile */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -45,15 +47,14 @@ const SidebarCategories = ({ isOpen, setIsOpen }: SidebarProps) => {
 
       <motion.aside
         className={`
-          fixed top-0 ${
-            locale === "ar" ? "right-0" : "left-0"
-          }  h-full bg-white shadow-lg border-r border-gray-200 z-50 
+          fixed top-0 h-full bg-white shadow-lg border-r border-gray-200 z-50 
           flex flex-col items-start py-4
-          sm:translate-x-0
-          ${!isOpen ? "-translate-x-full sm:translate-x-0" : "translate-x-0"}
+          transition-transform duration-300 ease-in-out
+          ${locale === "ar" ? "right-0" : "left-0"}
+          ${isOpen ? "translate-x-0" : locale === "ar" ? "translate-x-full sm:translate-x-0" : "-translate-x-full sm:translate-x-0"}
         `}
         animate={{
-          width: isOpen ? 200 : 70,
+          width: isDesktop ? (isOpen ? 200 : 70) : 200,
         }}
         transition={{ duration: 0.2, ease: "easeInOut" }}
         onMouseEnter={() => {
@@ -80,7 +81,7 @@ const SidebarCategories = ({ isOpen, setIsOpen }: SidebarProps) => {
               animate={{ width: isOpen ? "100%" : "46px" }}
               transition={{
                 width: {
-                  duration: isOpen ? 0.013 : 0.15,
+                  duration: isOpen ? 0.13 : 0.15,
                   ease: isOpen ? "easeOut" : "easeIn",
                 },
               }}
@@ -102,11 +103,11 @@ const SidebarCategories = ({ isOpen, setIsOpen }: SidebarProps) => {
               <AnimatePresence>
                 {isOpen && (
                   <motion.span
-                    initial={{ opacity: 0, x: -10 }}
+                    initial={{ opacity: 0, x: locale === "ar" ? 10 : -10 }}
                     animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -10 }}
+                    exit={{ opacity: 0, x: locale === "ar" ? 10 : -10 }}
                     transition={{ duration: 0.2, ease: "easeOut" }}
-                    className="text-sm font-medium tracking-wide whitespace-nowrap text-white z-10"
+                    className="text-sm font-medium tracking-wide whitespace-nowrap text-white z-10 px-2"
                   >
                     {t("categories")}
                   </motion.span>
@@ -117,7 +118,7 @@ const SidebarCategories = ({ isOpen, setIsOpen }: SidebarProps) => {
         </div>
 
         {/* Categories */}
-        <div className="flex flex-col gap-4 w-full">
+        <div className="flex flex-col gap-4 w-full overflow-y-auto">
           {categories.map((cat, i) => {
             const Icon = iconMap[cat.iconName];
 
@@ -126,10 +127,7 @@ const SidebarCategories = ({ isOpen, setIsOpen }: SidebarProps) => {
                 key={i}
                 className="relative flex items-center h-[46px] mx-2 cursor-pointer group"
                 onClick={() => {
-                  if (
-                    typeof window !== "undefined" &&
-                    window.innerWidth < 640
-                  ) {
+                  if (typeof window !== "undefined" && window.innerWidth < 640) {
                     setIsOpen(false);
                   }
                   router.push(`/category/${cat.slug}`);
@@ -145,11 +143,11 @@ const SidebarCategories = ({ isOpen, setIsOpen }: SidebarProps) => {
                   <AnimatePresence>
                     {isOpen && (
                       <motion.span
-                        initial={{ opacity: 0, x: -10 }}
+                        initial={{ opacity: 0, x: locale === "ar" ? 10 : -10 }}
                         animate={{ opacity: 1, x: 0 }}
-                        exit={{ opacity: 0, x: -10 }}
+                        exit={{ opacity: 0, x: locale === "ar" ? 10 : -10 }}
                         transition={{ duration: 0.2, ease: "easeOut" }}
-                        className="text-sm font-medium whitespace-nowrap text-gray-700 z-10"
+                        className="text-sm font-medium whitespace-nowrap text-gray-700 z-10 px-2"
                       >
                         {cat.name}
                       </motion.span>

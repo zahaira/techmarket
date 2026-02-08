@@ -30,23 +30,18 @@ const Footer = () => {
   const SupportLinks = () => (
     <ul className="space-y-2 text-base">
       <li>
-        <Link href="/" className="text-gray-500 hover:text-primary-main transition-colors">
-          {t("faq")}
+        <Link href="/shipping?tab=shipping" className="text-gray-500 hover:text-primary-main transition-colors">
+          {t("shipping")}
         </Link>
       </li>
       <li>
-        <Link href="/" className="text-gray-500 hover:text-primary-main transition-colors">
+        <Link href="/shipping?tab=returns" className="text-gray-500 hover:text-primary-main transition-colors">
           {t("shipping_returns")}
         </Link>
       </li>
       <li>
-        <Link href="/" className="text-gray-500 hover:text-primary-main transition-colors">
+        <Link href="/privacy-policy" className="text-gray-500 hover:text-primary-main transition-colors">
           {t("privacy_policy")}
-        </Link>
-      </li>
-      <li>
-        <Link href="/" className="text-gray-500 hover:text-primary-main transition-colors">
-          {t("terms_conditions")}
         </Link>
       </li>
     </ul>
@@ -60,17 +55,12 @@ const Footer = () => {
         </Link>
       </li>
       <li>
-        <Link href="/" className="text-gray-500 hover:text-primary-main transition-colors">
-          {t("shop")}
-        </Link>
-      </li>
-      <li>
-        <Link href="/" className="text-gray-500 hover:text-primary-main transition-colors">
+        <Link href="/about-us" className="text-gray-500 hover:text-primary-main transition-colors">
           {t("about_us")}
         </Link>
       </li>
       <li>
-        <Link href="/" className="text-gray-500 hover:text-primary-main transition-colors">
+        <Link href="/contact-us" className="text-gray-500 hover:text-primary-main transition-colors">
           {t("contact")}
         </Link>
       </li>
