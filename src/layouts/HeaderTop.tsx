@@ -22,7 +22,7 @@ const HeaderTop = () => {
       <div className="container mx-auto  py-2 px-4">
         <div className="flex justify-between items-center">
           <div className="text-light text-xs hover:text-light transition-colors duration-200">
-            <Link href="#">{tNav("contact")}</Link>
+            <Link href="/contact-us">{tNav("contact")}</Link>
           </div>
           <div className="flex gap-4 items-center">
             <LocaleSwitcher />
