@@ -1,0 +1,166 @@
+import React, { useEffect, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { GiHamburgerMenu } from "react-icons/gi";
+import { IoClose } from "react-icons/io5";
+import { _mockCategories } from "../_mock/_category";
+import { iconMap } from "../utils/iconMap";
+import { useLocale, useTranslations } from "next-intl";
+import { mapCategoriesToLocale } from "../_mock/service";
+import { useRouter } from "@/i18n/navigation";
+
+interface SidebarProps {
+  isOpen: boolean;
+  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const SidebarCategories = ({ isOpen, setIsOpen }: SidebarProps) => {
+  const t = useTranslations("homePage");
+  const router = useRouter();
+  const [isDesktop, setIsDesktop] = useState(false);
+  const locale = useLocale();
+  
+  useEffect(() => {
+    const handleResize = () => setIsDesktop(window.innerWidth >= 640);
+    handleResize();
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  const categories = mapCategoriesToLocale(_mockCategories, locale);
+
+  return (
+    <>
+      {/* Overlay pour mobile */}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 bg-black/50 z-40 sm:hidden"
+            onClick={() => setIsOpen(false)}
+          />
+        )}
+      </AnimatePresence>
+
+      <motion.aside
+        className={`
+          fixed top-0 h-full bg-white shadow-lg border-r border-gray-200 z-50 
+          flex flex-col items-start py-4
+          transition-transform duration-300 ease-in-out
+          ${locale === "ar" ? "right-0" : "left-0"}
+          ${isOpen ? "translate-x-0" : locale === "ar" ? "translate-x-full sm:translate-x-0" : "-translate-x-full sm:translate-x-0"}
+        `}
+        animate={{
+          width: isDesktop ? (isOpen ? 200 : 70) : 200,
+        }}
+        transition={{ duration: 0.2, ease: "easeInOut" }}
+        onMouseEnter={() => {
+          if (isDesktop) {
+            setIsOpen(true);
+          }
+        }}
+        onMouseLeave={() => {
+          if (isDesktop) {
+            setIsOpen(false);
+          }
+        }}
+      >
+        <div className="w-full px-2 mb-6 relative">
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            className="relative flex items-center h-[46px] w-full"
+          >
+            <motion.div
+              className={`absolute top-0 ${
+                locale === "ar" ? "right-0" : "left-0"
+              } h-full bg-primary-main rounded-full shadow-md`}
+              initial={false}
+              animate={{ width: isOpen ? "100%" : "46px" }}
+              transition={{
+                width: {
+                  duration: isOpen ? 0.13 : 0.15,
+                  ease: isOpen ? "easeOut" : "easeIn",
+                },
+              }}
+            />
+
+            <div className="relative flex items-center w-full">
+              <div className="flex items-center justify-center w-[46px] h-[46px] flex-shrink-0 text-white z-10">
+                <span className="sm:hidden">
+                  {isOpen ? (
+                    <IoClose className="text-2xl" />
+                  ) : (
+                    <GiHamburgerMenu className="text-2xl" />
+                  )}
+                </span>
+                <span className="hidden sm:block">
+                  <GiHamburgerMenu className="text-2xl" />
+                </span>
+              </div>
+              <AnimatePresence>
+                {isOpen && (
+                  <motion.span
+                    initial={{ opacity: 0, x: locale === "ar" ? 10 : -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: locale === "ar" ? 10 : -10 }}
+                    transition={{ duration: 0.2, ease: "easeOut" }}
+                    className="text-sm font-medium tracking-wide whitespace-nowrap text-white z-10 px-2"
+                  >
+                    {t("categories")}
+                  </motion.span>
+                )}
+              </AnimatePresence>
+            </div>
+          </button>
+        </div>
+
+        {/* Categories */}
+        <div className="flex flex-col gap-4 w-full overflow-y-auto">
+          {categories.map((cat, i) => {
+            const Icon = iconMap[cat.iconName];
+
+            return (
+              <div
+                key={i}
+                className="relative flex items-center h-[46px] mx-2 cursor-pointer group"
+                onClick={() => {
+                  if (typeof window !== "undefined" && window.innerWidth < 640) {
+                    setIsOpen(false);
+                  }
+                  router.push(`/category/${cat.slug}`);
+                }}
+              >
+                <div className="absolute inset-0 bg-gray-100 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
+
+                <div className="relative flex items-center w-full">
+                  <div className="flex items-center justify-center w-[46px] h-[46px] flex-shrink-0 text-gray-700 z-10">
+                    {Icon && <Icon className="text-xl" />}
+                  </div>
+
+                  <AnimatePresence>
+                    {isOpen && (
+                      <motion.span
+                        initial={{ opacity: 0, x: locale === "ar" ? 10 : -10 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        exit={{ opacity: 0, x: locale === "ar" ? 10 : -10 }}
+                        transition={{ duration: 0.2, ease: "easeOut" }}
+                        className="text-sm font-medium whitespace-nowrap text-gray-700 z-10 px-2"
+                      >
+                        {cat.name}
+                      </motion.span>
+                    )}
+                  </AnimatePresence>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </motion.aside>
+    </>
+  );
+};
+
+export default SidebarCategories;

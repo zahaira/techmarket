@@ -1,15 +1,19 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+@import 'tailwind-scrollbar-hide/v4';
 
 @custom-variant dark (&:is(.dark *));
 
 @theme{
-  --color-primary-main: #4da6ff;
-  --color-primary-dark: #2b8ce0;
-  --color-primary-light: #e8f2faff;
-  --color-secondary: #041f4c;
-  --color-secondary-dark: #021132;
-  --color-secondary-light: #4d5a99;
+  --color-primary-main: #C60000;
+  --color-primary-dark: #9e0000;
+  --color-primary-light: #E53939;
+  --color-primary-lighter: #FDEAEA;
+  --color-secondary: #1a1a1a;
+  --color-secondary-dark: #000000;
+  --color-secondary-light: #4d4d4d;
+  --color-light: #FFF5F5;
+  --color-dark: #1a1a1a;
 }
 
 /* Sur mobile: sidebar cachée par défaut (hors écran) */
@@ -34,7 +38,11 @@
 .swiper-button-next {
   width: 25px !important;
   height: 25px !important;
-  color: #4da6ff !important; 
+  color: #C60000 !important; 
+}
+
+.swiper-pagination-bullet {
+  background-color: #C60000 !important;
 }
 
 @theme inline {

@@ -51,8 +51,8 @@
     "contact": "Contact",
   
     "support": "Support",
-    "faq": "FAQ",
-    "shipping_returns": "Shipping & Returns",
+    "shipping": "Shipping & Delivery",
+    "shipping_returns": "Returns and Refunds",
     "privacy_policy": "Privacy Policy",
     "terms_conditions": "Terms & Conditions",
   
@@ -178,6 +178,403 @@
     "title": "Oops! Page not found",
     "description": "The page you’re looking for might have been moved, deleted, or doesn’t exist anymore.",
     "backHome": "Back to Home"
+  },
+  "filter":{
+    "title": "Filters",
+    "open": "Filter",
+    "close": "Close",
+    "apply": "Apply filters",
+    "reset": "Reset",
+
+    "category": "Category",
+    "brand": "Brand",
+    "price": "Price",
+    "discount": "Discount rate",
+
+    "minPrice": "Min price",
+    "maxPrice": "Max price",
+
+    "all": "All",
+    "noResults": "No products found",
+    
+    "sort": {
+      "title": "Sort",
+      "popularity": "Popularity",
+      "priceLow": "Price: Low to High",
+      "priceHigh": "Price: High to Low",
+      "newest": "Newest"
+    },
+    "discountOptions": {
+      "50": "50% or more",
+      "40": "40% or more",
+      "30": "30% or more",
+      "20": "20% or more",
+      "10": "10% or more"
+    }
+  },
+  "shipping": {
+    "title": "Shipping & Delivery",
+    "description": "We deliver your orders quickly and securely.",
+    "productJourney": "Your Product Journey",
+    "productJourneySubtitle": "Pick up your order in store or enjoy convenient home delivery.",
+
+    "steps": {
+      "choose": {
+        "title": "Choose Delivery Method",
+        "desc": "Select store pickup or home delivery during checkout."
+      },
+      "confirmation": {
+        "title": "Confirmation",
+        "desc": "You will receive confirmation via WhatsApp and email."
+      },
+      "shipping": {
+        "title": "Shipping",
+        "desc": "We prepare and ship your order بسرعة."
+      },
+      "receive": {
+        "title": "Receive Order",
+        "desc": "Receive your package at home or at a pickup point."
+      }
+    },
+
+    "tracking": {
+      "title": "Order Tracking",
+      "confirmEmail": "After validating your order, a confirmation email will be sent.",
+      "trackingCode": "Once shipped, you will receive a tracking code by email.",
+      "accountTracking": "You can track your order anytime from your account."
+    },
+
+    "table": {
+      "title": "Delivery Time & Fees",
+      "city": "Cities",
+      "delay": "Delivery Time",
+      "price": "Price"
+    },
+
+    "rows": {
+      "rabat": {
+        "city": "Skhirat-Témara, Rabat",
+        "delay": "1 business day",
+        "price": "30 Dhs"
+      },
+      "casa": {
+        "city": "Salé, Kenitra, Casablanca, Mohammedia, Bouskoura",
+        "delay": "1–3 business days",
+        "price": "40 Dhs"
+      },
+      "major": {
+        "city": "Marrakech, Agadir, Fez, Meknes, Tangier, Tetouan",
+        "delay": "2–4 business days",
+        "price": "40 Dhs"
+      },
+      "other": {
+        "city": "Other cities",
+        "delay": "2–5 business days",
+        "price": "40 Dhs"
+      }
+    },
+
+    "notes": {
+      "title": "Important Notes",
+      "n1": "Delivery time may vary depending on location.",
+      "n2": "Make sure your address is correct.",
+      "n3": "You can track your order anytime from your account."
+    }
+  },
+  "returns": {
+    "title": "Returns & Refunds",
+    "subtitle": "Easy returns within 14 days. Your satisfaction is our priority.",
+    
+    "policyOverview": {
+      "title": "Our Return Policy",
+      "returnWindow": {
+        "title": "14-Day Return Window",
+        "desc": "You have 14 days from delivery to initiate a return for any reason."
+      },
+      "condition": {
+        "title": "Original Condition",
+        "desc": "Items must be unused, unworn, and in original packaging with all tags attached."
+      },
+      "refundTime": {
+        "title": "Fast Refunds",
+        "desc": "Refunds processed within 5-7 business days after we receive your return."
+      }
+    },
+    
+    "returnProcess": {
+      "title": "How to Return an Item",
+      "step1": {
+        "title": "Contact Us",
+        "desc": "Email or call our support team to initiate your return request."
+      },
+      "step2": {
+        "title": "Pack Your Item",
+        "desc": "Securely pack the item in its original packaging with all accessories."
+      },
+      "step3": {
+        "title": "Ship Back",
+        "desc": "Use the prepaid return label we provide or ship with a tracked service."
+      },
+      "step4": {
+        "title": "Get Refunded",
+        "desc": "Once inspected, your refund will be processed to your original payment method."
+      }
+    },
+    
+    "eligible": {
+      "title": "Eligible for Return",
+      "item1": "Unused items with original tags and packaging",
+      "item2": "Defective or damaged products",
+      "item3": "Wrong items received",
+      "item4": "Items not matching description"
+    },
+    
+    "nonEligible": {
+      "title": "Non-Returnable Items",
+      "item1": "Opened hygiene products or cosmetics",
+      "item2": "Customized or personalized items",
+      "item3": "Perishable goods",
+      "item4": "Sale or clearance items (unless defective)"
+    },
+    
+    "refundMethods": {
+      "title": "Refund Methods",
+      "original": {
+        "title": "Original Payment",
+        "desc": "Refund to your credit card, PayPal, or original payment method.",
+        "time": "5-7 business days"
+      },
+      "exchange": {
+        "title": "Product Exchange",
+        "desc": "Exchange for a different size, color, or product of equal value.",
+        "time": "3-5 business days"
+      },
+      "storeCredit": {
+        "title": "Store Credit",
+        "desc": "Receive instant store credit for faster processing.",
+        "time": "Instant"
+      }
+    },
+    
+    "importantNotes": {
+      "title": "Important Information",
+      "note1": "Return shipping costs are the customer's responsibility unless the item is defective or incorrect.",
+      "note2": "Items returned without authorization may not be accepted.",
+      "note3": "Original shipping fees are non-refundable.",
+      "note4": "Refunds will be issued in the original currency of purchase."
+    },
+    
+    "support": {
+      "title": "Need Help?",
+      "subtitle": "Our customer service team is here to assist you",
+      "email": "returns@techmarket.com",
+      "phone": "+212 5XX-XXXXXX"
+    }
+  },
+  "privacy": {
+    "title": "Privacy Policy",
+    "subtitle": "We value your privacy and are committed to protecting your personal information",
+    "lastUpdated": "Last updated",
+    "updateDate": "February 7, 2026",
+    
+    "quickSummary": {
+      "secure": {
+        "title": "Your Data is Secure",
+        "desc": "We use industry-standard encryption to protect your information"
+      },
+      "transparent": {
+        "title": "Full Transparency",
+        "desc": "We're clear about what data we collect and how we use it"
+      },
+      "control": {
+        "title": "You're in Control",
+        "desc": "Access, update, or delete your data anytime"
+      }
+    },
+    
+    "sections": {
+      "collection": {
+        "title": "Information We Collect",
+        "intro": "We collect information to provide better services to our users. Here's what we gather:",
+        "personal": {
+          "title": "Personal Information",
+          "item1": "Name and contact details",
+          "item2": "Email address and phone number",
+          "item3": "Billing and shipping addresses",
+          "item4": "Payment information"
+        },
+        "automatic": {
+          "title": "Automatically Collected",
+          "item1": "IP address and device information",
+          "item2": "Browser type and version",
+          "item3": "Pages visited and time spent",
+          "item4": "Cookies and similar technologies"
+        }
+      },
+      
+      "usage": {
+        "title": "How We Use Your Information",
+        "intro": "We use the information we collect for the following purposes:",
+        "item1": "Process and fulfill your orders",
+        "item2": "Communicate with you about your purchases",
+        "item3": "Improve our website and services",
+        "item4": "Send marketing communications (with your consent)",
+        "item5": "Prevent fraud and enhance security",
+        "item6": "Comply with legal obligations"
+      },
+      
+      "sharing": {
+        "title": "Information Sharing",
+        "intro": "We may share your information in the following circumstances:",
+        "partners": {
+          "title": "Service Providers",
+          "desc": "We share data with trusted partners who help us operate our business (payment processors, shipping companies, etc.)"
+        },
+        "legal": {
+          "title": "Legal Requirements",
+          "desc": "We may disclose information when required by law or to protect our rights and safety"
+        },
+        "business": {
+          "title": "Business Transfers",
+          "desc": "In case of merger or acquisition, your information may be transferred to the new entity"
+        },
+        "noSell": "We never sell your personal information to third parties for their marketing purposes."
+      },
+      
+      "cookies": {
+        "title": "Cookies and Tracking",
+        "intro": "We use cookies and similar technologies to enhance your browsing experience:",
+        "essential": {
+          "title": "Essential Cookies",
+          "desc": "Required for the website to function properly"
+        },
+        "analytics": {
+          "title": "Analytics Cookies",
+          "desc": "Help us understand how visitors interact with our site"
+        },
+        "marketing": {
+          "title": "Marketing Cookies",
+          "desc": "Used to deliver personalized advertisements"
+        },
+        "preferences": {
+          "title": "Preference Cookies",
+          "desc": "Remember your settings and preferences"
+        }
+      },
+      
+      "rights": {
+        "title": "Your Privacy Rights",
+        "intro": "You have the following rights regarding your personal data:",
+        "access": {
+          "title": "Right to Access",
+          "desc": "Request a copy of the personal information we hold about you"
+        },
+        "rectify": {
+          "title": "Right to Rectification",
+          "desc": "Request correction of inaccurate or incomplete data"
+        },
+        "delete": {
+          "title": "Right to Deletion",
+          "desc": "Request deletion of your personal data (subject to legal requirements)"
+        },
+        "object": {
+          "title": "Right to Object",
+          "desc": "Object to processing of your data for marketing purposes"
+        }
+      },
+      
+      "security": {
+        "title": "Data Security",
+        "intro": "We implement robust security measures to protect your information:",
+        "encryption": "SSL/TLS Encryption",
+        "secure": "Secure Data Centers",
+        "backup": "Regular Backups"
+      }
+    },
+    
+    "contact": {
+      "title": "Questions About Privacy?",
+      "description": "If you have any questions or concerns about our privacy practices, don't hesitate to reach out to our privacy team.",
+      "email": "privacy@techmarket.com"
+    }
+  },
+  "about": {
+    "title": "About Tech Market",
+    "subtitle": "Your trusted e-commerce partner in Morocco",
+    
+    "story": {
+      "title": "Who We Are",
+      "text": "TechMarket is Morocco's leading online marketplace, dedicated to bringing you quality products at competitive prices. Since 2020, we've been committed to making online shopping easy, safe, and enjoyable for everyone. Our mission is simple: deliver excellent products with exceptional service."
+    },
+    
+    "values": {
+      "quality": {
+        "title": "Quality Products",
+        "desc": "Only the best makes it to our store"
+      },
+      "trust": {
+        "title": "Trusted Service",
+        "desc": "Secure shopping you can rely on"
+      },
+      "service": {
+        "title": "Great Experience",
+        "desc": "Customer satisfaction is our priority"
+      }
+    },
+    
+    "stats": {
+      "years": "5+",
+      "yearsLabel": "Years",
+      "customers": "50K+",
+      "customersLabel": "Customers",
+      "products": "10K+",
+      "productsLabel": "Products",
+      "satisfaction": "98%",
+      "satisfactionLabel": "Satisfaction"
+    }
+  },
+  "contact": {
+    "title": "Contact Us",
+    "subtitle": "We'd love to hear from you. Send us a message!",
+    
+    "form": {
+      "title": "Send us a Message",
+      "name": "Your Name",
+      "namePlaceholder": "John Doe",
+      "email": "Email Address",
+      "emailPlaceholder": "john@example.com",
+      "subject": "Subject",
+      "subjectPlaceholder": "How can we help you?",
+      "message": "Message",
+      "messagePlaceholder": "Tell us more about your inquiry...",
+      "submit": "Send Message"
+    },
+    
+    "info": {
+      "title": "Contact Information",
+      "email": {
+        "title": "Email",
+        "value": "contact@techmarket.com"
+      },
+      "phone": {
+        "title": "Phone",
+        "value": "+212 5XX-XXXXXX"
+      },
+      "address": {
+        "title": "Address",
+        "value": "Rabat, Morocco"
+      },
+      "hours": {
+        "title": "Business Hours",
+        "value": "Mon - Fri: 9:00 AM - 6:00 PM"
+      }
+    },
+    
+    "help": {
+      "title": "Need Quick Help?",
+      "description": "Check out our FAQ section for instant answers to common questions.",
+      "link": "Visit FAQ"
+    }
   }
 }
 

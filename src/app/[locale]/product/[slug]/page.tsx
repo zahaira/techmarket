@@ -1,6 +1,6 @@
 import NotFound from "@/app/[locale]/not-found";
-import { getProductBySlug } from "@/shared/_mock/_productMock";
-import ProductDetails from "@/shared/section/products/view/ProductDetails";
+import { getProductBySlug } from "@/_mock/_productMock";
+import ProductDetails from "@/sections/products/view/ProductDetails";
 import { cookies } from "next/headers";
 import React from "react";
 

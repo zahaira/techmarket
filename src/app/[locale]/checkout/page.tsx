@@ -1,4 +1,4 @@
-import CheckoutPage from "@/shared/section/checkout/view/CheckoutPage";
+import CheckoutPage from "@/sections/checkout/view/CheckoutPage";
 import React from "react";
 
 const page = () => {
