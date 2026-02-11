@@ -56,7 +56,7 @@ const AuthPage = ({ onClose }: AuthPageProps) => {
   const onSubmit = (data: PersonalInfoType) => {};
 
   return (
-    <div className="h-[calc(100vh-2rem)] relative overflow-y-auto p-6 md:w-[600px] flex justify-center">
+    <div className="h-[calc(100vh-2rem)] relative overflow-y-auto p-3 sm:p-6 md:w-[600px] flex justify-center">
       <div className="mb-4">
         <button
           onClick={onClose}

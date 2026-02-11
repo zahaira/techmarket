@@ -202,7 +202,8 @@
       "popularity": "Popularity",
       "priceLow": "Price: Low to High",
       "priceHigh": "Price: High to Low",
-      "newest": "Newest"
+      "newest": "Newest",
+      "sortBy": "Sort by"
     },
     "discountOptions": {
       "50": "50% or more",

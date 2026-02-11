@@ -10,7 +10,6 @@ import { BiSort } from "react-icons/bi";
 import { FiFilter } from "react-icons/fi";
 import { getCategoriesByLocale } from "@/_mock/_category";
 import { orderBy } from "@/utils/helper";
-import { ChevronDown } from "lucide-react";
 
 interface ProductListViewProps {
   products: ProductCardItem[];
@@ -134,7 +133,7 @@ const ProductListView = ({ products, category, title, query: searchTerm }: Produ
                   {isSortOpen && (
                     <div className="fixed inset-0 z-50 bg-black/40">
                       <div ref={sortRef} className="absolute bottom-0 w-full bg-white rounded-t-2xl p-4">
-                        <h3 className="font-semibold mb-4">Sort by</h3>
+                        <h3 className="font-semibold mb-4">{tFilter('sort.sortBy')}</h3>
                   
                         {sortOptions.map(option => (
                           <button
