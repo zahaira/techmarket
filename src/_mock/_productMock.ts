@@ -1128,7 +1128,6 @@ export const getPromotionProducts = (locale: string = "en"): Product[] => {
 // ProductCardItem versions - with locale support
 export const getProductCardItems = (
   products: Product[],
-  locale: string = "en" // Keep for consistency but not needed anymore
 ): ProductCardItem[] => {
   return products.map((product) => {
     const discount = product.discountPercentage;
@@ -1161,7 +1160,7 @@ export const getProductCardItemsByCategory = (
   locale: string = "en"
 ): ProductCardItem[] => {
   const products = getProductsByCategory(categoryId, locale);
-  return getProductCardItems(products, locale);
+  return getProductCardItems(products);
 };
 
 export const getProductCardItemsByCategorySlug = (
@@ -1169,21 +1168,21 @@ export const getProductCardItemsByCategorySlug = (
   locale: string = "en"
 ): ProductCardItem[] => {
   const products = getProductsByCategorySlug(slug, locale);
-  return getProductCardItems(products, locale);
+  return getProductCardItems(products);
 };
 
 export const getBestSellerProductCardItems = (
   locale: string = "en"
 ): ProductCardItem[] => {
   const products = getBestSellerProducts(locale); // Add locale here
-  return getProductCardItems(products, locale);
+  return getProductCardItems(products);
 };
 
 export const getPromotionProductCardItems = (
   locale: string = "en"
 ): ProductCardItem[] => {
   const products = getPromotionProducts(locale); // Add locale here
-  return getProductCardItems(products, locale);
+  return getProductCardItems(products);
 };
 
 // Best offers for homepage
@@ -1192,8 +1191,7 @@ export const _mockBestOfferProducts = (
 ): ProductCardItem[] => {
   const products = getMockProducts(locale); // Changed from mockProducts
   return getProductCardItems(
-    products.filter((p) => p.discountPercentage !== undefined).slice(0, 12),
-    locale
+    products.filter((p) => p.discountPercentage !== undefined).slice(0, 12)
   );
 };
 
@@ -1202,8 +1200,7 @@ export const _mockBestSellersProducts = (
 ): ProductCardItem[] => {
   const products = getMockProducts(locale); // Changed from mockProducts
   return getProductCardItems(
-    products.filter((p) => p.isBestSeller === true).slice(0, 12),
-    locale
+    products.filter((p) => p.isBestSeller === true).slice(0, 12)
   );
 };
 
@@ -1466,7 +1463,7 @@ export function getBestOfferProductsPaginated(
   const products = getMockProducts(locale)
     .filter((p) => p.discountPercentage);
 
-  const mapped = getProductCardItems(products, locale);
+  const mapped = getProductCardItems(products);
 
   return paginate(mapped, page, limit);
 }
@@ -1480,4 +1477,37 @@ export function getProductCardItemsByCategorySlugPaginated(
   const products = getProductCardItemsByCategorySlug(slug, locale);
 
   return paginate(products, page, limit);
+}
+
+export function getSearchProductsPaginated(
+  locale: string,
+  page: number,
+  limit: number,
+  queryParam?: string
+) {
+  const products = getMockProducts(locale);
+
+  let filteredProducts = products;
+
+  if (queryParam && queryParam.trim() !== "") {
+    const query = queryParam.toLowerCase().trim();
+    
+    filteredProducts = products.filter((p) => {
+      // Get the product in both locales to search both names
+      const productEn = getProductById(p.productId, "en");
+      const productAr = getProductById(p.productId, "ar");
+      
+      // Search in English name
+      const matchesEnglish = productEn?.name.toLowerCase().includes(query);
+      
+      // Search in Arabic name
+      const matchesArabic = productAr?.name.toLowerCase().includes(query);
+      
+      return matchesEnglish || matchesArabic;
+    });
+  }
+
+  const mapped = getProductCardItems(filteredProducts);
+
+  return paginate(mapped, page, limit);
 }

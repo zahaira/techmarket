@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FiX } from "react-icons/fi";
 import { Controller, useForm } from "react-hook-form";
 import { z as zod } from "zod";
@@ -43,14 +43,24 @@ const AuthPage = ({ onClose }: AuthPageProps) => {
     defaultValues,
   });
 
+  useEffect(() => {
+    // disable page scrolling
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      // Reactivate scrolling when closing
+      document.body.style.overflow = "auto";
+    };
+  }, []);
+
   const onSubmit = (data: PersonalInfoType) => {};
 
   return (
-    <div className="h-[calc(100vh-2rem)] relative  overflow-y-auto p-6 md:w-[600px] flex justify-center">
+    <div className="h-[calc(100vh-2rem)] relative overflow-y-auto p-6 md:w-[600px] flex justify-center">
       <div className="mb-4">
         <button
           onClick={onClose}
-          aria-label="Close wishlist"
+          aria-label="Close Auth Form"
           className="absolute top-4 right-4 p-1 rounded-full hover:bg-gray-50 transition cursor-pointer"
         >
           <FiX className="text-gray-500 text-2xl" />

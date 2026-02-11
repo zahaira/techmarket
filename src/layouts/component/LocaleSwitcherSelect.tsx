@@ -1,7 +1,7 @@
 "use client";
 
 import clsx from "clsx";
-import { useParams } from "next/navigation";
+import { useParams, useSearchParams } from "next/navigation";
 import { Locale } from "next-intl";
 import { ChangeEvent, ReactNode, useTransition } from "react";
 import { usePathname, useRouter } from "@/i18n/navigation";
@@ -21,6 +21,7 @@ export default function LocaleSwitcherSelect({
   const [isPending, startTransition] = useTransition();
   const pathname = usePathname();
   const params = useParams();
+  const searchParams = useSearchParams();
 
   function onSelectChange(event: ChangeEvent<HTMLSelectElement>) {
     const nextLocale = event.target.value as Locale;
@@ -29,7 +30,7 @@ export default function LocaleSwitcherSelect({
         // @ts-expect-error -- TypeScript will validate that only known `params`
         // are used in combination with a given `pathname`. Since the two will
         // always match for the current route, we can skip runtime checks.
-        { pathname, params },
+        { pathname, params , query: Object.fromEntries(searchParams.entries()),},
         { locale: nextLocale }
       );
     });
@@ -44,7 +45,7 @@ export default function LocaleSwitcherSelect({
     >
       <p className="sr-only">{label}</p>
       <select
-        className="inline-flex text-xs py-3 pl-2 pr-2 text-light hover:cursor-pointer"
+        className="inline-flex text-xs py-3 pl-2 pr-2 text-light hover:cursor-pointer [&>option]:bg-white [&>option]:text-black"
         defaultValue={defaultValue}
         disabled={isPending}
         onChange={onSelectChange}

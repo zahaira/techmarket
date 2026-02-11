@@ -3,7 +3,7 @@
 import { _mockCategories } from "@/_mock/_category";
 import { ProductFilter } from "@/types/product";
 import { useLocale, useTranslations } from "next-intl";
-import React from "react";
+import React, { useEffect } from "react";
 import { FiRefreshCw } from "react-icons/fi";
 
 
@@ -14,11 +14,25 @@ type Props = {
   options: {
     categories: { categoryId: string; name: string }[];
   };
+  isOpen: boolean;
 };
 
-const ProductFilterForm = ({ filters, setFilters, canReset, options }: Props) => {
+const ProductFilterForm = ({ filters, setFilters, canReset, options, isOpen }: Props) => {
   const tFilter = useTranslations("filter");
   const instanceId = React.useId();
+
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden"; // Bloque le scroll
+    } else {
+      document.body.style.overflow = "auto"; // Réactive le scroll
+    }
+
+    // Optionnel : nettoyer si le composant se démonte
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [isOpen]);
 
   return (
     <aside className="w-full bg-white rounded-xl p-4 space-y-6">

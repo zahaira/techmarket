@@ -575,6 +575,9 @@
       "description": "Check out our FAQ section for instant answers to common questions.",
       "link": "Visit FAQ"
     }
+  },
+  "search": {
+    "results": "Search results for \"{query}\""
   }
 }
 

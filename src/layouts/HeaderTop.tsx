@@ -37,7 +37,7 @@ const HeaderTop = () => {
           </div>
         </div>
       </div>
-      {/* Modal Wishlist */}
+      {/* Modal Auth */}
       <Modal isOpen={isAuthPageOpen} onClose={() => setIsAuthPageOpen(false)}>
         <AuthPage onClose={() => setIsAuthPageOpen(false)} />
       </Modal>

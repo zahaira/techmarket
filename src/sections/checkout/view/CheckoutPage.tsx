@@ -41,6 +41,10 @@ const CheckoutPage = () => {
       <h1 className="text-2xl font-bold mb-6">{tCheckout("title")}</h1>
 
       <div className="flex flex-col lg:flex-row gap-6">
+        {/* --- Summary Section --- */}
+        <SummarySection />
+
+        {/* --- client  address --- */}
         <div className="w-full flex flex-col gap-6">
           <Accordion
             type="single"
@@ -61,7 +65,6 @@ const CheckoutPage = () => {
                   boukhakef, 122 rue jjj | kobros | +2427655444
                 </span>
               </div> */}
-
               <AccordionContent className="py-3 px-1">
                 <PersonalInfoForm />
               </AccordionContent>
@@ -113,8 +116,6 @@ const CheckoutPage = () => {
             <CheckoutSection />
           </div>
         </div>
-        {/* --- Summary Section --- */}
-        <SummarySection />
       </div>
     </div>
   );

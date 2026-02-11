@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import ProductList from "../../components/ProductList";
 import { ProductCardItem, ProductFilter } from "@/types/product";
 import { Category } from "@/types/category";
@@ -10,15 +10,20 @@ import { BiSort } from "react-icons/bi";
 import { FiFilter } from "react-icons/fi";
 import { getCategoriesByLocale } from "@/_mock/_category";
 import { orderBy } from "@/utils/helper";
+import { ChevronDown } from "lucide-react";
 
 interface ProductListViewProps {
   products: ProductCardItem[];
   category?: Category;
   title?: string;
+  query?: string;
 }
-const ProductListView = ({ products, category, title }: ProductListViewProps) => {
+const ProductListView = ({ products, category, title, query: searchTerm }: ProductListViewProps) => {
   const [open, setOpen] = useState<boolean>(false);
+  const [isSortOpen, setIsSortOpen] = useState(false);
+  const sortRef = useRef<HTMLDivElement>(null);
   const tFilter = useTranslations("filter");
+  const tSearch = useTranslations("search");
   const locale = useLocale();
   const [sortValue, setSortValue] = useState("popularity");
   const sortOptions = [
@@ -27,6 +32,30 @@ const ProductListView = ({ products, category, title }: ProductListViewProps) =>
     { value: "priceHigh", label: tFilter("sort.priceHigh") },
     { value: "newest", label: tFilter("sort.newest") },
   ];
+  const finalTitle =
+    category?.name ??
+    title ??
+    tSearch('results', { query: searchTerm ?? '' });
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (
+        sortRef.current &&
+        !sortRef.current.contains(event.target as Node)
+      ) {
+        setIsSortOpen(false);
+      }
+    }
+
+    if (isSortOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isSortOpen]);
+
   const [filters, setFilters] = useState<ProductFilter>({
     categories: [],
     price: 5000,
@@ -52,13 +81,14 @@ const ProductListView = ({ products, category, title }: ProductListViewProps) =>
             options={{
               categories: getCategoriesByLocale(locale)
             }}
+            isOpen={open}
           />
         </aside>
         <section className="flex-1">
           {/* Desktop header avec titre et tri */}
           <div className="hidden md:flex items-center mb-4 justify-between">
             {/* Titre */}
-            <h2 className="text-2xl font-bold m-0">{category?.name || title}</h2>
+            <h2 className="text-2xl font-bold m-0">{finalTitle}</h2>
             {/* Select tri */}
             <div className="relative">
               <select
@@ -77,7 +107,7 @@ const ProductListView = ({ products, category, title }: ProductListViewProps) =>
           </div>
             
           {/* Mobile title */}
-          <h2 className="md:hidden text-2xl font-bold mb-4">{category?.name || title}</h2>
+          <h2 className="md:hidden text-2xl font-bold mb-4">{finalTitle}</h2>
 
           {/* Mobile filter + sort */}
           <div className="md:hidden mb-4 flex justify-between">
@@ -89,18 +119,43 @@ const ProductListView = ({ products, category, title }: ProductListViewProps) =>
               {tFilter('title')}
             </button>
               <div className="relative">
-                <select
-                  value={sortValue}
-                  onChange={(e) => setSortValue(e.target.value)}
-                  className="border rounded-lg py-2 pl-3 pr-8 text-sm appearance-none bg-white"
-                >
-                  {sortOptions.map((option) => (
-                    <option key={option.value} value={option.value}>
-                      {option.label}
-                    </option>
-                  ))}
-                </select>
-                <BiSort className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+                <div className="block md:hidden">
+                  <button
+                    onClick={() => setIsSortOpen(true)}
+                    className="w-full flex items-center justify-between border rounded-xl px-4 py-3 text-sm bg-white"
+                  >
+                    <span>
+                      {sortOptions.find(o => o.value === sortValue)?.label}
+                    </span>
+                    <BiSort className="w-4 h-4" />
+
+                  </button>
+
+                  {isSortOpen && (
+                    <div className="fixed inset-0 z-50 bg-black/40">
+                      <div ref={sortRef} className="absolute bottom-0 w-full bg-white rounded-t-2xl p-4">
+                        <h3 className="font-semibold mb-4">Sort by</h3>
+                  
+                        {sortOptions.map(option => (
+                          <button
+                            key={option.value}
+                            onClick={() => {
+                              setSortValue(option.value);
+                              setIsSortOpen(false);
+                            }}
+                            className={`w-full text-left px-4 py-3 rounded-lg mb-2 ${
+                              sortValue === option.value
+                                ? "bg-primary-main text-white"
+                                : "hover:bg-gray-100"
+                            }`}
+                          >
+                            {option.label}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
               </div>
           </div>
           {dataFiltered.length > 0 ? (
@@ -126,6 +181,7 @@ const ProductListView = ({ products, category, title }: ProductListViewProps) =>
                   options={{
                     categories: getCategoriesByLocale(locale)
                   }}
+                  isOpen={open}
                 />
               </div>
             </div>

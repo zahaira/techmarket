@@ -89,7 +89,7 @@ const PersonalInfoForm = () => {
           )}
         />
       </div>
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="grid grid-cols-[auto_1fr] gap-2">
           <div className="relative w-16">
             <input

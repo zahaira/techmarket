@@ -1,7 +1,7 @@
 "use client";
 
 import { useWishlistStore } from "@/api/stores/wishlistStore";
-import React from "react";
+import React, { useEffect } from "react";
 import { FiX } from "react-icons/fi";
 import ProductWishlistedCard from "./ProductWishlistedCard";
 import { Link } from "@/i18n/navigation";
@@ -13,6 +13,17 @@ interface WishlistProps {
 const Wishlist = ({ onClose }: WishlistProps) => {
   const { items } = useWishlistStore();
   const t = useTranslations("Wishlist");
+
+  useEffect(() => {
+    // disable page scrolling
+    document.body.style.overflow = "hidden";
+  
+    return () => {
+      // Reactivate scrolling when closing
+      document.body.style.overflow = "auto";
+    };
+  }, []);
+
   return (
     <div className="h-[calc(100vh-2rem)] overflow-y-auto p-6 md:w-[600px]">
       <div className="flex justify-between items-center px-3 py-2 border-b border-gray-100">

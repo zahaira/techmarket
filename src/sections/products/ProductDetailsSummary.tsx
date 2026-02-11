@@ -11,6 +11,7 @@ import { useForm } from "react-hook-form";
 import { CustomButton } from "@/components/CustomButton";
 import { useLocale, useTranslations } from "next-intl";
 import { getArabicYearText } from "@/utils/helper";
+import { useRouter } from "@/i18n/navigation";
 
 interface ProductDetailsSummaryProps {
   product: Product;
@@ -34,6 +35,7 @@ const ProductDetailsSummary = ({ product }: ProductDetailsSummaryProps) => {
   const methods = useForm({ defaultValues });
   const { watch, setValue } = methods;
   const values = watch();
+  const router = useRouter();
 
   const handleAddCart = useCallback(() => {
     try {
@@ -42,6 +44,21 @@ const ProductDetailsSummary = ({ product }: ProductDetailsSummaryProps) => {
       console.error(error);
     }
   }, [addToCart, values]);
+
+  const handleBuyNow = useCallback(() => {
+    try {
+      // Add product to cart (only if not already in cart)
+      if (!isInCart) {
+        addToCart?.(product, values.quantity);
+      }
+
+      // Redirect to checkout
+      router.push("/checkout");
+    } catch (error) {
+      console.error("Buy now error:", error);
+    }
+  }, [addToCart, product, values.quantity, isInCart, router]);
+
 
   return (
     <div className="flex flex-col gap-4 sm:px-6">
@@ -150,7 +167,12 @@ const ProductDetailsSummary = ({ product }: ProductDetailsSummaryProps) => {
         </div>
 
         {/* Buy Now */}
-        <CustomButton variant="secondary" className="sm:w-1/2">
+        <CustomButton 
+          variant="secondary" 
+          className="sm:w-1/2" 
+          disabled={product.stock < 1}
+          onClick={handleBuyNow}
+        >
           {tBtn("buy_now")}
         </CustomButton>
       </div>

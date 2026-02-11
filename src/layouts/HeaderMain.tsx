@@ -1,7 +1,7 @@
 "use client";
 
-import { Link } from "@/i18n/navigation";
-import React, { useState } from "react";
+import { Link, useRouter } from "@/i18n/navigation";
+import React, { useEffect, useState } from "react";
 import { BsSearch } from "react-icons/bs";
 import { FiHeart, FiUser } from "react-icons/fi";
 import { GiHamburgerMenu } from "react-icons/gi";
@@ -12,15 +12,33 @@ import Wishlist from "../sections/wishlist/Wishlist";
 import Modal from "./component/Modal";
 import { useCartStore } from "../api/stores/CartStore";
 import { useLocale, useTranslations } from "next-intl";
+import AuthPage from "@/sections/auth/AuthPage";
+import { useSearchParams } from "next/navigation";
 
 interface HeaderMainProps {
   toggleSidebar: () => void;
 }
 
 const HeaderMain = ({ toggleSidebar }: HeaderMainProps) => {
+  const [isAuthPageOpen, setIsAuthPageOpen] = useState(false);
   const { items: wishlistItems } = useWishlistStore();
   const { items: cartItems } = useCartStore();
   const tPlaceHolder = useTranslations("placeholders");
+  const [searchQuery, setSearchQuery] = useState("");
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    const query = searchParams.get("query") || "";
+    setSearchQuery(query);
+  }, [searchParams]);
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchQuery.trim() !== "") {
+      router.push(`/search?query=${encodeURIComponent(searchQuery)}`);
+    }
+  };
 
   const wishlistCount = wishlistItems.length;
   const cartCount = cartItems.length;
@@ -55,7 +73,11 @@ const HeaderMain = ({ toggleSidebar }: HeaderMainProps) => {
 
           {/* Mobile Icons */}
           <div className="sm:hidden flex items-center gap-3 text-gray-600 text-[19px] ml-3">
-            <IconWithBadge icon={<FiUser />} ariaLabel="User profile" />
+            <IconWithBadge 
+              icon={<FiUser />} 
+              ariaLabel="User profile"
+              onClick={() => setIsAuthPageOpen(true)}
+            />
             <IconWithBadge
               icon={<FiHeart />}
               count={wishlistCount}
@@ -72,17 +94,18 @@ const HeaderMain = ({ toggleSidebar }: HeaderMainProps) => {
         </div>
 
         {/* Search Bar */}
-        <div className="relative w-full sm:w-[300px] md:w-[60%]">
+        <form onSubmit={handleSearch} className="relative w-full sm:w-[300px] md:w-[60%]">
           <input
             type="text"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
             placeholder={tPlaceHolder("search")}
             className="w-full border border-gray-300 bg-light rounded-full px-4 py-2 pr-10 text-sm focus:outline-none focus:ring-2 focus:ring-primary-main transition"
           />
-          <BsSearch
-            size={18}
-            className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none"
-          />
-        </div>
+          <button type="submit" className="absolute right-3 top-1/2 -translate-y-1/2">
+            <BsSearch size={18} className="text-gray-400" />
+          </button>
+        </form>
 
         {/* Desktop Icons */}
         <div className="hidden sm:flex items-center gap-6 text-gray-600 text-2xl">
@@ -101,6 +124,10 @@ const HeaderMain = ({ toggleSidebar }: HeaderMainProps) => {
           />
         </div>
       </div>
+      {/* Modal Auth */}
+      <Modal isOpen={isAuthPageOpen} onClose={() => setIsAuthPageOpen(false)}>
+        <AuthPage onClose={() => setIsAuthPageOpen(false)} />
+      </Modal>
 
       {/* Modal Wishlist */}
       <Modal isOpen={isWishlistOpen} onClose={() => setIsWishlistOpen(false)}>
