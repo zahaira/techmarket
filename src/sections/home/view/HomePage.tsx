@@ -2,7 +2,6 @@ import React from "react";
 import Hero from "../Hero";
 import CategorySection from "../CategorySection";
 import { _mockCategories } from "@/_mock/_category";
-import FeaturesSection from "../FeaturesSection";
 import ProductCarouselSection from "../../components/ProductCarouselSection";
 import { useLocale, useTranslations } from "next-intl";
 import { mapCategoriesToLocale } from "@/_mock/service";

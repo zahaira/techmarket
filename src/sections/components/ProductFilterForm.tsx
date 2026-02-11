@@ -2,7 +2,7 @@
 
 import { _mockCategories } from "@/_mock/_category";
 import { ProductFilter } from "@/types/product";
-import { useLocale, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 import React, { useEffect } from "react";
 import { FiRefreshCw } from "react-icons/fi";
 

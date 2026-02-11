@@ -10,13 +10,14 @@ type Props = {
 };
 
 export default function Pagination({ currentPage, totalPages }: Props) {
-  if (totalPages <= 1) return null;
   const locale = useLocale();
   const isRTL = locale === "ar";
   const PrevIcon = isRTL ? ChevronRight : ChevronLeft;
   const NextIcon = isRTL ? ChevronLeft : ChevronRight;
 
   const searchParams = useSearchParams();
+  
+  if (totalPages <= 1) return null;
 
   // Helper to merge existing params with new page
   const getPageLink = (page: number) => {
