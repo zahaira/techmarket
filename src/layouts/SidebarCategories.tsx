@@ -50,7 +50,7 @@ const SidebarCategories = ({ isOpen, setIsOpen }: SidebarProps) => {
           fixed top-0 h-full bg-white shadow-lg border-r border-gray-200 z-50 
           flex flex-col items-start py-4
           transition-transform duration-300 ease-in-out
-          overflow-x-hidden
+          overflow-hidden
           ${locale === "ar" ? "right-0" : "left-0"}
           ${isOpen ? "translate-x-0" : locale === "ar" ? "translate-x-full sm:translate-x-0" : "-translate-x-full sm:translate-x-0"}
         `}
@@ -69,10 +69,10 @@ const SidebarCategories = ({ isOpen, setIsOpen }: SidebarProps) => {
           }
         }}
       >
-        <div className="w-full px-2 mb-6 relative">
+        <div className="w-full px-2 mb-6 relative min-w-0">
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="relative flex items-center h-[46px] w-full"
+            className="relative flex items-center h-[46px] w-full min-w-0"
           >
             <motion.div
               className={`absolute top-0 ${
@@ -88,7 +88,7 @@ const SidebarCategories = ({ isOpen, setIsOpen }: SidebarProps) => {
               }}
             />
 
-            <div className="relative flex items-center w-full">
+            <div className="relative flex items-center w-full min-w-0">
               <div className="flex items-center justify-center w-[46px] h-[46px] flex-shrink-0 text-white z-10">
                 <span className="sm:hidden">
                   {isOpen ? (
@@ -108,7 +108,7 @@ const SidebarCategories = ({ isOpen, setIsOpen }: SidebarProps) => {
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, x: locale === "ar" ? 10 : -10 }}
                     transition={{ duration: 0.2, ease: "easeOut" }}
-                    className="text-sm font-medium tracking-wide whitespace-nowrap text-white z-10 px-2"
+                    className="text-sm font-medium tracking-wide whitespace-nowrap text-white z-10 px-2 overflow-hidden"
                   >
                     {t("categories")}
                   </motion.span>
@@ -119,14 +119,14 @@ const SidebarCategories = ({ isOpen, setIsOpen }: SidebarProps) => {
         </div>
 
         {/* Categories */}
-        <div className="flex flex-col gap-4 w-full overflow-y-auto">
+        <div className="flex flex-col gap-4 w-full overflow-y-auto overflow-x-hidden">
           {categories.map((cat, i) => {
             const Icon = iconMap[cat.iconName];
 
             return (
               <div
                 key={i}
-                className="relative flex items-center h-[46px] mx-2 cursor-pointer group"
+                className="relative flex items-center h-[46px] mx-2 cursor-pointer group min-w-0"
                 onClick={() => {
                   if (typeof window !== "undefined" && window.innerWidth < 640) {
                     setIsOpen(false);
@@ -136,7 +136,7 @@ const SidebarCategories = ({ isOpen, setIsOpen }: SidebarProps) => {
               >
                 <div className="absolute inset-0 bg-gray-100 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
 
-                <div className="relative flex items-center w-full">
+                <div className="relative flex items-center w-full min-w-0">
                   <div className="flex items-center justify-center w-[46px] h-[46px] flex-shrink-0 text-gray-700 z-10">
                     {Icon && <Icon className="text-xl" />}
                   </div>
@@ -148,7 +148,7 @@ const SidebarCategories = ({ isOpen, setIsOpen }: SidebarProps) => {
                         animate={{ opacity: 1, x: 0 }}
                         exit={{ opacity: 0, x: locale === "ar" ? 10 : -10 }}
                         transition={{ duration: 0.2, ease: "easeOut" }}
-                        className="text-sm font-medium whitespace-nowrap text-gray-700 z-10 px-2"
+                        className="text-sm font-medium whitespace-nowrap text-gray-700 z-10 px-2 overflow-hidden"
                       >
                         {cat.name}
                       </motion.span>
